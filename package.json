@@ -1,0 +1,47 @@
+{
+  "name": "react-tooltip-lite",
+  "version": "0.0.1",
+  "description": "React tooltip, focused on simplicity and performance",
+  "main": "dist/index.js",
+  "scripts": {
+    "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bsidelinger912/react-tooltip-lite.git"
+  },
+  "keywords": [
+    "React"
+  ],
+  "author": "Ben Sidelinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bsidelinger912/react-tooltip-lite/issues"
+  },
+  "homepage": "https://github.com/bsidelinger912/react-tooltip-lite#readme",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "*",
+    "babel-eslint": "^6.0.4",
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-0": "*",
+    "enzyme": "^2.4.1",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-prefer-object-spread": "^1.1.0",
+    "eslint-plugin-react": "^6.7.1",
+    "expect": "^1.20.2",
+    "express": "^4.14.0",
+    "mocha": "^2.5.3",
+    "react": "^15.1.0",
+    "react-addons-test-utils": "^15.2.1",
+    "react-dom": "^15.1.0",
+    "react-hot-loader": "*",
+    "webpack": "*",
+    "webpack-dev-server": "*"
+  }
+}

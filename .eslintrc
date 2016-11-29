@@ -1,0 +1,94 @@
+{
+    "extends": "eslint-config-airbnb",
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "plugins": [
+        "prefer-object-spread"
+    ],
+    "rules": {
+        // overrides best practices.js
+        "curly": [
+            1,
+            "all"
+        ],
+        "eqeqeq": [
+            2,
+            "allow-null"
+        ],
+        // Temporarily disabled due to a possible bug in babel-eslint (todomvc example)
+        "block-scoped-var": 0,
+        "wrap-iife": [
+            2,
+            "inside"
+        ],
+        // overrides style.js
+        "comma-dangle": [
+            1,
+            "always-multiline"
+        ],
+        "indent": [
+            1,
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "keyword-spacing": [
+            1
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "new-cap": [
+            1
+        ],
+        "padded-blocks": [ 0 ],
+        "space-before-blocks": [ 1, "always" ],
+        "space-before-function-paren": [
+            2,
+            {
+                "anonymous": "always",
+                "named": "never"
+            }
+        ],
+
+        // overrides errors.js
+        "no-console": [ 0 ],
+
+        // overrides variables.js
+        "no-unused-vars": [ 1 ],
+
+        "react/prefer-stateless-function": [ 0 ],
+
+        "react/prop-types": [ 0 ],
+
+        "react/jsx-indent": [ 2, 4 ],
+
+        "max-len": [ 1, 150 ],
+
+        "consistent-return": [ 0 ],
+
+        //this allows left handed conditionals, though apparently it is not considered a best practice these days, eslint.org/docs/rules/yoda
+        "yoda": [ 0 ],
+
+        // warns when trying to use Object.assign()
+        "prefer-object-spread/prefer-object-spread": 2,
+
+        "import/no-extraneous-dependencies": [ 0 ]
+    },
+    "globals" : {
+        "__CLIENT__": true
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "mocha": true
+    }
+}
