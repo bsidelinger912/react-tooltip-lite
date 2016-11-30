@@ -11,34 +11,57 @@ class App extends React.Component {
 
             <section>
                 <h3>Basic:</h3>
-                <Tooltip content="Tip text here and getting longer, and longer and much much longer to go">
-                    <a href="http://google.com">Some link text</a>
-                </Tooltip> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Cras vehicula ac risus vitae pretium. Fusce ut sem lectus.
-                <Tooltip content="Tip text" direction="left">
-                    <a href="http://google.com">Some link text </a>
-                </Tooltip>
-                Proin ultrices nibh et nulla aliquet, id sagittis nunc iaculis. Duis augue ligula, vulputate at arcu accumsan, pretium porta urna.
-                Morbi accumsan placerat elit, porttitor egestas diam posuere et. Cras congue ligula et pharetra pharetra.
-                Morbi pulvinar arcu at placerat volutpat. Sed non eros fermentum, tincidunt neque sed, fringilla arcu.
-                Quisque in porttitor lorem, et lacinia sem. Quisque facilisis hendrerit libero. Aliquam erat volutpat.
-                Curabitur facilisis, justo id volutpat venenatis, lacus urna pulvinar lectus, ut imperdiet augue orci quis elit.
-                Vestibulum aliquet mauris aliquam est pulvinar, ut maximus nunc faucibus.
-                <Tooltip content="Tip text here and getting longer, and longer and much much longer to go">
-                    <a href="http://google.com">Some link text</a>
-                </Tooltip> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Cras vehicula ac risus vitae pretium. Fusce ut sem lectus.
-                <Tooltip content="Tip text here and getting longer, and longer and much much longer to go">
-                    <a href="http://google.com">Some link text </a>
-                </Tooltip>
-                Proin ultrices nibh et nulla aliquet, id sagittis nunc iaculis. Duis augue ligula, vulputate at arcu accumsan, pretium porta urna.
-                Morbi accumsan placerat elit, porttitor egestas diam posuere et. Cras congue ligula et pharetra pharetra.
-                Morbi pulvinar arcu at placerat volutpat. Sed non eros fermentum, tincidunt neque sed, fringilla arcu.
-                Quisque in porttitor lorem, et lacinia sem. Quisque facilisis hendrerit libero. Aliquam erat volutpat.
-                Curabitur facilisis, justo id volutpat venenatis, lacus urna pulvinar lectus, ut imperdiet augue orci quis elit.
-                Vestibulum aliquet mauris aliquam est pulvinar, ut maximus nunc faucibus.
-                <Tooltip content="Tip text here and getting longer, and longer and much much longer to go">
-                    <a href="http://google.com">Some link text</a>
+
+                <div className="flex-spread">
+                    <Tooltip content="By default the text is above the element" className="target">
+                        Target
+                    </Tooltip>
+
+                    <Tooltip content="It'll center if it has room" className="target">
+                        Target
+                    </Tooltip>
+
+                    <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target">
+                        Target
+                    </Tooltip>
+                </div>
+            </section>
+
+            <section>
+                <h3>In a paragraph</h3>
+                <p>
+                    For <Tooltip content="Go to google" direction="right" tagName="span">
+                        <a href="http://google.com">inline text</a>
+                    </Tooltip>, a right or left tip works nicely.
+                    The tip will try to go the desired way and flip if there
+                    is not enough <Tooltip content="Go to google" direction="right" tagName="span">
+                        <a href="http://google.com">space</a>
+                    </Tooltip>.
+                    Shrink the window and see how the tip behaves when close to the <Tooltip content="Go to google" direction="right" tagName="span">
+                        <a href="http://google.com"> edge</a>
+                    </Tooltip>.
+                </p>
+            </section>
+
+            <section>
+                <h3>Html Contents</h3>
+
+                You can also have a tooltip
+                with <Tooltip
+                  content={(
+                      <div>
+                          <h4 className="tip-heading">An unordered list</h4>
+                          <ul className="tip-list">
+                              <li>One</li>
+                              <li>Two</li>
+                          </ul>
+                      </div>
+                  )}
+                  direction="right"
+                  tagName="span"
+                  className="target"
+                >
+                    Html content
                 </Tooltip>
             </section>
         </div>

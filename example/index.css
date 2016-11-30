@@ -1,3 +1,32 @@
+section {
+  margin-bottom: 50px;
+}
+
 a {
   display: inline-block;
+}
+
+.target {
+  display: inline-block;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.flex-spread {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tip-heading {
+  margin: 0 0 10px;
+}
+
+.tip-list {
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+
+.tip-list li {
+  margin: 5px 0;
+  padding: 0;
 }

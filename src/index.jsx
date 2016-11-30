@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import { positions } from './position';
 
 class Tooltip extends React.Component {
+  static propTypes = {
+    // eslint-disable-next-line react/no-unused-prop-types
+    tagName: PropTypes.string,
+    direction: PropTypes.string,
+    className: PropTypes.string,
+    content: PropTypes.node.isRequired,
+  }
+
+  static defaultProps = {
+    tagName: 'div',
+    direction: 'up',
+    className: '',
+  }
+
   constructor() {
     super();
 
@@ -21,12 +35,11 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const direction = this.props.direction || 'up';
+    const { direction, className } = this.props;
     const currentPositions = positions(direction, this.tip, this.target, this.state);
 
     const wrapperStyles = {
       position: 'relative',
-      display: 'inline',
     };
 
     const tipStyles = {
@@ -52,29 +65,28 @@ class Tooltip extends React.Component {
       position: 'absolute',
     };
 
-    const tipElem = (this.props.content) ? (
-        <div style={tipWrapperStyles}>
-            <div style={tipStyles} ref={(tip) => { this.tip = tip; }}>
+    const tipElem = (
+        <span style={tipWrapperStyles}>
+            <span style={tipStyles} ref={(tip) => { this.tip = tip; }}>
                 {this.props.content}
-            </div>
-        </div>
-    ) : null;
+            </span>
+        </span>
+    );
 
-    const arrowElem = (this.props.content) ? (
-        <div style={arrowStyles} />
-    ) : null;
+    const arrowElem = <span style={arrowStyles} />;
 
     return (
-        <div
+        <this.props.tagName
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           style={wrapperStyles}
           ref={(target) => { this.target = target; }}
+          className={`react-tooltip-lite ${className}`}
         >
             {this.props.children}
             {tipElem}
             {arrowElem}
-        </div>
+        </this.props.tagName>
     );
   }
 }
