@@ -4,7 +4,8 @@
   "description": "React tooltip, focused on simplicity and performance",
   "main": "dist/index.js",
   "scripts": {
-    "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js"
+    "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js",
+    "dev": "webpack-dev-server --progress --colors"
   },
   "repository": {
     "type": "git",

@@ -81,7 +81,8 @@
         // warns when trying to use Object.assign()
         "prefer-object-spread/prefer-object-spread": 2,
 
-        "import/no-extraneous-dependencies": [ 0 ]
+        "import/no-extraneous-dependencies": [ 0 ],
+        "import/prefer-default-export": [ 0 ]
     },
     "globals" : {
         "__CLIENT__": true

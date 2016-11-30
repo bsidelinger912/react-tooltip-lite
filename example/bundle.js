@@ -109,7 +109,7 @@
 	                        _react2.default.createElement(
 	                            'a',
 	                            { href: 'http://google.com' },
-	                            'Some link text'
+	                            'Some link text will go here...'
 	                        )
 	                    )
 	                )
@@ -21553,6 +21553,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	// import { position } from './position';
+	
 	var Tooltip = function (_React$Component) {
 	  _inherits(Tooltip, _React$Component);
 	
@@ -21561,7 +21563,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this));
 	
-	    _this.state = { showTip: false };
+	    _this.state = { showTip: true };
 	
 	    _this.handleMouseEnter = _this.handleMouseEnter.bind(_this);
 	    _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
@@ -21582,11 +21584,16 @@
 	    key: 'render',
 	    value: function render() {
 	      var wrapperStyles = {
-	        position: 'relative'
+	        position: 'relative',
+	        display: 'inline'
 	      };
 	
 	      var tipStyles = {
-	        display: 'none'
+	        display: 'none',
+	        position: 'absolute',
+	        top: '25px',
+	        left: '5px',
+	        border: '1px solid black'
 	      };
 	
 	      if (this.state.showTip) {
