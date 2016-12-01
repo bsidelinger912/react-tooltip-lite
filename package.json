@@ -21,6 +21,7 @@
     "url": "https://github.com/bsidelinger912/react-tooltip-lite/issues"
   },
   "homepage": "https://github.com/bsidelinger912/react-tooltip-lite#readme",
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "*",
