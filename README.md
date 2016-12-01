@@ -12,7 +12,7 @@ $ npm install react-tooltip-lite
 
 #### 2. Import into your react Component
 ```
-import ToolTip from 'react-tooltip-lite';
+import Tooltip from 'react-tooltip-lite';
 ```
 <br />
 
