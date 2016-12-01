@@ -1,6 +1,6 @@
 {
   "name": "react-tooltip-lite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React tooltip, focused on simplicity and performance",
   "main": "dist/index.js",
   "scripts": {
