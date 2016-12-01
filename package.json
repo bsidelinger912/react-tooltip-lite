@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js",
-    "dev": "webpack-dev-server --progress --colors"
+    "dev": "webpack-dev-server --progress --colors",
+    "transpile": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,6 @@
     "eslint-plugin-prefer-object-spread": "^1.1.0",
     "eslint-plugin-react": "^6.7.1",
     "expect": "^1.20.2",
-    "express": "^4.14.0",
     "mocha": "^2.5.3",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.2.1",

@@ -50,10 +50,13 @@ class App extends React.Component {
                 with <Tooltip
                   content={(
                       <div>
-                          <h4 className="tip-heading">An unordered list</h4>
+                          <h4 className="tip-heading">An unordered list to demo some html content</h4>
                           <ul className="tip-list">
                               <li>One</li>
                               <li>Two</li>
+                              <li>Three</li>
+                              <li>Four</li>
+                              <li>Five</li>
                           </ul>
                       </div>
                   )}
@@ -62,6 +65,23 @@ class App extends React.Component {
                   className="target"
                 >
                     Html content
+                </Tooltip>
+            </section>
+
+            <section>
+                <h3>Colors</h3>
+
+                You can
+                pass <Tooltip tagName="span" className="target" color="blue" background="red" content="The color for this is defined by props">
+                  color options as props
+                </Tooltip> or use a&nbsp;
+                <Tooltip
+                  tagName="span"
+                  className="target customTip"
+                  direction="right"
+                  content="The color for this tip is defined by examples/index.css"
+                >
+                  css stylesheet.
                 </Tooltip>
             </section>
         </div>

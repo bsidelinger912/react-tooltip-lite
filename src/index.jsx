@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { positions } from './position';
+import positions from './position';
 
 class Tooltip extends React.Component {
   static propTypes = {
@@ -9,12 +9,18 @@ class Tooltip extends React.Component {
     direction: PropTypes.string,
     className: PropTypes.string,
     content: PropTypes.node.isRequired,
+    background: PropTypes.string,
+    color: PropTypes.string,
+    padding: PropTypes.string,
   }
 
   static defaultProps = {
     tagName: 'div',
     direction: 'up',
     className: '',
+    background: '',
+    color: '',
+    padding: '10px',
   }
 
   constructor() {
@@ -22,21 +28,21 @@ class Tooltip extends React.Component {
 
     this.state = { showTip: false };
 
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.showTip = this.showTip.bind(this);
+    this.hideTip = this.hideTip.bind(this);
   }
 
-  handleMouseEnter() {
+  showTip() {
     this.setState({ showTip: true });
   }
 
-  handleMouseLeave() {
+  hideTip() {
     this.setState({ showTip: false });
   }
 
   render() {
-    const { direction, className } = this.props;
-    const currentPositions = positions(direction, this.tip, this.target, this.state);
+    const { direction, className, color, background, padding } = this.props;
+    const currentPositions = positions(direction, this.tip, this.target, this.state, this.props);
 
     const wrapperStyles = {
       position: 'relative',
@@ -44,10 +50,9 @@ class Tooltip extends React.Component {
 
     const tipStyles = {
       ...currentPositions.tip,
-      border: '1px solid #444',
-      background: 'black',
-      color: '#fff',
-      padding: '10px',
+      background,
+      color,
+      padding,
       boxSizing: 'border-box',
       zIndex: 100,
     };
@@ -65,27 +70,24 @@ class Tooltip extends React.Component {
       position: 'absolute',
     };
 
-    const tipElem = (
-        <span style={tipWrapperStyles}>
-            <span style={tipStyles} ref={(tip) => { this.tip = tip; }}>
-                {this.props.content}
-            </span>
-        </span>
-    );
-
-    const arrowElem = <span style={arrowStyles} />;
-
     return (
         <this.props.tagName
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
+          onMouseEnter={this.showTip}
+          onMouseLeave={this.hideTip}
           style={wrapperStyles}
           ref={(target) => { this.target = target; }}
-          className={`react-tooltip-lite ${className}`}
+          className={className}
         >
             {this.props.children}
-            {tipElem}
-            {arrowElem}
+
+            <span style={tipWrapperStyles}>
+                <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
+                    {this.props.content}
+                </span>
+            </span>
+
+            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
+
         </this.props.tagName>
     );
   }
