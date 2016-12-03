@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Portal = require('./Portal');
+
+var _Portal2 = _interopRequireDefault(_Portal);
+
 var _position = require('./position');
 
 var _position2 = _interopRequireDefault(_position);
@@ -72,7 +76,9 @@ var Tooltip = function (_React$Component) {
         color: color,
         padding: padding,
         boxSizing: 'border-box',
-        zIndex: 100
+        zIndex: 100,
+        position: 'absolute',
+        display: 'inline-block'
       });
 
       var arrowStyles = _extends({}, currentPositions.arrow, {
@@ -80,10 +86,6 @@ var Tooltip = function (_React$Component) {
         width: '0px',
         height: '0px',
         zIndex: 101
-      });
-
-      var tipWrapperStyles = _extends({}, currentPositions.tipWrapper, {
-        position: 'absolute'
       });
 
       return _react2.default.createElement(
@@ -99,8 +101,8 @@ var Tooltip = function (_React$Component) {
         },
         this.props.children,
         _react2.default.createElement(
-          'span',
-          { style: tipWrapperStyles },
+          _Portal2.default,
+          { className: className },
           _react2.default.createElement(
             'span',
             { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {

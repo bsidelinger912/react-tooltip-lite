@@ -3,6 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * @file positions.js
+                                                                                                                                                                                                                                                                   * @description some functions for position calculation
+                                                                                                                                                                                                                                                                   */
+
 exports.default = positions;
 
 var _getDirection = require('./getDirection');
@@ -12,81 +18,102 @@ var _getDirection2 = _interopRequireDefault(_getDirection);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // @TODO: make these options (passed as props) at some point
-var distance = 10; /**
-                    * @file positions.js
-                    * @description some functions for position calculation
-                    */
-
+var distance = 10;
 var bodyPadding = 10;
-var arrowWidth = 10;
+var minArrowPadding = 5;
 
 /**
- * Sets tip width safely for mobile
+ * cross browser scroll positions
  */
-function getTipWidth(tip) {
-  if (!tip) {
-    return null;
-  }
+function getScrollTop() {
+  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+}
 
-  if (tip.offsetWidth + bodyPadding * 2 > document.documentElement.clientWidth) {
-    return document.documentElement.clientWidth - bodyPadding * 2;
-  }
+function getScrollLeft() {
+  return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+}
 
-  return tip.offsetWidth + 1;
+/**
+ * Sets tip max width safely for mobile
+ */
+function getTipMaxWidth() {
+  return document.documentElement.clientWidth - bodyPadding * 2;
 }
 
 /**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
  */
-function getWrapperLeft(tip, target) {
-  // get wrapper left position
-  var targetRect = target.getBoundingClientRect();
-  var halfTargetWidth = Math.round(target.offsetWidth / 2);
-  var tipWidth = getTipWidth(tip);
+function getUpDownPosition(tip, target, state, direction) {
+  var left = -10000000;
+  var top = void 0;
 
-  // default is centered
-  var left = halfTargetWidth - tipWidth / 2;
+  if (tip && state.showTip) {
+    // get wrapper left position
+    var targetRect = target.getBoundingClientRect();
+    var targetLeft = targetRect.left + getScrollLeft();
 
-  // check for left overhang here
-  if (targetRect.left + left < 0) {
-    left = (targetRect.left - bodyPadding) * -1;
+    var halfTargetWidth = Math.round(target.offsetWidth / 2);
+    var tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
+
+    // default is centered, but must be higher than body padding
+    left = Math.max(targetLeft + halfTargetWidth - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+
+    // check for right overhang
+    var rightOverhang = left + tipWidth + bodyPadding - document.documentElement.clientWidth;
+    if (rightOverhang > 0) {
+      left -= rightOverhang;
+    }
+
+    if (direction === 'up') {
+      top = targetRect.top + getScrollTop() - (tip.offsetHeight + distance);
+    } else {
+      top = targetRect.bottom + getScrollTop() + distance;
+    }
   }
 
-  // check for right overhang
-  var rightOverhang = tipWidth - (document.documentElement.clientWidth - targetRect.left + left * -1);
-  if (rightOverhang > 0) {
-    left -= rightOverhang + bodyPadding;
-  }
-
-  return left;
+  return {
+    left: left,
+    top: top
+  };
 }
 
 /**
  * gets top position for left/right arrows
  */
-function getTopPosition(tip, target) {
-  // centered by default
-  var top = Math.round(tip.offsetHeight / 2);
+function getLeftRightPosition(tip, target, state, direction) {
+  var left = -10000000;
+  var top = 0;
 
-  var targetRect = target.getBoundingClientRect();
-  var halfTargetHeight = Math.round(target.offsetHeight / 2);
+  if (tip && state.showTip) {
+    var scrollTop = getScrollTop();
+    var targetRect = target.getBoundingClientRect();
+    var targetTop = targetRect.top + scrollTop;
+    var halfTargetHeight = Math.round(target.offsetHeight / 2);
 
-  // check for top overhang
-  if (targetRect.top + halfTargetHeight < top) {
-    top = Math.max(targetRect.top + halfTargetHeight - bodyPadding, arrowWidth);
+    // default to middle, but don't go below body
+    top = Math.max(targetTop + halfTargetHeight - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
+
+    // make sure it doesn't go below the arrow
+    top = Math.min(top, targetTop - minArrowPadding);
 
     // check for bottom overhang
-  } else {
-    var targetBottom = window.innerHeight - targetRect.bottom;
-    var fromTopToWindowBottom = top + halfTargetHeight + targetBottom;
+    var bottomOverhang = top - scrollTop + tip.offsetHeight + bodyPadding - window.innerHeight;
+    if (bottomOverhang > 0) {
+      // try to add the body padding below the tip, but don't offset too far from the arrow
+      top = Math.max(top - bottomOverhang, targetRect.bottom + scrollTop + minArrowPadding - tip.offsetHeight);
+    }
 
-    if (fromTopToWindowBottom < tip.offsetHeight) {
-      var bottomOverlap = tip.offsetHeight - fromTopToWindowBottom + bodyPadding;
-      top = Math.min(top + bottomOverlap, tip.offsetHeight - arrowWidth);
+    if (direction === 'right') {
+      left = targetRect.right + distance;
+    } else {
+      left = targetRect.left - distance - tip.offsetWidth;
     }
   }
 
-  return top;
+  return {
+    left: left,
+    top: top
+  };
 }
 
 /**
@@ -94,30 +121,14 @@ function getTopPosition(tip, target) {
  */
 function positions(direction, tip, target, state, props) {
   var realDirection = (0, _getDirection2.default)(direction, tip, target, distance, bodyPadding);
-
-  // set the wrapper width to match the tip width to avoid squishing
-  var width = '1000000px';
-  if (tip) {
-    if (realDirection !== 'up' && realDirection !== 'down') {
-      width = getTipWidth(tip) + distance * 2 + 'px';
-    } else {
-      width = getTipWidth(tip);
-    }
-  }
+  var maxWidth = getTipMaxWidth();
 
   switch (realDirection) {
     case 'right':
       return {
-        tipWrapper: {
-          left: tip ? '100%' : '-1000000px',
-          top: '50%',
-          width: width
-        },
-        tip: {
-          position: 'absolute',
-          top: state.showTip && tip ? '-' + getTopPosition(tip, target) + 'px' : '-10000000px',
-          left: distance + 'px'
-        },
+        tip: _extends({}, getLeftRightPosition(tip, target, state, 'right'), {
+          maxWidth: maxWidth
+        }),
         arrow: {
           top: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
           right: '-11px',
@@ -130,16 +141,9 @@ function positions(direction, tip, target, state, props) {
 
     case 'left':
       return {
-        tipWrapper: {
-          right: tip ? '100%' : '1000000px', // ***** ??????? is this right????
-          top: '50%',
-          width: width
-        },
-        tip: {
-          position: 'absolute',
-          top: state.showTip && tip ? '-' + getTopPosition(tip, target) + 'px' : '-10000000px',
-          left: distance + 'px'
-        },
+        tip: _extends({}, getLeftRightPosition(tip, target, state, 'left'), {
+          maxWidth: maxWidth
+        }),
         arrow: {
           top: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
           left: '-12px',
@@ -153,16 +157,9 @@ function positions(direction, tip, target, state, props) {
     case 'up':
 
       return {
-        tipWrapper: {
-          bottom: '100%',
-          left: tip && state.showTip ? getWrapperLeft(tip, target) : '-10000000px',
-          width: width
-        },
-        tip: {
-          position: 'absolute',
-          bottom: distance + 'px',
-          left: '0'
-        },
+        tip: _extends({}, getUpDownPosition(tip, target, state, 'up'), {
+          maxWidth: maxWidth
+        }),
         arrow: {
           left: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
           top: '-11px',
@@ -177,16 +174,9 @@ function positions(direction, tip, target, state, props) {
     default:
 
       return {
-        tipWrapper: {
-          top: '100%',
-          left: tip && state.showTip ? getWrapperLeft(tip, target) : '-10000000px',
-          width: width
-        },
-        tip: {
-          position: 'absolute',
-          top: distance + 'px',
-          left: '0'
-        },
+        tip: _extends({}, getUpDownPosition(tip, target, state, 'down'), {
+          maxWidth: maxWidth
+        }),
         arrow: {
           left: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
           bottom: '-11px',
