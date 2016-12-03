@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+import Portal from './Portal';
 import positions from './position';
 
 class Tooltip extends React.Component {
@@ -55,6 +56,8 @@ class Tooltip extends React.Component {
       padding,
       boxSizing: 'border-box',
       zIndex: 100,
+      position: 'absolute',
+      display: 'inline-block',
     };
 
     const arrowStyles = {
@@ -63,11 +66,6 @@ class Tooltip extends React.Component {
       width: '0px',
       height: '0px',
       zIndex: 101,
-    };
-
-    const tipWrapperStyles = {
-      ...currentPositions.tipWrapper,
-      position: 'absolute',
     };
 
     return (
@@ -80,11 +78,11 @@ class Tooltip extends React.Component {
         >
             {this.props.children}
 
-            <span style={tipWrapperStyles}>
+            <Portal className={className}>
                 <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
                     {this.props.content}
                 </span>
-            </span>
+            </Portal>
 
             <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
 
