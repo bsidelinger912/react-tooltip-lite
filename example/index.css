@@ -143,3 +143,12 @@ a {
   z-index: 99;
   display: block;
 }
+
+.imageWrapper {
+  margin: 50px 0 0;
+  position: relative;
+}
+
+.imageWrapper img {
+  width: 500px;
+}

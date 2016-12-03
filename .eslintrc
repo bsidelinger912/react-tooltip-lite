@@ -82,7 +82,9 @@
         "prefer-object-spread/prefer-object-spread": 2,
 
         "import/no-extraneous-dependencies": [ 0 ],
-        "import/prefer-default-export": [ 0 ]
+        "import/prefer-default-export": [ 0 ],
+
+        "react/forbid-prop-types": [ 0 ]
     },
     "globals" : {
         "__CLIENT__": true

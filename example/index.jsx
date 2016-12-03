@@ -84,6 +84,35 @@ class App extends React.Component {
                   css stylesheet.
                 </Tooltip>
             </section>
+
+            <section>
+                <h3>Wrap anything as a target</h3>
+                <Tooltip content="this is lorem ipsum">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt egestas sapien quis lacinia. Praesent ut sem leo.
+                    Curabitur vel dolor eu nulla ultrices efficitur a ut mauris. Nulla non odio non nibh venenatis commodo non vitae magna.
+                    Nunc porttitor, dolor nec sodales commodo, velit elit auctor arcu, sed dapibus nibh lacus sit amet nunc.
+                    Phasellus enim dui, blandit sed faucibus sit amet, feugiat vel urna. Vivamus ut lacus sollicitudin, dignissim risus vel,
+                    iaculis leo. Donec lobortis, turpis nec pulvinar venenatis, orci nunc semper sem, nec ornare nisl nisi ut ligula. Integer
+                    ut tempus elit. Cras luctus, tellus id vestibulum accumsan, purus velit mattis erat, euismod tempor mauris elit eget metus.
+                    Vivamus interdum ex sed egestas tincidunt.
+                </Tooltip>
+
+                <div className="imageWrapper">
+                    <Tooltip content="you can wrap images of course too" styles={{ display: 'inline-block' }} direction="right">
+                        <img src="/example/reactLogo.svg" alt="react logo" />
+                    </Tooltip>
+
+                    <Tooltip
+                      content="this image is absolute positioned"
+                      styles={{ display: 'inline-block', position: 'absolute', top: '0', right: 0 }}
+                      direction="right"
+                      className="image2"
+                    >
+                        <img src="/example/reactLogo.svg" alt="react logo" />
+                    </Tooltip>
+                </div>
+
+            </section>
         </div>
     );
   }

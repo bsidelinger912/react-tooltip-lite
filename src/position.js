@@ -5,10 +5,11 @@
 
 import getDirection from './getDirection';
 
-// @TODO: make these options (passed as props) at some point
+// @TODO: consider which of these should be props that can be passed
 const distance = 10;
 const bodyPadding = 10;
 const minArrowPadding = 5;
+const arrowSize = 10;
 
 /**
  * cross browser scroll positions
@@ -84,13 +85,15 @@ function getLeftRightPosition(tip, target, state, direction) {
     top = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
     // make sure it doesn't go below the arrow
-    top = Math.min(top, targetTop - minArrowPadding);
+    const arrowTop = (targetTop + halfTargetHeight) - arrowSize;
+    top = Math.min(top, arrowTop - minArrowPadding);
 
     // check for bottom overhang
     const bottomOverhang = ((top - scrollTop) + tip.offsetHeight + bodyPadding) - window.innerHeight;
     if (bottomOverhang > 0) {
       // try to add the body padding below the tip, but don't offset too far from the arrow
-      top = Math.max(top - bottomOverhang, (targetRect.bottom + scrollTop + minArrowPadding) - tip.offsetHeight);
+      const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
+      top = Math.max(top - bottomOverhang, (arrowBottom + minArrowPadding) - tip.offsetHeight);
     }
 
     if (direction === 'right') {

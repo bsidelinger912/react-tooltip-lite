@@ -13,6 +13,7 @@ class Tooltip extends React.Component {
     background: PropTypes.string,
     color: PropTypes.string,
     padding: PropTypes.string,
+    styles: PropTypes.object,
   }
 
   static defaultProps = {
@@ -22,6 +23,7 @@ class Tooltip extends React.Component {
     background: '',
     color: '',
     padding: '10px',
+    styles: {},
   }
 
   constructor() {
@@ -42,11 +44,12 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const { direction, className, color, background, padding } = this.props;
+    const { direction, className, color, background, padding, children, content, styles } = this.props;
     const currentPositions = positions(direction, this.tip, this.target, this.state, this.props);
 
     const wrapperStyles = {
       position: 'relative',
+      ...styles,
     };
 
     const tipStyles = {
@@ -55,7 +58,7 @@ class Tooltip extends React.Component {
       color,
       padding,
       boxSizing: 'border-box',
-      zIndex: 100,
+      zIndex: 1000,
       position: 'absolute',
       display: 'inline-block',
     };
@@ -65,7 +68,7 @@ class Tooltip extends React.Component {
       position: 'absolute',
       width: '0px',
       height: '0px',
-      zIndex: 101,
+      zIndex: 1001,
     };
 
     return (
@@ -76,11 +79,11 @@ class Tooltip extends React.Component {
           ref={(target) => { this.target = target; }}
           className={className}
         >
-            {this.props.children}
+            {children}
 
             <Portal className={className}>
                 <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
-                    {this.props.content}
+                    {content}
                 </span>
             </Portal>
 
