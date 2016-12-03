@@ -26,9 +26,8 @@ function getScrollLeft() {
  * Sets tip max width safely for mobile
  */
 function getTipMaxWidth() {
-  return document.documentElement.clientWidth - (bodyPadding * 2);
+  return (typeof document !== 'undefined') ? document.documentElement.clientWidth - (bodyPadding * 2) : 1000;
 }
-
 
 /**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
@@ -110,78 +109,79 @@ function getLeftRightPosition(tip, target, state, direction) {
 }
 
 /**
+ * sets the Arrow styles based on direction
+ */
+function getArrowStyles(target, tip, direction, state, props) {
+  if (!target) {
+    return {
+      top: '0',
+      left: '-10000000px',
+    };
+  }
+
+  const targetRect = target.getBoundingClientRect();
+  const halfTargetHeight = Math.round(target.offsetHeight / 2);
+  const halfTargetWidth = Math.round(target.offsetWidth / 2);
+  const scrollTop = getScrollTop();
+  const scrollLeft = getScrollLeft();
+
+  switch (direction) {
+    case 'right':
+      return {
+        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
+        left: targetRect.right + scrollLeft,
+        borderRight: (props.background !== '') ? `10px solid ${props.background}` : '',
+        borderTop: '10px solid transparent',
+        borderBottom: '10px solid transparent',
+      };
+
+    case 'left':
+      return {
+        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
+        left: (targetRect.left + scrollLeft) - distance - 1,
+        borderLeft: (props.background !== '') ? `10px solid ${props.background}` : '',
+        borderTop: '10px solid transparent',
+        borderBottom: '10px solid transparent',
+      };
+
+    case 'up':
+      return {
+        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
+        top: (targetRect.top + scrollTop) - distance,
+        borderTop: (props.background !== '') ? `10px solid ${props.background}` : '',
+        borderLeft: '10px solid transparent',
+        borderRight: '10px solid transparent',
+      };
+
+    case 'down':
+    default:
+      return {
+        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
+        top: targetRect.bottom + scrollTop,
+        borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
+        borderLeft: '10px solid transparent',
+        borderRight: '10px solid transparent',
+      };
+  }
+}
+
+/**
  * Returns the positions style rules
  */
 export default function positions(direction, tip, target, state, props) {
   const realDirection = getDirection(direction, tip, target, distance, bodyPadding);
   const maxWidth = getTipMaxWidth();
 
-  switch (realDirection) {
-    case 'right':
-      return {
-        tip: {
-          ...getLeftRightPosition(tip, target, state, 'right'),
-          maxWidth,
-        },
-        arrow: {
-          top: (state.showTip && tip) ? 'calc(50% - 10px)' : '-10000000px',
-          right: '-11px',
-          borderRight: (props.background !== '') ? `10px solid ${props.background}` : '',
-          borderTop: '10px solid transparent',
-          borderBottom: '10px solid transparent',
-        },
-        realDirection,
-      };
+  const tipPosition = (realDirection === 'up' || realDirection === 'down')
+    ? getUpDownPosition(tip, target, state, realDirection)
+    : getLeftRightPosition(tip, target, state, realDirection);
 
-    case 'left':
-      return {
-        tip: {
-          ...getLeftRightPosition(tip, target, state, 'left'),
-          maxWidth,
-        },
-        arrow: {
-          top: (state.showTip && tip) ? 'calc(50% - 10px)' : '-10000000px',
-          left: '-12px',
-          borderLeft: (props.background !== '') ? `10px solid ${props.background}` : '',
-          borderTop: '10px solid transparent',
-          borderBottom: '10px solid transparent',
-        },
-        realDirection,
-      };
-
-    case 'up':
-
-      return {
-        tip: {
-          ...getUpDownPosition(tip, target, state, 'up'),
-          maxWidth,
-        },
-        arrow: {
-          left: (state.showTip && tip) ? 'calc(50% - 10px)' : '-10000000px',
-          top: '-11px',
-          borderTop: (props.background !== '') ? `10px solid ${props.background}` : '',
-          borderLeft: '10px solid transparent',
-          borderRight: '10px solid transparent',
-        },
-        realDirection,
-      };
-
-    case 'down':
-    default:
-
-      return {
-        tip: {
-          ...getUpDownPosition(tip, target, state, 'down'),
-          maxWidth,
-        },
-        arrow: {
-          left: (state.showTip && tip) ? 'calc(50% - 10px)' : '-10000000px',
-          bottom: '-11px',
-          borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
-          borderLeft: '10px solid transparent',
-          borderRight: '10px solid transparent',
-        },
-        realDirection,
-      };
-  }
+  return {
+    tip: {
+      ...tipPosition,
+      maxWidth,
+    },
+    arrow: getArrowStyles(target, tip, realDirection, state, props),
+    realDirection,
+  };
 }

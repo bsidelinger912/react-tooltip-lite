@@ -85,10 +85,8 @@ class Tooltip extends React.Component {
                 <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
                     {content}
                 </span>
+                <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
             </Portal>
-
-            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
-
         </this.props.tagName>
     );
   }
