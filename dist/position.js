@@ -17,10 +17,11 @@ var _getDirection2 = _interopRequireDefault(_getDirection);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// @TODO: make these options (passed as props) at some point
+// @TODO: consider which of these should be props that can be passed
 var distance = 10;
 var bodyPadding = 10;
 var minArrowPadding = 5;
+var arrowSize = 10;
 
 /**
  * cross browser scroll positions
@@ -94,13 +95,15 @@ function getLeftRightPosition(tip, target, state, direction) {
     top = Math.max(targetTop + halfTargetHeight - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
     // make sure it doesn't go below the arrow
-    top = Math.min(top, targetTop - minArrowPadding);
+    var arrowTop = targetTop + halfTargetHeight - arrowSize;
+    top = Math.min(top, arrowTop - minArrowPadding);
 
     // check for bottom overhang
     var bottomOverhang = top - scrollTop + tip.offsetHeight + bodyPadding - window.innerHeight;
     if (bottomOverhang > 0) {
       // try to add the body padding below the tip, but don't offset too far from the arrow
-      top = Math.max(top - bottomOverhang, targetRect.bottom + scrollTop + minArrowPadding - tip.offsetHeight);
+      var arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
+      top = Math.max(top - bottomOverhang, arrowBottom + minArrowPadding - tip.offsetHeight);
     }
 
     if (direction === 'right') {

@@ -63,20 +63,23 @@ var Tooltip = function (_React$Component) {
           className = _props.className,
           color = _props.color,
           background = _props.background,
-          padding = _props.padding;
+          padding = _props.padding,
+          children = _props.children,
+          content = _props.content,
+          styles = _props.styles;
 
       var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, this.props);
 
-      var wrapperStyles = {
+      var wrapperStyles = _extends({
         position: 'relative'
-      };
+      }, styles);
 
       var tipStyles = _extends({}, currentPositions.tip, {
         background: background,
         color: color,
         padding: padding,
         boxSizing: 'border-box',
-        zIndex: 100,
+        zIndex: 1000,
         position: 'absolute',
         display: 'inline-block'
       });
@@ -85,7 +88,7 @@ var Tooltip = function (_React$Component) {
         position: 'absolute',
         width: '0px',
         height: '0px',
-        zIndex: 101
+        zIndex: 1001
       });
 
       return _react2.default.createElement(
@@ -99,7 +102,7 @@ var Tooltip = function (_React$Component) {
           },
           className: className
         },
-        this.props.children,
+        children,
         _react2.default.createElement(
           _Portal2.default,
           { className: className },
@@ -108,7 +111,7 @@ var Tooltip = function (_React$Component) {
             { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {
                 _this2.tip = tip;
               } },
-            this.props.content
+            content
           )
         ),
         _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
@@ -127,7 +130,8 @@ Tooltip.propTypes = {
   content: _react.PropTypes.node.isRequired,
   background: _react.PropTypes.string,
   color: _react.PropTypes.string,
-  padding: _react.PropTypes.string
+  padding: _react.PropTypes.string,
+  styles: _react.PropTypes.object
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -135,6 +139,7 @@ Tooltip.defaultProps = {
   className: '',
   background: '',
   color: '',
-  padding: '10px'
+  padding: '10px',
+  styles: {}
 };
 exports.default = Tooltip;
