@@ -34,52 +34,49 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <th>Description</th>
     </tr>
   </thead>
-
   <tbody>
     <tr>
       <td>content</td>
       <td>node (text or html)</td>
       <td>the contents of your hover target</td>
     </tr>
-
     <tr>
       <td>tagName</td>
       <td>string</td>
       <td>html tag used for className</td>
     </tr>
-
     <tr>
       <td>direction</td>
       <td>string</td>
       <td>the tip direction, defaults to up</td>
     </tr>
-
     <tr>
       <td>className</td>
       <td>string</td>
       <td>css class added to the rendered wrapper</td>
     </tr>
-
     <tr>
       <td>background</td>
       <td>string</td>
       <td>background color for the tooltip contents and arrow</td>
     </tr>
-
     <tr>
       <td>color</td>
       <td>string</td>
       <td>text color for the tooltip contents</td>
     </tr>
-
     <tr>
       <td>padding</td>
       <td>string</td>
       <td>padding amount for the tooltip contents (defaults to '10px')</td>
     </tr>
+    <tr>
+      <td>styles</td>
+      <td>object</td>
+      <td>style overrides for the target wrapper</td>
+    </tr>
   </tbody>
 </table>
-
 <br />
 
 ### Here's an example using more of the props:
