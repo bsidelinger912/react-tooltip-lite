@@ -38,7 +38,7 @@ function getScrollLeft() {
  * Sets tip max width safely for mobile
  */
 function getTipMaxWidth() {
-  return document.documentElement.clientWidth - bodyPadding * 2;
+  return typeof document !== 'undefined' ? document.documentElement.clientWidth - bodyPadding * 2 : 1000;
 }
 
 /**
@@ -120,74 +120,76 @@ function getLeftRightPosition(tip, target, state, direction) {
 }
 
 /**
+ * sets the Arrow styles based on direction
+ */
+function getArrowStyles(target, tip, direction, state, props) {
+  if (!target) {
+    return {
+      top: '0',
+      left: '-10000000px'
+    };
+  }
+
+  var targetRect = target.getBoundingClientRect();
+  var halfTargetHeight = Math.round(target.offsetHeight / 2);
+  var halfTargetWidth = Math.round(target.offsetWidth / 2);
+  var scrollTop = getScrollTop();
+  var scrollLeft = getScrollLeft();
+
+  switch (direction) {
+    case 'right':
+      return {
+        top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
+        left: targetRect.right + scrollLeft,
+        borderRight: props.background !== '' ? '10px solid ' + props.background : '',
+        borderTop: '10px solid transparent',
+        borderBottom: '10px solid transparent'
+      };
+
+    case 'left':
+      return {
+        top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
+        left: targetRect.left + scrollLeft - distance - 1,
+        borderLeft: props.background !== '' ? '10px solid ' + props.background : '',
+        borderTop: '10px solid transparent',
+        borderBottom: '10px solid transparent'
+      };
+
+    case 'up':
+      return {
+        left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
+        top: targetRect.top + scrollTop - distance,
+        borderTop: props.background !== '' ? '10px solid ' + props.background : '',
+        borderLeft: '10px solid transparent',
+        borderRight: '10px solid transparent'
+      };
+
+    case 'down':
+    default:
+      return {
+        left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
+        top: targetRect.bottom + scrollTop,
+        borderBottom: props.background !== '' ? '10px solid ' + props.background : '',
+        borderLeft: '10px solid transparent',
+        borderRight: '10px solid transparent'
+      };
+  }
+}
+
+/**
  * Returns the positions style rules
  */
 function positions(direction, tip, target, state, props) {
   var realDirection = (0, _getDirection2.default)(direction, tip, target, distance, bodyPadding);
   var maxWidth = getTipMaxWidth();
 
-  switch (realDirection) {
-    case 'right':
-      return {
-        tip: _extends({}, getLeftRightPosition(tip, target, state, 'right'), {
-          maxWidth: maxWidth
-        }),
-        arrow: {
-          top: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
-          right: '-11px',
-          borderRight: props.background !== '' ? '10px solid ' + props.background : '',
-          borderTop: '10px solid transparent',
-          borderBottom: '10px solid transparent'
-        },
-        realDirection: realDirection
-      };
+  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection) : getLeftRightPosition(tip, target, state, realDirection);
 
-    case 'left':
-      return {
-        tip: _extends({}, getLeftRightPosition(tip, target, state, 'left'), {
-          maxWidth: maxWidth
-        }),
-        arrow: {
-          top: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
-          left: '-12px',
-          borderLeft: props.background !== '' ? '10px solid ' + props.background : '',
-          borderTop: '10px solid transparent',
-          borderBottom: '10px solid transparent'
-        },
-        realDirection: realDirection
-      };
-
-    case 'up':
-
-      return {
-        tip: _extends({}, getUpDownPosition(tip, target, state, 'up'), {
-          maxWidth: maxWidth
-        }),
-        arrow: {
-          left: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
-          top: '-11px',
-          borderTop: props.background !== '' ? '10px solid ' + props.background : '',
-          borderLeft: '10px solid transparent',
-          borderRight: '10px solid transparent'
-        },
-        realDirection: realDirection
-      };
-
-    case 'down':
-    default:
-
-      return {
-        tip: _extends({}, getUpDownPosition(tip, target, state, 'down'), {
-          maxWidth: maxWidth
-        }),
-        arrow: {
-          left: state.showTip && tip ? 'calc(50% - 10px)' : '-10000000px',
-          bottom: '-11px',
-          borderBottom: props.background !== '' ? '10px solid ' + props.background : '',
-          borderLeft: '10px solid transparent',
-          borderRight: '10px solid transparent'
-        },
-        realDirection: realDirection
-      };
-  }
+  return {
+    tip: _extends({}, tipPosition, {
+      maxWidth: maxWidth
+    }),
+    arrow: getArrowStyles(target, tip, realDirection, state, props),
+    realDirection: realDirection
+  };
 }

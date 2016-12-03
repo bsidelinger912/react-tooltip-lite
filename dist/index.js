@@ -112,9 +112,9 @@ var Tooltip = function (_React$Component) {
                 _this2.tip = tip;
               } },
             content
-          )
-        ),
-        _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
+          ),
+          _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
+        )
       );
     }
   }]);
