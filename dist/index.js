@@ -45,23 +45,35 @@ var Tooltip = function (_React$Component) {
     _this.hideTip = _this.hideTip.bind(_this);
     _this.checkHover = _this.checkHover.bind(_this);
     _this.cancelTip = _this.cancelTip.bind(_this);
+    _this.toggleTip = _this.toggleTip.bind(_this);
+    _this.startHover = _this.startHover.bind(_this);
     return _this;
   }
 
   _createClass(Tooltip, [{
+    key: 'toggleTip',
+    value: function toggleTip() {
+      this.setState({ showTip: !this.state.showTip });
+    }
+  }, {
     key: 'showTip',
     value: function showTip() {
-      if (!this.state.ignoreShow) {
-        this.setState({ hasHover: true });
-
-        setTimeout(this.checkHover, hoverDelay);
-      }
+      this.setState({ showTip: true });
     }
   }, {
     key: 'hideTip',
     value: function hideTip() {
       this.setState({ hasHover: false });
       this.setState({ showTip: false });
+    }
+  }, {
+    key: 'startHover',
+    value: function startHover() {
+      if (!this.state.ignoreShow) {
+        this.setState({ hasHover: true });
+
+        setTimeout(this.checkHover, hoverDelay);
+      }
     }
   }, {
     key: 'checkHover',
@@ -94,7 +106,11 @@ var Tooltip = function (_React$Component) {
           padding = _props.padding,
           children = _props.children,
           content = _props.content,
-          styles = _props.styles;
+          styles = _props.styles,
+          eventOn = _props.eventOn,
+          eventOff = _props.eventOff,
+          eventToggle = _props.eventToggle,
+          useHover = _props.useHover;
 
       var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, this.props);
 
@@ -119,18 +135,36 @@ var Tooltip = function (_React$Component) {
         zIndex: 1001
       });
 
+      var props = {
+        style: wrapperStyles,
+        ref: function ref(target) {
+          _this3.target = target;
+        },
+        className: className
+      };
+
+      // event handling
+      if (eventOff) {
+        props[eventOff] = this.hideTip;
+      }
+
+      if (eventOn) {
+        props[eventOn] = this.showTip;
+      }
+
+      if (eventToggle) {
+        props[eventToggle] = this.toggleTip;
+
+        // only use hover if they don't have a toggle event
+      } else if (useHover) {
+        props.onMouseOver = this.startHover;
+        props.onMouseOut = this.hideTip;
+        props.onTouchStart = this.cancelTip;
+      }
+
       return _react2.default.createElement(
         this.props.tagName,
-        {
-          onMouseOver: this.showTip,
-          onMouseOut: this.hideTip,
-          onTouchStart: this.cancelTip,
-          style: wrapperStyles,
-          ref: function ref(target) {
-            _this3.target = target;
-          },
-          className: className
-        },
+        props,
         children,
         _react2.default.createElement(
           _Portal2.default,
@@ -160,7 +194,11 @@ Tooltip.propTypes = {
   background: _react.PropTypes.string,
   color: _react.PropTypes.string,
   padding: _react.PropTypes.string,
-  styles: _react.PropTypes.object
+  styles: _react.PropTypes.object,
+  eventOff: _react.PropTypes.string,
+  eventOn: _react.PropTypes.string,
+  eventToggle: _react.PropTypes.string,
+  useHover: _react.PropTypes.bool
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -169,6 +207,7 @@ Tooltip.defaultProps = {
   background: '',
   color: '',
   padding: '10px',
-  styles: {}
+  styles: {},
+  useHover: true
 };
 exports.default = Tooltip;

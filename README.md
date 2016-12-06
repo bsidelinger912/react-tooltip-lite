@@ -75,6 +75,26 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>object</td>
       <td>style overrides for the target wrapper</td>
     </tr>
+    <tr>
+      <td>eventOn</td>
+      <td>string</td>
+      <td>full name of supported react event to show the tooltip, e.g.: 'onClick'</td>
+    </tr>
+    <tr>
+      <td>eventOff</td>
+      <td>string</td>
+      <td>full name of supported react event to hide the tooltip, e.g.: 'onClick'</td>
+    </tr>
+    <tr>
+      <td>eventOn</td>
+      <td>string</td>
+      <td>full name of supported react event to toggle the tooltip, e.g.: 'onClick'</td>
+    </tr>
+    <tr>
+      <td>useHover</td>
+      <td>boolean</td>
+      <td>whether to use hover to show/hide the tip</td>
+    </tr>
   </tbody>
 </table>
 <br />

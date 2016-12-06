@@ -113,6 +113,34 @@ class App extends React.Component {
                 </div>
 
             </section>
+
+            <section>
+                <h3>Custom events</h3>
+                <p>
+                    <Tooltip content="this uses hover but also closes on click" className="target" tagName="span" eventOff="onClick">
+                        Close on click
+                    </Tooltip>
+                </p>
+
+                <p>
+                    <Tooltip
+                      content="opens on a click and closes on mouse out"
+                      className="target"
+                      tagName="span"
+                      eventOn="onClick"
+                      eventOff="onMouseOut"
+                      useHover={false}
+                    >
+                        Open on click
+                    </Tooltip>
+                </p>
+
+                <p>
+                    <Tooltip content="this uses hover but also closes on click" className="target" tagName="span" eventToggle="onClick">
+                        Toggle on click
+                    </Tooltip>
+                </p>
+            </section>
         </div>
     );
   }

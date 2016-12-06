@@ -17,6 +17,10 @@ class Tooltip extends React.Component {
     color: PropTypes.string,
     padding: PropTypes.string,
     styles: PropTypes.object,
+    eventOff: PropTypes.string,
+    eventOn: PropTypes.string,
+    eventToggle: PropTypes.string,
+    useHover: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -27,6 +31,7 @@ class Tooltip extends React.Component {
     color: '',
     padding: '10px',
     styles: {},
+    useHover: true,
   }
 
   constructor() {
@@ -38,19 +43,29 @@ class Tooltip extends React.Component {
     this.hideTip = this.hideTip.bind(this);
     this.checkHover = this.checkHover.bind(this);
     this.cancelTip = this.cancelTip.bind(this);
+    this.toggleTip = this.toggleTip.bind(this);
+    this.startHover = this.startHover.bind(this);
+  }
+
+  toggleTip() {
+    this.setState({ showTip: !this.state.showTip });
   }
 
   showTip() {
-    if (!this.state.ignoreShow) {
-      this.setState({ hasHover: true });
-
-      setTimeout(this.checkHover, hoverDelay);
-    }
+    this.setState({ showTip: true });
   }
 
   hideTip() {
     this.setState({ hasHover: false });
     this.setState({ showTip: false });
+  }
+
+  startHover() {
+    if (!this.state.ignoreShow) {
+      this.setState({ hasHover: true });
+
+      setTimeout(this.checkHover, hoverDelay);
+    }
   }
 
   checkHover() {
@@ -66,7 +81,7 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const { direction, className, color, background, padding, children, content, styles } = this.props;
+    const { direction, className, color, background, padding, children, content, styles, eventOn, eventOff, eventToggle, useHover } = this.props;
     const currentPositions = positions(direction, this.tip, this.target, this.state, this.props);
 
     const wrapperStyles = {
@@ -93,15 +108,33 @@ class Tooltip extends React.Component {
       zIndex: 1001,
     };
 
+    const props = {
+      style: wrapperStyles,
+      ref: (target) => { this.target = target; },
+      className,
+    };
+
+    // event handling
+    if (eventOff) {
+      props[eventOff] = this.hideTip;
+    }
+
+    if (eventOn) {
+      props[eventOn] = this.showTip;
+    }
+
+    if (eventToggle) {
+      props[eventToggle] = this.toggleTip;
+
+    // only use hover if they don't have a toggle event
+    } else if (useHover) {
+      props.onMouseOver = this.startHover;
+      props.onMouseOut = this.hideTip;
+      props.onTouchStart = this.cancelTip;
+    }
+
     return (
-        <this.props.tagName
-          onMouseOver={this.showTip}
-          onMouseOut={this.hideTip}
-          onTouchStart={this.cancelTip}
-          style={wrapperStyles}
-          ref={(target) => { this.target = target; }}
-          className={className}
-        >
+        <this.props.tagName {...props}>
             {children}
 
             <Portal className={className}>
