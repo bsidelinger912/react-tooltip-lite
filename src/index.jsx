@@ -3,6 +3,9 @@ import React, { PropTypes } from 'react';
 import Portal from './Portal';
 import positions from './position';
 
+const hoverDelay = 200;
+const touchToMouseOverDelay = 1000;
+
 class Tooltip extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/no-unused-prop-types
@@ -29,18 +32,37 @@ class Tooltip extends React.Component {
   constructor() {
     super();
 
-    this.state = { showTip: false };
+    this.state = { showTip: false, hasHover: false, ignoreShow: false };
 
     this.showTip = this.showTip.bind(this);
     this.hideTip = this.hideTip.bind(this);
+    this.checkHover = this.checkHover.bind(this);
+    this.cancelTip = this.cancelTip.bind(this);
   }
 
   showTip() {
-    this.setState({ showTip: true });
+    if (!this.state.ignoreShow) {
+      this.setState({ hasHover: true });
+
+      setTimeout(this.checkHover, hoverDelay);
+    }
   }
 
   hideTip() {
+    this.setState({ hasHover: false });
     this.setState({ showTip: false });
+  }
+
+  checkHover() {
+    if (this.state.hasHover) {
+      this.setState({ showTip: true });
+    }
+  }
+
+  cancelTip() {
+    this.setState({ ignoreShow: true });
+
+    setTimeout(() => { this.setState({ ignoreShow: false }); }, touchToMouseOverDelay);
   }
 
   render() {
@@ -73,8 +95,9 @@ class Tooltip extends React.Component {
 
     return (
         <this.props.tagName
-          onMouseEnter={this.showTip}
-          onMouseLeave={this.hideTip}
+          onMouseOver={this.showTip}
+          onMouseOut={this.hideTip}
+          onTouchStart={this.cancelTip}
           style={wrapperStyles}
           ref={(target) => { this.target = target; }}
           className={className}

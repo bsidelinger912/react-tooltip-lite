@@ -28,6 +28,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var hoverDelay = 200;
+var touchToMouseOverDelay = 1000;
+
 var Tooltip = function (_React$Component) {
   _inherits(Tooltip, _React$Component);
 
@@ -36,27 +39,52 @@ var Tooltip = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this));
 
-    _this.state = { showTip: false };
+    _this.state = { showTip: false, hasHover: false, ignoreShow: false };
 
     _this.showTip = _this.showTip.bind(_this);
     _this.hideTip = _this.hideTip.bind(_this);
+    _this.checkHover = _this.checkHover.bind(_this);
+    _this.cancelTip = _this.cancelTip.bind(_this);
     return _this;
   }
 
   _createClass(Tooltip, [{
     key: 'showTip',
     value: function showTip() {
-      this.setState({ showTip: true });
+      if (!this.state.ignoreShow) {
+        this.setState({ hasHover: true });
+
+        setTimeout(this.checkHover, hoverDelay);
+      }
     }
   }, {
     key: 'hideTip',
     value: function hideTip() {
+      this.setState({ hasHover: false });
       this.setState({ showTip: false });
+    }
+  }, {
+    key: 'checkHover',
+    value: function checkHover() {
+      if (this.state.hasHover) {
+        this.setState({ showTip: true });
+      }
+    }
+  }, {
+    key: 'cancelTip',
+    value: function cancelTip() {
+      var _this2 = this;
+
+      this.setState({ ignoreShow: true });
+
+      setTimeout(function () {
+        _this2.setState({ ignoreShow: false });
+      }, touchToMouseOverDelay);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _props = this.props,
           direction = _props.direction,
@@ -94,11 +122,12 @@ var Tooltip = function (_React$Component) {
       return _react2.default.createElement(
         this.props.tagName,
         {
-          onMouseEnter: this.showTip,
-          onMouseLeave: this.hideTip,
+          onMouseOver: this.showTip,
+          onMouseOut: this.hideTip,
+          onTouchStart: this.cancelTip,
           style: wrapperStyles,
           ref: function ref(target) {
-            _this2.target = target;
+            _this3.target = target;
           },
           className: className
         },
@@ -109,7 +138,7 @@ var Tooltip = function (_React$Component) {
           _react2.default.createElement(
             'span',
             { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {
-                _this2.tip = tip;
+                _this3.tip = tip;
               } },
             content
           ),
