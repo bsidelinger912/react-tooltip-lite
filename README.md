@@ -86,14 +86,14 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>full name of supported react event to hide the tooltip, e.g.: 'onClick'</td>
     </tr>
     <tr>
-      <td>eventOn</td>
+      <td>eventToggle</td>
       <td>string</td>
-      <td>full name of supported react event to toggle the tooltip, e.g.: 'onClick'</td>
+      <td>full name of supported react event to toggle the tooltip, e.g.: 'onClick', default hover toggling is disabled when using this option</td>
     </tr>
     <tr>
       <td>useHover</td>
       <td>boolean</td>
-      <td>whether to use hover to show/hide the tip</td>
+      <td>whether to use hover to show/hide the tip, defaults to true</td>
     </tr>
   </tbody>
 </table>
