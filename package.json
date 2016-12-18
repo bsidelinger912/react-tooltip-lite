@@ -8,6 +8,10 @@
     "dev": "webpack-dev-server --progress --colors",
     "transpile": "babel src --out-dir dist"
   },
+  "files": [
+    "dist",
+    "example"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bsidelinger912/react-tooltip-lite.git"
