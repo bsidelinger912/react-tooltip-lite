@@ -1,10 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Portal from './Portal';
 import positions from './position';
 
 const hoverDelay = 200;
 const touchToMouseOverDelay = 1000;
+
+// default colors
+const defaultColor = 'white';
+const defaultBg = 'black';
 
 class Tooltip extends React.Component {
   static propTypes = {
@@ -21,6 +26,7 @@ class Tooltip extends React.Component {
     eventOn: PropTypes.string,
     eventToggle: PropTypes.string,
     useHover: PropTypes.bool,
+    useDefaultStyles: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -32,6 +38,7 @@ class Tooltip extends React.Component {
     padding: '10px',
     styles: {},
     useHover: true,
+    useDefaultStyles: false,
   }
 
   constructor() {
@@ -81,8 +88,28 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const { direction, className, color, background, padding, children, content, styles, eventOn, eventOff, eventToggle, useHover } = this.props;
-    const currentPositions = positions(direction, this.tip, this.target, this.state, this.props);
+    const usedProps = { ...this.props };
+
+    // override color and bg if useDefaultStyles flag is set
+    if (this.props.useDefaultStyles) {
+      usedProps.color = defaultColor;
+      usedProps.background = defaultBg;
+    }
+
+    const {
+      direction,
+      className,
+      padding,
+      children,
+      content,
+      styles,
+      eventOn,
+      eventOff,
+      eventToggle,
+      useHover,
+    } = this.props;
+
+    const currentPositions = positions(direction, this.tip, this.target, this.state, usedProps);
 
     const wrapperStyles = {
       position: 'relative',
@@ -91,8 +118,8 @@ class Tooltip extends React.Component {
 
     const tipStyles = {
       ...currentPositions.tip,
-      background,
-      color,
+      background: usedProps.background,
+      color: usedProps.color,
       padding,
       boxSizing: 'border-box',
       zIndex: 1000,

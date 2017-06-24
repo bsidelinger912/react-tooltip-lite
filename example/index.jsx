@@ -6,6 +6,14 @@ import Tooltip from '../src/';
 class App extends React.Component {
   render() {
     return (
+        <div>
+            <Tooltip content="styled with colors only" direction="down" useDefaultStyles tagName="span">
+              Target
+            </Tooltip>
+        </div>
+    );
+
+    /* return (
         <div className="wrapper">
             <h1>React tooltip-lite examples</h1>
 
@@ -142,7 +150,7 @@ class App extends React.Component {
                 </p>
             </section>
         </div>
-    );
+    );*/
   }
 }
 

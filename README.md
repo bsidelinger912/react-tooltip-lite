@@ -23,6 +23,35 @@ import Tooltip from 'react-tooltip-lite';
 </Tooltip>
 ```
 
+### styling
+By default you need to style react-tooltip-lite with CSS, this allows for psuedo elements and some cool border tricks, as well as using sass variables and such to keep your colors consistant.  Here's an example stylesheet:
+
+```
+/* default tooltip styles */
+.react-tooltip-lite {
+  background: #333;
+  color: white;
+}
+
+.react-tooltip-lite-up-arrow {
+  border-top: 10px solid #333;
+}
+
+.react-tooltip-lite-down-arrow {
+  border-bottom: 10px solid #333;
+}
+
+.react-tooltip-lite-right-arrow {
+  border-right: 10px solid #333;
+}
+
+.react-tooltip-lite-left-arrow {
+  border-left: 10px solid #333;
+}
+```
+
+You can also pass the "useDefaultStyles" prop which will allow you to use react-tooltip-lite without a stylesheet.
+
 ## Props
 You can pass in props to define tip direction, styling, etc.  Content is the only required prop.
 
@@ -94,6 +123,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>useHover</td>
       <td>boolean</td>
       <td>whether to use hover to show/hide the tip, defaults to true</td>
+    </tr>
+    <tr>
+      <td>useDefaultStyles</td>
+      <td>boolean</td>
+      <td>uses default colors for the tooltip, so you don't need to write any CSS for it</td>
     </tr>
   </tbody>
 </table>

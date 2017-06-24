@@ -4,7 +4,7 @@
   padding: 0 10px;
 }
 
-section {
+/* section {
   margin-bottom: 50px;
 }
 
@@ -41,7 +41,7 @@ a {
   padding: 0;
 }
 
-/* tooltip styles */
+/* tooltip styles *//*
 .react-tooltip-lite {
   background: #333;
   color: white;
@@ -63,7 +63,7 @@ a {
   border-left: 10px solid #333;
 }
 
-/* overrides with a custom class */
+/* overrides with a custom class */ /*
 .customTip .react-tooltip-lite {
   border: 1px solid #888;
   border: 1px solid #888;
@@ -151,4 +151,4 @@ a {
 
 .imageWrapper img {
   width: 500px;
-}
+}*/
