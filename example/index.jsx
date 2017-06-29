@@ -141,6 +141,17 @@ class App extends React.Component {
                     </Tooltip>
                 </p>
             </section>
+            <section>
+                <h3>Default styles</h3>
+                <p>
+                  pass the {'"defaultStyles"'} prop as true to get up and running quick and easy
+                </p>
+                <p>
+                    <Tooltip content="styled with defaults" className="target" useDefaultStyles tagName="span">
+                      See default styles
+                    </Tooltip>
+                </p>
+            </section>
         </div>
     );
   }

@@ -4,9 +4,11 @@
   "description": "React tooltip, focused on simplicity and performance",
   "main": "dist/index.js",
   "scripts": {
-    "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js",
+    "bundle": "node node_modules/webpack/bin/webpack.js -p --colors --display-error-details --config webpack.dist.config.js",
     "dev": "webpack-dev-server --progress --colors",
-    "transpile": "babel src --out-dir dist"
+    "transpile": "babel src --out-dir dist",
+    "build": "npm run transpile && npm run bundle",
+    "prepublish": "npm run build"
   },
   "files": [
     "dist",
@@ -25,7 +27,12 @@
     "url": "https://github.com/bsidelinger912/react-tooltip-lite/issues"
   },
   "homepage": "https://github.com/bsidelinger912/react-tooltip-lite#readme",
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4"
+  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "*",
@@ -43,7 +50,6 @@
     "eslint-plugin-react": "^6.7.1",
     "expect": "^1.20.2",
     "mocha": "^2.5.3",
-    "react": "^15.1.0",
     "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.1.0",
     "react-hot-loader": "*",

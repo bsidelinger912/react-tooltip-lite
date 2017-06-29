@@ -1,6 +1,6 @@
 # React tooltip-lite
 
-A lightweight and responsive tooltip. Currently only this is only activated by mouseover/out but we'll be adding focus and other events as needed.  Feel free to Post an [issue](https://github.com/bsidelinger912/react-tooltip-lite/issues) if you're looking to support more use cases.
+A lightweight and responsive tooltip. Feel free to Post an [issue](https://github.com/bsidelinger912/react-tooltip-lite/issues) if you're looking to support more use cases.
 
 ## Getting started
 
@@ -22,6 +22,40 @@ import Tooltip from 'react-tooltip-lite';
     <a href="http://google.com"> edge</a>
 </Tooltip>
 ```
+
+<br />
+
+**CodePen demo**: [http://codepen.io/bsidelinger912/pen/WOdPNK](http://codepen.io/bsidelinger912/pen/WOdPNK)
+
+<br />
+
+### styling
+By default you need to style react-tooltip-lite with CSS, this allows for psuedo elements and some cool border tricks, as well as using sass variables and such to keep your colors consistant. But as of version 1.2.0 you can also pass the "useDefaultStyles" prop which will allow you to use react-tooltip-lite without a stylesheet. Here's an example stylesheet:
+
+```
+/* default tooltip styles */
+.react-tooltip-lite {
+  background: #333;
+  color: white;
+}
+
+.react-tooltip-lite-up-arrow {
+  border-top: 10px solid #333;
+}
+
+.react-tooltip-lite-down-arrow {
+  border-bottom: 10px solid #333;
+}
+
+.react-tooltip-lite-right-arrow {
+  border-right: 10px solid #333;
+}
+
+.react-tooltip-lite-left-arrow {
+  border-left: 10px solid #333;
+}
+```
+
 
 ## Props
 You can pass in props to define tip direction, styling, etc.  Content is the only required prop.
@@ -94,6 +128,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>useHover</td>
       <td>boolean</td>
       <td>whether to use hover to show/hide the tip, defaults to true</td>
+    </tr>
+    <tr>
+      <td>useDefaultStyles</td>
+      <td>boolean</td>
+      <td>uses default colors for the tooltip, so you don't need to write any CSS for it</td>
     </tr>
   </tbody>
 </table>
