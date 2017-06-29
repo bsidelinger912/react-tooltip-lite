@@ -6,7 +6,9 @@
   "scripts": {
     "bundle": "node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack.config.js",
     "dev": "webpack-dev-server --progress --colors",
-    "transpile": "babel src --out-dir dist"
+    "transpile": "babel src --out-dir dist",
+    "build": "npm run transpile && npm run bundle",
+    "prepublish": "npm run build"
   },
   "files": [
     "dist",

@@ -8,8 +8,8 @@ const hoverDelay = 200;
 const touchToMouseOverDelay = 1000;
 
 // default colors
-const defaultColor = 'white';
-const defaultBg = 'black';
+const defaultColor = '#fff';
+const defaultBg = '#333';
 
 class Tooltip extends React.Component {
   static propTypes = {
@@ -88,14 +88,6 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const usedProps = { ...this.props };
-
-    // override color and bg if useDefaultStyles flag is set
-    if (this.props.useDefaultStyles) {
-      usedProps.color = defaultColor;
-      usedProps.background = defaultBg;
-    }
-
     const {
       direction,
       className,
@@ -107,9 +99,14 @@ class Tooltip extends React.Component {
       eventOff,
       eventToggle,
       useHover,
+      background,
+      color,
+      useDefaultStyles,
     } = this.props;
 
-    const currentPositions = positions(direction, this.tip, this.target, this.state, usedProps);
+    const currentPositions = positions(direction, this.tip, this.target, this.state, {
+      background: useDefaultStyles ? defaultBg : background,
+    });
 
     const wrapperStyles = {
       position: 'relative',
@@ -118,8 +115,8 @@ class Tooltip extends React.Component {
 
     const tipStyles = {
       ...currentPositions.tip,
-      background: usedProps.background,
-      color: usedProps.color,
+      background: useDefaultStyles ? defaultBg : background,
+      color: useDefaultStyles ? defaultColor : color,
       padding,
       boxSizing: 'border-box',
       zIndex: 1000,

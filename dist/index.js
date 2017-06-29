@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _Portal = require('./Portal');
 
 var _Portal2 = _interopRequireDefault(_Portal);
@@ -30,6 +34,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var hoverDelay = 200;
 var touchToMouseOverDelay = 1000;
+
+// default colors
+var defaultColor = '#fff';
+var defaultBg = '#333';
 
 var Tooltip = function (_React$Component) {
   _inherits(Tooltip, _React$Component);
@@ -101,8 +109,6 @@ var Tooltip = function (_React$Component) {
       var _props = this.props,
           direction = _props.direction,
           className = _props.className,
-          color = _props.color,
-          background = _props.background,
           padding = _props.padding,
           children = _props.children,
           content = _props.content,
@@ -110,17 +116,23 @@ var Tooltip = function (_React$Component) {
           eventOn = _props.eventOn,
           eventOff = _props.eventOff,
           eventToggle = _props.eventToggle,
-          useHover = _props.useHover;
+          useHover = _props.useHover,
+          background = _props.background,
+          color = _props.color,
+          useDefaultStyles = _props.useDefaultStyles;
 
-      var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, this.props);
+
+      var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, {
+        background: useDefaultStyles ? defaultBg : background
+      });
 
       var wrapperStyles = _extends({
         position: 'relative'
       }, styles);
 
       var tipStyles = _extends({}, currentPositions.tip, {
-        background: background,
-        color: color,
+        background: useDefaultStyles ? defaultBg : background,
+        color: useDefaultStyles ? defaultColor : color,
         padding: padding,
         boxSizing: 'border-box',
         zIndex: 1000,
@@ -187,18 +199,19 @@ var Tooltip = function (_React$Component) {
 
 Tooltip.propTypes = {
   // eslint-disable-next-line react/no-unused-prop-types
-  tagName: _react.PropTypes.string,
-  direction: _react.PropTypes.string,
-  className: _react.PropTypes.string,
-  content: _react.PropTypes.node.isRequired,
-  background: _react.PropTypes.string,
-  color: _react.PropTypes.string,
-  padding: _react.PropTypes.string,
-  styles: _react.PropTypes.object,
-  eventOff: _react.PropTypes.string,
-  eventOn: _react.PropTypes.string,
-  eventToggle: _react.PropTypes.string,
-  useHover: _react.PropTypes.bool
+  tagName: _propTypes2.default.string,
+  direction: _propTypes2.default.string,
+  className: _propTypes2.default.string,
+  content: _propTypes2.default.node.isRequired,
+  background: _propTypes2.default.string,
+  color: _propTypes2.default.string,
+  padding: _propTypes2.default.string,
+  styles: _propTypes2.default.object,
+  eventOff: _propTypes2.default.string,
+  eventOn: _propTypes2.default.string,
+  eventToggle: _propTypes2.default.string,
+  useHover: _propTypes2.default.bool,
+  useDefaultStyles: _propTypes2.default.bool
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -208,6 +221,7 @@ Tooltip.defaultProps = {
   color: '',
   padding: '10px',
   styles: {},
-  useHover: true
+  useHover: true,
+  useDefaultStyles: false
 };
 exports.default = Tooltip;

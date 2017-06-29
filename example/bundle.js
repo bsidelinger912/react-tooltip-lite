@@ -104,12 +104,250 @@
 	                        'Basic:'
 	                    ),
 	                    _react2.default.createElement(
-	                        _src2.default,
-	                        { content: 'Tip text here' },
+	                        'div',
+	                        { className: 'flex-spread' },
 	                        _react2.default.createElement(
-	                            'a',
-	                            { href: 'http://google.com' },
-	                            'Some link text will go here...'
+	                            _src2.default,
+	                            { content: 'By default the text is above the element', className: 'target' },
+	                            'Target'
+	                        ),
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'It\'ll center if it has room', className: 'target' },
+	                            'Target'
+	                        ),
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'you can specify \'direction\' (up, down, left, right) too', direction: 'down', className: 'target' },
+	                            'Target'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'In a paragraph'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        'For ',
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'Go to google', direction: 'right', tagName: 'span' },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'http://google.com' },
+	                                'inline text'
+	                            )
+	                        ),
+	                        ', a right or left tip works nicely. The tip will try to go the desired way and flip if there is not enough ',
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'Go to google', direction: 'right', tagName: 'span' },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'http://google.com' },
+	                                'space'
+	                            )
+	                        ),
+	                        '. Shrink the window and see how the tip behaves when close to the ',
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'Go to google', direction: 'right', tagName: 'span' },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'http://google.com' },
+	                                ' edge'
+	                            )
+	                        ),
+	                        '.'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Html Contents'
+	                    ),
+	                    'You can also have a tooltip with ',
+	                    _react2.default.createElement(
+	                        _src2.default,
+	                        {
+	                            content: _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'h4',
+	                                    { className: 'tip-heading' },
+	                                    'An unordered list to demo some html content'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'tip-list' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        'One'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        'Two'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        'Three'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        'Four'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        'Five'
+	                                    )
+	                                )
+	                            ),
+	                            direction: 'right',
+	                            tagName: 'span',
+	                            className: 'target'
+	                        },
+	                        'Html content'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Colors'
+	                    ),
+	                    'You can pass ',
+	                    _react2.default.createElement(
+	                        _src2.default,
+	                        { tagName: 'span', className: 'target', color: 'blue', background: 'red', content: 'The color for this is defined by props' },
+	                        'color options as props'
+	                    ),
+	                    ' or use a\xA0',
+	                    _react2.default.createElement(
+	                        _src2.default,
+	                        {
+	                            tagName: 'span',
+	                            className: 'target customTip',
+	                            direction: 'right',
+	                            content: 'The color for this tip is defined by examples/index.css'
+	                        },
+	                        'css stylesheet.'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Wrap anything as a target'
+	                    ),
+	                    _react2.default.createElement(
+	                        _src2.default,
+	                        { content: 'this is lorem ipsum' },
+	                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt egestas sapien quis lacinia. Praesent ut sem leo. Curabitur vel dolor eu nulla ultrices efficitur a ut mauris. Nulla non odio non nibh venenatis commodo non vitae magna. Nunc porttitor, dolor nec sodales commodo, velit elit auctor arcu, sed dapibus nibh lacus sit amet nunc. Phasellus enim dui, blandit sed faucibus sit amet, feugiat vel urna. Vivamus ut lacus sollicitudin, dignissim risus vel, iaculis leo. Donec lobortis, turpis nec pulvinar venenatis, orci nunc semper sem, nec ornare nisl nisi ut ligula. Integer ut tempus elit. Cras luctus, tellus id vestibulum accumsan, purus velit mattis erat, euismod tempor mauris elit eget metus. Vivamus interdum ex sed egestas tincidunt.'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'imageWrapper' },
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'you can wrap images of course too', styles: { display: 'inline-block' }, direction: 'right' },
+	                            _react2.default.createElement('img', { src: '/example/reactLogo.svg', alt: 'react logo' })
+	                        ),
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            {
+	                                content: 'this image is absolute positioned',
+	                                styles: { display: 'inline-block', position: 'absolute', top: '0', right: 0 },
+	                                direction: 'right',
+	                                className: 'image2'
+	                            },
+	                            _react2.default.createElement('img', { src: '/example/reactLogo.svg', alt: 'react logo' })
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Custom events'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'this uses hover but also closes on click', className: 'target', tagName: 'span', eventOff: 'onClick' },
+	                            'Close on click'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            {
+	                                content: 'opens on a click and closes on mouse out',
+	                                className: 'target',
+	                                tagName: 'span',
+	                                eventOn: 'onClick',
+	                                eventOff: 'onMouseOut',
+	                                useHover: false
+	                            },
+	                            'Open on click'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'this uses hover but also closes on click', className: 'target', tagName: 'span', eventToggle: 'onClick' },
+	                            'Toggle on click'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Default styles'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        'pass the ',
+	                        '"defaultStyles"',
+	                        ' prop as true to get up and running quick and easy'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _src2.default,
+	                            { content: 'styled with defaults', className: 'target', useDefaultStyles: true, tagName: 'span' },
+	                            'See default styles'
 	                        )
 	                    )
 	                )
@@ -21539,11 +21777,25 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(180);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _Portal = __webpack_require__(188);
+	
+	var _Portal2 = _interopRequireDefault(_Portal);
+	
+	var _position = __webpack_require__(189);
+	
+	var _position2 = _interopRequireDefault(_position);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21553,7 +21805,12 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// import { position } from './position';
+	var hoverDelay = 200;
+	var touchToMouseOverDelay = 1000;
+	
+	// default colors
+	var defaultColor = '#fff';
+	var defaultBg = '#333';
 	
 	var Tooltip = function (_React$Component) {
 	  _inherits(Tooltip, _React$Component);
@@ -21563,58 +21820,149 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this));
 	
-	    _this.state = { showTip: true };
+	    _this.state = { showTip: false, hasHover: false, ignoreShow: false };
 	
-	    _this.handleMouseEnter = _this.handleMouseEnter.bind(_this);
-	    _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
+	    _this.showTip = _this.showTip.bind(_this);
+	    _this.hideTip = _this.hideTip.bind(_this);
+	    _this.checkHover = _this.checkHover.bind(_this);
+	    _this.cancelTip = _this.cancelTip.bind(_this);
+	    _this.toggleTip = _this.toggleTip.bind(_this);
+	    _this.startHover = _this.startHover.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Tooltip, [{
-	    key: 'handleMouseEnter',
-	    value: function handleMouseEnter() {
+	    key: 'toggleTip',
+	    value: function toggleTip() {
+	      this.setState({ showTip: !this.state.showTip });
+	    }
+	  }, {
+	    key: 'showTip',
+	    value: function showTip() {
 	      this.setState({ showTip: true });
 	    }
 	  }, {
-	    key: 'handleMouseLeave',
-	    value: function handleMouseLeave() {
+	    key: 'hideTip',
+	    value: function hideTip() {
+	      this.setState({ hasHover: false });
 	      this.setState({ showTip: false });
+	    }
+	  }, {
+	    key: 'startHover',
+	    value: function startHover() {
+	      if (!this.state.ignoreShow) {
+	        this.setState({ hasHover: true });
+	
+	        setTimeout(this.checkHover, hoverDelay);
+	      }
+	    }
+	  }, {
+	    key: 'checkHover',
+	    value: function checkHover() {
+	      if (this.state.hasHover) {
+	        this.setState({ showTip: true });
+	      }
+	    }
+	  }, {
+	    key: 'cancelTip',
+	    value: function cancelTip() {
+	      var _this2 = this;
+	
+	      this.setState({ ignoreShow: true });
+	
+	      setTimeout(function () {
+	        _this2.setState({ ignoreShow: false });
+	      }, touchToMouseOverDelay);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var wrapperStyles = {
-	        position: 'relative',
-	        display: 'inline'
-	      };
+	      var _this3 = this;
 	
-	      var tipStyles = {
-	        display: 'none',
+	      var _props = this.props,
+	          direction = _props.direction,
+	          className = _props.className,
+	          padding = _props.padding,
+	          children = _props.children,
+	          content = _props.content,
+	          styles = _props.styles,
+	          eventOn = _props.eventOn,
+	          eventOff = _props.eventOff,
+	          eventToggle = _props.eventToggle,
+	          useHover = _props.useHover,
+	          background = _props.background,
+	          color = _props.color,
+	          useDefaultStyles = _props.useDefaultStyles;
+	
+	
+	      var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, {
+	        background: useDefaultStyles ? defaultBg : background
+	      });
+	
+	      var wrapperStyles = _extends({
+	        position: 'relative'
+	      }, styles);
+	
+	      var tipStyles = _extends({}, currentPositions.tip, {
+	        background: useDefaultStyles ? defaultBg : background,
+	        color: useDefaultStyles ? defaultColor : color,
+	        padding: padding,
+	        boxSizing: 'border-box',
+	        zIndex: 1000,
 	        position: 'absolute',
-	        top: '25px',
-	        left: '5px',
-	        border: '1px solid black'
+	        display: 'inline-block'
+	      });
+	
+	      var arrowStyles = _extends({}, currentPositions.arrow, {
+	        position: 'absolute',
+	        width: '0px',
+	        height: '0px',
+	        zIndex: 1001
+	      });
+	
+	      var props = {
+	        style: wrapperStyles,
+	        ref: function ref(target) {
+	          _this3.target = target;
+	        },
+	        className: className
 	      };
 	
-	      if (this.state.showTip) {
-	        tipStyles.display = '';
+	      // event handling
+	      if (eventOff) {
+	        props[eventOff] = this.hideTip;
 	      }
 	
-	      var tip = this.props.content ? _react2.default.createElement(
-	        'div',
-	        { style: tipStyles },
-	        this.props.content
-	      ) : null;
+	      if (eventOn) {
+	        props[eventOn] = this.showTip;
+	      }
+	
+	      if (eventToggle) {
+	        props[eventToggle] = this.toggleTip;
+	
+	        // only use hover if they don't have a toggle event
+	      } else if (useHover) {
+	        props.onMouseOver = this.startHover;
+	        props.onMouseOut = this.hideTip;
+	        props.onTouchStart = this.cancelTip;
+	      }
 	
 	      return _react2.default.createElement(
-	        'div',
-	        {
-	          onMouseEnter: this.handleMouseEnter,
-	          onMouseLeave: this.handleMouseLeave,
-	          style: wrapperStyles
-	        },
-	        this.props.children,
-	        tip
+	        this.props.tagName,
+	        props,
+	        children,
+	        _react2.default.createElement(
+	          _Portal2.default,
+	          { className: className },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {
+	                _this3.tip = tip;
+	              } },
+	            content
+	          ),
+	          _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
+	        )
 	      );
 	    }
 	  }]);
@@ -21622,7 +21970,1289 @@
 	  return Tooltip;
 	}(_react2.default.Component);
 	
+	Tooltip.propTypes = {
+	  // eslint-disable-next-line react/no-unused-prop-types
+	  tagName: _propTypes2.default.string,
+	  direction: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  content: _propTypes2.default.node.isRequired,
+	  background: _propTypes2.default.string,
+	  color: _propTypes2.default.string,
+	  padding: _propTypes2.default.string,
+	  styles: _propTypes2.default.object,
+	  eventOff: _propTypes2.default.string,
+	  eventOn: _propTypes2.default.string,
+	  eventToggle: _propTypes2.default.string,
+	  useHover: _propTypes2.default.bool,
+	  useDefaultStyles: _propTypes2.default.bool
+	};
+	Tooltip.defaultProps = {
+	  tagName: 'div',
+	  direction: 'up',
+	  className: '',
+	  background: '',
+	  color: '',
+	  padding: '10px',
+	  styles: {},
+	  useHover: true,
+	  useDefaultStyles: false
+	};
 	exports.default = Tooltip;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+	    Symbol.for &&
+	    Symbol.for('react.element')) ||
+	    0xeac7;
+	
+	  var isValidElement = function(object) {
+	    return typeof object === 'object' &&
+	      object !== null &&
+	      object.$$typeof === REACT_ELEMENT_TYPE;
+	  };
+	
+	  // By explicitly using `prop-types` you are opting into new development behavior.
+	  // http://fb.me/prop-types-in-prod
+	  var throwOnDirectAccess = true;
+	  module.exports = __webpack_require__(181)(isValidElement, throwOnDirectAccess);
+	} else {
+	  // By explicitly using `prop-types` you are opting into new production behavior.
+	  // http://fb.me/prop-types-in-prod
+	  module.exports = __webpack_require__(187)();
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	var emptyFunction = __webpack_require__(182);
+	var invariant = __webpack_require__(183);
+	var warning = __webpack_require__(184);
+	
+	var ReactPropTypesSecret = __webpack_require__(185);
+	var checkPropTypes = __webpack_require__(186);
+	
+	module.exports = function(isValidElement, throwOnDirectAccess) {
+	  /* global Symbol */
+	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+	
+	  /**
+	   * Returns the iterator method function contained on the iterable object.
+	   *
+	   * Be sure to invoke the function with the iterable as context:
+	   *
+	   *     var iteratorFn = getIteratorFn(myIterable);
+	   *     if (iteratorFn) {
+	   *       var iterator = iteratorFn.call(myIterable);
+	   *       ...
+	   *     }
+	   *
+	   * @param {?object} maybeIterable
+	   * @return {?function}
+	   */
+	  function getIteratorFn(maybeIterable) {
+	    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+	    if (typeof iteratorFn === 'function') {
+	      return iteratorFn;
+	    }
+	  }
+	
+	  /**
+	   * Collection of methods that allow declaration and validation of props that are
+	   * supplied to React components. Example usage:
+	   *
+	   *   var Props = require('ReactPropTypes');
+	   *   var MyArticle = React.createClass({
+	   *     propTypes: {
+	   *       // An optional string prop named "description".
+	   *       description: Props.string,
+	   *
+	   *       // A required enum prop named "category".
+	   *       category: Props.oneOf(['News','Photos']).isRequired,
+	   *
+	   *       // A prop named "dialog" that requires an instance of Dialog.
+	   *       dialog: Props.instanceOf(Dialog).isRequired
+	   *     },
+	   *     render: function() { ... }
+	   *   });
+	   *
+	   * A more formal specification of how these methods are used:
+	   *
+	   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+	   *   decl := ReactPropTypes.{type}(.isRequired)?
+	   *
+	   * Each and every declaration produces a function with the same signature. This
+	   * allows the creation of custom validation functions. For example:
+	   *
+	   *  var MyLink = React.createClass({
+	   *    propTypes: {
+	   *      // An optional string or URI prop named "href".
+	   *      href: function(props, propName, componentName) {
+	   *        var propValue = props[propName];
+	   *        if (propValue != null && typeof propValue !== 'string' &&
+	   *            !(propValue instanceof URI)) {
+	   *          return new Error(
+	   *            'Expected a string or an URI for ' + propName + ' in ' +
+	   *            componentName
+	   *          );
+	   *        }
+	   *      }
+	   *    },
+	   *    render: function() {...}
+	   *  });
+	   *
+	   * @internal
+	   */
+	
+	  var ANONYMOUS = '<<anonymous>>';
+	
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+	  var ReactPropTypes = {
+	    array: createPrimitiveTypeChecker('array'),
+	    bool: createPrimitiveTypeChecker('boolean'),
+	    func: createPrimitiveTypeChecker('function'),
+	    number: createPrimitiveTypeChecker('number'),
+	    object: createPrimitiveTypeChecker('object'),
+	    string: createPrimitiveTypeChecker('string'),
+	    symbol: createPrimitiveTypeChecker('symbol'),
+	
+	    any: createAnyTypeChecker(),
+	    arrayOf: createArrayOfTypeChecker,
+	    element: createElementTypeChecker(),
+	    instanceOf: createInstanceTypeChecker,
+	    node: createNodeChecker(),
+	    objectOf: createObjectOfTypeChecker,
+	    oneOf: createEnumTypeChecker,
+	    oneOfType: createUnionTypeChecker,
+	    shape: createShapeTypeChecker
+	  };
+	
+	  /**
+	   * inlined Object.is polyfill to avoid requiring consumers ship their own
+	   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	   */
+	  /*eslint-disable no-self-compare*/
+	  function is(x, y) {
+	    // SameValue algorithm
+	    if (x === y) {
+	      // Steps 1-5, 7-10
+	      // Steps 6.b-6.e: +0 != -0
+	      return x !== 0 || 1 / x === 1 / y;
+	    } else {
+	      // Step 6.a: NaN == NaN
+	      return x !== x && y !== y;
+	    }
+	  }
+	  /*eslint-enable no-self-compare*/
+	
+	  /**
+	   * We use an Error-like object for backward compatibility as people may call
+	   * PropTypes directly and inspect their output. However, we don't use real
+	   * Errors anymore. We don't inspect their stack anyway, and creating them
+	   * is prohibitively expensive if they are created too often, such as what
+	   * happens in oneOfType() for any type before the one that matched.
+	   */
+	  function PropTypeError(message) {
+	    this.message = message;
+	    this.stack = '';
+	  }
+	  // Make `instanceof Error` still work for returned errors.
+	  PropTypeError.prototype = Error.prototype;
+	
+	  function createChainableTypeChecker(validate) {
+	    if (process.env.NODE_ENV !== 'production') {
+	      var manualPropTypeCallCache = {};
+	      var manualPropTypeWarningCount = 0;
+	    }
+	    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+	      componentName = componentName || ANONYMOUS;
+	      propFullName = propFullName || propName;
+	
+	      if (secret !== ReactPropTypesSecret) {
+	        if (throwOnDirectAccess) {
+	          // New behavior only for users of `prop-types` package
+	          invariant(
+	            false,
+	            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+	            'Use `PropTypes.checkPropTypes()` to call them. ' +
+	            'Read more at http://fb.me/use-check-prop-types'
+	          );
+	        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+	          // Old behavior for people using React.PropTypes
+	          var cacheKey = componentName + ':' + propName;
+	          if (
+	            !manualPropTypeCallCache[cacheKey] &&
+	            // Avoid spamming the console because they are often not actionable except for lib authors
+	            manualPropTypeWarningCount < 3
+	          ) {
+	            warning(
+	              false,
+	              'You are manually calling a React.PropTypes validation ' +
+	              'function for the `%s` prop on `%s`. This is deprecated ' +
+	              'and will throw in the standalone `prop-types` package. ' +
+	              'You may be seeing this warning due to a third-party PropTypes ' +
+	              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+	              propFullName,
+	              componentName
+	            );
+	            manualPropTypeCallCache[cacheKey] = true;
+	            manualPropTypeWarningCount++;
+	          }
+	        }
+	      }
+	      if (props[propName] == null) {
+	        if (isRequired) {
+	          if (props[propName] === null) {
+	            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+	          }
+	          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+	        }
+	        return null;
+	      } else {
+	        return validate(props, propName, componentName, location, propFullName);
+	      }
+	    }
+	
+	    var chainedCheckType = checkType.bind(null, false);
+	    chainedCheckType.isRequired = checkType.bind(null, true);
+	
+	    return chainedCheckType;
+	  }
+	
+	  function createPrimitiveTypeChecker(expectedType) {
+	    function validate(props, propName, componentName, location, propFullName, secret) {
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== expectedType) {
+	        // `propValue` being instance of, say, date/regexp, pass the 'object'
+	        // check, but we can offer a more precise error message here rather than
+	        // 'of type `object`'.
+	        var preciseType = getPreciseType(propValue);
+	
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createAnyTypeChecker() {
+	    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+	  }
+	
+	  function createArrayOfTypeChecker(typeChecker) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+	      }
+	      var propValue = props[propName];
+	      if (!Array.isArray(propValue)) {
+	        var propType = getPropType(propValue);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+	      }
+	      for (var i = 0; i < propValue.length; i++) {
+	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+	        if (error instanceof Error) {
+	          return error;
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createElementTypeChecker() {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      if (!isValidElement(propValue)) {
+	        var propType = getPropType(propValue);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createInstanceTypeChecker(expectedClass) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (!(props[propName] instanceof expectedClass)) {
+	        var expectedClassName = expectedClass.name || ANONYMOUS;
+	        var actualClassName = getClassName(props[propName]);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createEnumTypeChecker(expectedValues) {
+	    if (!Array.isArray(expectedValues)) {
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
+	    }
+	
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      for (var i = 0; i < expectedValues.length; i++) {
+	        if (is(propValue, expectedValues[i])) {
+	          return null;
+	        }
+	      }
+	
+	      var valuesString = JSON.stringify(expectedValues);
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createObjectOfTypeChecker(typeChecker) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+	      }
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== 'object') {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+	      }
+	      for (var key in propValue) {
+	        if (propValue.hasOwnProperty(key)) {
+	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+	          if (error instanceof Error) {
+	            return error;
+	          }
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createUnionTypeChecker(arrayOfTypeCheckers) {
+	    if (!Array.isArray(arrayOfTypeCheckers)) {
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
+	    }
+	
+	    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+	      var checker = arrayOfTypeCheckers[i];
+	      if (typeof checker !== 'function') {
+	        warning(
+	          false,
+	          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+	          'received %s at index %s.',
+	          getPostfixForTypeWarning(checker),
+	          i
+	        );
+	        return emptyFunction.thatReturnsNull;
+	      }
+	    }
+	
+	    function validate(props, propName, componentName, location, propFullName) {
+	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+	        var checker = arrayOfTypeCheckers[i];
+	        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+	          return null;
+	        }
+	      }
+	
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createNodeChecker() {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (!isNode(props[propName])) {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function createShapeTypeChecker(shapeTypes) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== 'object') {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+	      }
+	      for (var key in shapeTypes) {
+	        var checker = shapeTypes[key];
+	        if (!checker) {
+	          continue;
+	        }
+	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+	        if (error) {
+	          return error;
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+	
+	  function isNode(propValue) {
+	    switch (typeof propValue) {
+	      case 'number':
+	      case 'string':
+	      case 'undefined':
+	        return true;
+	      case 'boolean':
+	        return !propValue;
+	      case 'object':
+	        if (Array.isArray(propValue)) {
+	          return propValue.every(isNode);
+	        }
+	        if (propValue === null || isValidElement(propValue)) {
+	          return true;
+	        }
+	
+	        var iteratorFn = getIteratorFn(propValue);
+	        if (iteratorFn) {
+	          var iterator = iteratorFn.call(propValue);
+	          var step;
+	          if (iteratorFn !== propValue.entries) {
+	            while (!(step = iterator.next()).done) {
+	              if (!isNode(step.value)) {
+	                return false;
+	              }
+	            }
+	          } else {
+	            // Iterator will provide entry [k,v] tuples rather than values.
+	            while (!(step = iterator.next()).done) {
+	              var entry = step.value;
+	              if (entry) {
+	                if (!isNode(entry[1])) {
+	                  return false;
+	                }
+	              }
+	            }
+	          }
+	        } else {
+	          return false;
+	        }
+	
+	        return true;
+	      default:
+	        return false;
+	    }
+	  }
+	
+	  function isSymbol(propType, propValue) {
+	    // Native Symbol.
+	    if (propType === 'symbol') {
+	      return true;
+	    }
+	
+	    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+	    if (propValue['@@toStringTag'] === 'Symbol') {
+	      return true;
+	    }
+	
+	    // Fallback for non-spec compliant Symbols which are polyfilled.
+	    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+	      return true;
+	    }
+	
+	    return false;
+	  }
+	
+	  // Equivalent of `typeof` but with special handling for array and regexp.
+	  function getPropType(propValue) {
+	    var propType = typeof propValue;
+	    if (Array.isArray(propValue)) {
+	      return 'array';
+	    }
+	    if (propValue instanceof RegExp) {
+	      // Old webkits (at least until Android 4.0) return 'function' rather than
+	      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+	      // passes PropTypes.object.
+	      return 'object';
+	    }
+	    if (isSymbol(propType, propValue)) {
+	      return 'symbol';
+	    }
+	    return propType;
+	  }
+	
+	  // This handles more types than `getPropType`. Only used for error messages.
+	  // See `createPrimitiveTypeChecker`.
+	  function getPreciseType(propValue) {
+	    if (typeof propValue === 'undefined' || propValue === null) {
+	      return '' + propValue;
+	    }
+	    var propType = getPropType(propValue);
+	    if (propType === 'object') {
+	      if (propValue instanceof Date) {
+	        return 'date';
+	      } else if (propValue instanceof RegExp) {
+	        return 'regexp';
+	      }
+	    }
+	    return propType;
+	  }
+	
+	  // Returns a string that is postfixed to a warning about an invalid type.
+	  // For example, "undefined" or "of type array"
+	  function getPostfixForTypeWarning(value) {
+	    var type = getPreciseType(value);
+	    switch (type) {
+	      case 'array':
+	      case 'object':
+	        return 'an ' + type;
+	      case 'boolean':
+	      case 'date':
+	      case 'regexp':
+	        return 'a ' + type;
+	      default:
+	        return type;
+	    }
+	  }
+	
+	  // Returns class name of the object, if any.
+	  function getClassName(propValue) {
+	    if (!propValue.constructor || !propValue.constructor.name) {
+	      return ANONYMOUS;
+	    }
+	    return propValue.constructor.name;
+	  }
+	
+	  ReactPropTypes.checkPropTypes = checkPropTypes;
+	  ReactPropTypes.PropTypes = ReactPropTypes;
+	
+	  return ReactPropTypes;
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+	
+	function makeEmptyFunction(arg) {
+	  return function () {
+	    return arg;
+	  };
+	}
+	
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	var emptyFunction = function emptyFunction() {};
+	
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function () {
+	  return this;
+	};
+	emptyFunction.thatReturnsArgument = function (arg) {
+	  return arg;
+	};
+	
+	module.exports = emptyFunction;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+	
+	var validateFormat = function validateFormat(format) {};
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  };
+	}
+	
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
+	
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	      error.name = 'Invariant Violation';
+	    }
+	
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	}
+	
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var emptyFunction = __webpack_require__(182);
+	
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+	
+	var warning = emptyFunction;
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
+	
+	      var argIndex = 0;
+	      var message = 'Warning: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // --- Welcome to debugging React ---
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch (x) {}
+	    };
+	
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+	
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+	
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+	
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
+	}
+	
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+	
+	module.exports = ReactPropTypesSecret;
+
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  var invariant = __webpack_require__(183);
+	  var warning = __webpack_require__(184);
+	  var ReactPropTypesSecret = __webpack_require__(185);
+	  var loggedTypeFailures = {};
+	}
+	
+	/**
+	 * Assert that the values match with the type specs.
+	 * Error messages are memorized and will only be shown once.
+	 *
+	 * @param {object} typeSpecs Map of name to a ReactPropType
+	 * @param {object} values Runtime values that need to be type-checked
+	 * @param {string} location e.g. "prop", "context", "child context"
+	 * @param {string} componentName Name of the component for error messages.
+	 * @param {?Function} getStack Returns the component stack.
+	 * @private
+	 */
+	function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    for (var typeSpecName in typeSpecs) {
+	      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+	        var error;
+	        // Prop type validation may throw. In case they do, we don't want to
+	        // fail the render phase where it didn't fail before. So we log it.
+	        // After these have been cleaned up, we'll let them throw.
+	        try {
+	          // This is intentionally an invariant that gets caught. It's the same
+	          // behavior as without this statement except with a better message.
+	          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+	          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+	        } catch (ex) {
+	          error = ex;
+	        }
+	        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+	        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+	          // Only monitor this failure once because there tends to be a lot of the
+	          // same error.
+	          loggedTypeFailures[error.message] = true;
+	
+	          var stack = getStack ? getStack() : '';
+	
+	          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+	        }
+	      }
+	    }
+	  }
+	}
+	
+	module.exports = checkPropTypes;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	var emptyFunction = __webpack_require__(182);
+	var invariant = __webpack_require__(183);
+	var ReactPropTypesSecret = __webpack_require__(185);
+	
+	module.exports = function() {
+	  function shim(props, propName, componentName, location, propFullName, secret) {
+	    if (secret === ReactPropTypesSecret) {
+	      // It is still safe when called from React.
+	      return;
+	    }
+	    invariant(
+	      false,
+	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+	      'Use PropTypes.checkPropTypes() to call them. ' +
+	      'Read more at http://fb.me/use-check-prop-types'
+	    );
+	  };
+	  shim.isRequired = shim;
+	  function getShim() {
+	    return shim;
+	  };
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+	  var ReactPropTypes = {
+	    array: shim,
+	    bool: shim,
+	    func: shim,
+	    number: shim,
+	    object: shim,
+	    string: shim,
+	    symbol: shim,
+	
+	    any: shim,
+	    arrayOf: getShim,
+	    element: shim,
+	    instanceOf: getShim,
+	    node: shim,
+	    objectOf: getShim,
+	    oneOf: getShim,
+	    oneOfType: getShim,
+	    shape: getShim
+	  };
+	
+	  ReactPropTypes.checkPropTypes = emptyFunction;
+	  ReactPropTypes.PropTypes = ReactPropTypes;
+	
+	  return ReactPropTypes;
+	};
+
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(33);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @class Portal
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description a portal element that puts the tooltip contents at the top of the document tree, outside the react app
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var instanceCounter = 0;
+	
+	var Portal = function (_React$Component) {
+	  _inherits(Portal, _React$Component);
+	
+	  function Portal() {
+	    _classCallCheck(this, Portal);
+	
+	    var _this = _possibleConstructorReturn(this, (Portal.__proto__ || Object.getPrototypeOf(Portal)).call(this));
+	
+	    _this.portalElement = null;
+	    return _this;
+	  }
+	
+	  _createClass(Portal, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // generate a unique ID
+	      instanceCounter += 1;
+	      var portalId = 'react-tooltip-lite-instace-' + instanceCounter;
+	
+	      var el = document.getElementById(portalId);
+	
+	      // add the div to the body if not there.
+	      if (!el) {
+	        el = document.createElement('div');
+	        el.id = portalId;
+	        document.body.appendChild(el);
+	      }
+	
+	      this.portalElement = el;
+	      this.componentDidUpdate();
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      _reactDom2.default.render(_react2.default.createElement(
+	        'div',
+	        { className: this.props.className },
+	        this.props.children
+	      ), this.portalElement);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      document.body.removeChild(this.portalElement);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return null;
+	    }
+	  }]);
+	
+	  return Portal;
+	}(_react2.default.Component);
+	
+	Portal.propTypes = {
+	  children: _react.PropTypes.node.isRequired
+	};
+	exports.default = Portal;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+	                                                                                                                                                                                                                                                                   * @file positions.js
+	                                                                                                                                                                                                                                                                   * @description some functions for position calculation
+	                                                                                                                                                                                                                                                                   */
+	
+	exports.default = positions;
+	
+	var _getDirection = __webpack_require__(190);
+	
+	var _getDirection2 = _interopRequireDefault(_getDirection);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// @TODO: consider which of these should be props that can be passed
+	var distance = 10;
+	var bodyPadding = 10;
+	var minArrowPadding = 5;
+	var arrowSize = 10;
+	
+	/**
+	 * cross browser scroll positions
+	 */
+	function getScrollTop() {
+	  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+	}
+	
+	function getScrollLeft() {
+	  return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+	}
+	
+	/**
+	 * Sets tip max width safely for mobile
+	 */
+	function getTipMaxWidth() {
+	  return typeof document !== 'undefined' ? document.documentElement.clientWidth - bodyPadding * 2 : 1000;
+	}
+	
+	/**
+	 * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
+	 */
+	function getUpDownPosition(tip, target, state, direction) {
+	  var left = -10000000;
+	  var top = void 0;
+	
+	  if (tip && state.showTip) {
+	    // get wrapper left position
+	    var targetRect = target.getBoundingClientRect();
+	    var targetLeft = targetRect.left + getScrollLeft();
+	
+	    var halfTargetWidth = Math.round(target.offsetWidth / 2);
+	    var tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
+	
+	    // default is centered, but must be higher than body padding
+	    left = Math.max(targetLeft + halfTargetWidth - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+	
+	    // check for right overhang
+	    var rightOverhang = left + tipWidth + bodyPadding - document.documentElement.clientWidth;
+	    if (rightOverhang > 0) {
+	      left -= rightOverhang;
+	    }
+	
+	    if (direction === 'up') {
+	      top = targetRect.top + getScrollTop() - (tip.offsetHeight + distance);
+	    } else {
+	      top = targetRect.bottom + getScrollTop() + distance;
+	    }
+	  }
+	
+	  return {
+	    left: left,
+	    top: top
+	  };
+	}
+	
+	/**
+	 * gets top position for left/right arrows
+	 */
+	function getLeftRightPosition(tip, target, state, direction) {
+	  var left = -10000000;
+	  var top = 0;
+	
+	  if (tip && state.showTip) {
+	    var scrollTop = getScrollTop();
+	    var targetRect = target.getBoundingClientRect();
+	    var targetTop = targetRect.top + scrollTop;
+	    var halfTargetHeight = Math.round(target.offsetHeight / 2);
+	
+	    // default to middle, but don't go below body
+	    top = Math.max(targetTop + halfTargetHeight - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
+	
+	    // make sure it doesn't go below the arrow
+	    var arrowTop = targetTop + halfTargetHeight - arrowSize;
+	    top = Math.min(top, arrowTop - minArrowPadding);
+	
+	    // check for bottom overhang
+	    var bottomOverhang = top - scrollTop + tip.offsetHeight + bodyPadding - window.innerHeight;
+	    if (bottomOverhang > 0) {
+	      // try to add the body padding below the tip, but don't offset too far from the arrow
+	      var arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
+	      top = Math.max(top - bottomOverhang, arrowBottom + minArrowPadding - tip.offsetHeight);
+	    }
+	
+	    if (direction === 'right') {
+	      left = targetRect.right + distance;
+	    } else {
+	      left = targetRect.left - distance - tip.offsetWidth;
+	    }
+	  }
+	
+	  return {
+	    left: left,
+	    top: top
+	  };
+	}
+	
+	/**
+	 * sets the Arrow styles based on direction
+	 */
+	function getArrowStyles(target, tip, direction, state, props) {
+	  if (!target) {
+	    return {
+	      top: '0',
+	      left: '-10000000px'
+	    };
+	  }
+	
+	  var targetRect = target.getBoundingClientRect();
+	  var halfTargetHeight = Math.round(target.offsetHeight / 2);
+	  var halfTargetWidth = Math.round(target.offsetWidth / 2);
+	  var scrollTop = getScrollTop();
+	  var scrollLeft = getScrollLeft();
+	
+	  switch (direction) {
+	    case 'right':
+	      return {
+	        top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
+	        left: targetRect.right + scrollLeft,
+	        borderRight: props.background !== '' ? '10px solid ' + props.background : '',
+	        borderTop: '10px solid transparent',
+	        borderBottom: '10px solid transparent'
+	      };
+	
+	    case 'left':
+	      return {
+	        top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
+	        left: targetRect.left + scrollLeft - distance - 1,
+	        borderLeft: props.background !== '' ? '10px solid ' + props.background : '',
+	        borderTop: '10px solid transparent',
+	        borderBottom: '10px solid transparent'
+	      };
+	
+	    case 'up':
+	      return {
+	        left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
+	        top: targetRect.top + scrollTop - distance,
+	        borderTop: props.background !== '' ? '10px solid ' + props.background : '',
+	        borderLeft: '10px solid transparent',
+	        borderRight: '10px solid transparent'
+	      };
+	
+	    case 'down':
+	    default:
+	      return {
+	        left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
+	        top: targetRect.bottom + scrollTop,
+	        borderBottom: props.background !== '' ? '10px solid ' + props.background : '',
+	        borderLeft: '10px solid transparent',
+	        borderRight: '10px solid transparent'
+	      };
+	  }
+	}
+	
+	/**
+	 * Returns the positions style rules
+	 */
+	function positions(direction, tip, target, state, props) {
+	  var realDirection = (0, _getDirection2.default)(direction, tip, target, distance, bodyPadding);
+	  var maxWidth = getTipMaxWidth();
+	
+	  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection) : getLeftRightPosition(tip, target, state, realDirection);
+	
+	  return {
+	    tip: _extends({}, tipPosition, {
+	      maxWidth: maxWidth
+	    }),
+	    arrow: getArrowStyles(target, tip, realDirection, state, props),
+	    realDirection: realDirection
+	  };
+	}
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = getDirection;
+	/**
+	 * Checks the intended tip direction and falls back if not enough space
+	 */
+	
+	function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
+	  var targetRect = target.getBoundingClientRect();
+	  var deadSpace = Math.min(targetRect.left, document.documentElement.clientWidth - targetRect.right);
+	
+	  return tip.offsetWidth + target.offsetWidth + distance + bodyPadding + deadSpace < document.documentElement.clientWidth;
+	}
+	
+	function checkHalfHeightVisible(target) {
+	  var targetCenterFromWindow = target.getBoundingClientRect().top + Math.round(target.offsetHeight / 2);
+	
+	  return targetCenterFromWindow < window.innerHeight && targetCenterFromWindow > 0;
+	}
+	
+	function getDirection(currentDirection, tip, target, distance, bodyPadding) {
+	  // can't switch until target is rendered
+	  if (!target) {
+	    return currentDirection;
+	  }
+	
+	  var targetRect = target.getBoundingClientRect();
+	
+	  switch (currentDirection) {
+	    case 'right':
+	      // if the window is not wide enough try top (which falls back to down)
+	      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkHalfHeightVisible(target)) {
+	        return getDirection('up', tip, target, distance, bodyPadding);
+	      }
+	
+	      if (document.documentElement.clientWidth - targetRect.right < tip.offsetWidth + distance + bodyPadding) {
+	        return 'left';
+	      }
+	
+	      return 'right';
+	
+	    case 'left':
+	      // if the window is not wide enough try top (which falls back to down)
+	      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkHalfHeightVisible(target)) {
+	        return getDirection('up', tip, target, distance, bodyPadding);
+	      }
+	
+	      if (targetRect.left < tip.offsetWidth + distance + bodyPadding) {
+	        return 'right';
+	      }
+	
+	      return 'left';
+	
+	    case 'up':
+	      if (targetRect.top < tip.offsetHeight + distance + bodyPadding) {
+	        return 'down';
+	      }
+	
+	      return 'up';
+	
+	    case 'down':
+	    default:
+	      if (window.innerHeight - targetRect.bottom < tip.offsetHeight + distance + bodyPadding) {
+	        return 'up';
+	      }
+	
+	      return 'down';
+	  }
+	}
 
 /***/ }
 /******/ ]);
