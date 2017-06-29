@@ -1,6 +1,6 @@
 # React tooltip-lite
 
-A lightweight and responsive tooltip. Currently only this is only activated by mouseover/out but we'll be adding focus and other events as needed.  Feel free to Post an [issue](https://github.com/bsidelinger912/react-tooltip-lite/issues) if you're looking to support more use cases.
+A lightweight and responsive tooltip. Feel free to Post an [issue](https://github.com/bsidelinger912/react-tooltip-lite/issues) if you're looking to support more use cases.
 
 ## Getting started
 
@@ -23,8 +23,14 @@ import Tooltip from 'react-tooltip-lite';
 </Tooltip>
 ```
 
+<br />
+
+**CodePen demo**: [http://codepen.io/bsidelinger912/pen/WOdPNK](http://codepen.io/bsidelinger912/pen/WOdPNK)
+
+<br />
+
 ### styling
-By default you need to style react-tooltip-lite with CSS, this allows for psuedo elements and some cool border tricks, as well as using sass variables and such to keep your colors consistant.  Here's an example stylesheet:
+By default you need to style react-tooltip-lite with CSS, this allows for psuedo elements and some cool border tricks, as well as using sass variables and such to keep your colors consistant. But as of version 1.2.0 you can also pass the "useDefaultStyles" prop which will allow you to use react-tooltip-lite without a stylesheet. Here's an example stylesheet:
 
 ```
 /* default tooltip styles */
@@ -50,7 +56,6 @@ By default you need to style react-tooltip-lite with CSS, this allows for psuedo
 }
 ```
 
-You can also pass the "useDefaultStyles" prop which will allow you to use react-tooltip-lite without a stylesheet.
 
 ## Props
 You can pass in props to define tip direction, styling, etc.  Content is the only required prop.
