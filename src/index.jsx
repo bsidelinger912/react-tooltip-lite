@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Portal from './Portal';
+import Portal from 'react-minimalist-portal';
 import positions from './position';
 
 const hoverDelay = 200;
@@ -161,11 +161,13 @@ class Tooltip extends React.Component {
         <this.props.tagName {...props}>
             {children}
 
-            <Portal className={className}>
+            <Portal>
+              <div className={className}>
                 <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
                     {content}
                 </span>
                 <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
+              </div>
             </Portal>
         </this.props.tagName>
     );
