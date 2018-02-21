@@ -16,9 +16,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Portal = require('./Portal');
+var _reactMinimalistPortal = require('react-minimalist-portal');
 
-var _Portal2 = _interopRequireDefault(_Portal);
+var _reactMinimalistPortal2 = _interopRequireDefault(_reactMinimalistPortal);
 
 var _position = require('./position');
 
@@ -179,16 +179,20 @@ var Tooltip = function (_React$Component) {
         props,
         children,
         _react2.default.createElement(
-          _Portal2.default,
-          { className: className },
+          _reactMinimalistPortal2.default,
+          null,
           _react2.default.createElement(
-            'span',
-            { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {
-                _this3.tip = tip;
-              } },
-            content
-          ),
-          _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
+            'div',
+            { className: className },
+            _react2.default.createElement(
+              'span',
+              { className: 'react-tooltip-lite', style: tipStyles, ref: function ref(tip) {
+                  _this3.tip = tip;
+                } },
+              content
+            ),
+            _react2.default.createElement('span', { className: 'react-tooltip-lite-arrow react-tooltip-lite-' + currentPositions.realDirection + '-arrow', style: arrowStyles })
+          )
         )
       );
     }
