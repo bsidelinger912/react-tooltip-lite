@@ -32,16 +32,16 @@
     "react-minimalist-portal": "^2.1.1"
   },
   "peerDependencies": {
-    "react": "^15.5.4"
+    "react": "^15.5.4 || ^16.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
-    "babel-core": "*",
+    "babel-core": "^6.18.2",
     "babel-eslint": "^6.0.4",
-    "babel-loader": "*",
-    "babel-preset-es2015": "*",
-    "babel-preset-react": "*",
-    "babel-preset-stage-0": "*",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
     "enzyme": "^2.4.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
@@ -51,10 +51,11 @@
     "eslint-plugin-react": "^6.7.1",
     "expect": "^1.20.2",
     "mocha": "^2.5.3",
+    "react": "^16.2.0",
     "react-addons-test-utils": "^15.2.1",
-    "react-dom": "^15.1.0",
-    "react-hot-loader": "*",
-    "webpack": "*",
-    "webpack-dev-server": "*"
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^1.3.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   }
 }
