@@ -119,10 +119,12 @@ var Tooltip = function (_React$Component) {
           useHover = _props.useHover,
           background = _props.background,
           color = _props.color,
-          useDefaultStyles = _props.useDefaultStyles;
+          useDefaultStyles = _props.useDefaultStyles,
+          isOpen = _props.isOpen;
 
 
-      var currentPositions = (0, _position2.default)(direction, this.tip, this.target, this.state, {
+      var showTip = typeof isOpen === 'undefined' ? this.state.showTip : isOpen;
+      var currentPositions = (0, _position2.default)(direction, this.tip, this.target, _extends({}, this.state, { showTip: showTip }), {
         background: useDefaultStyles ? defaultBg : background
       });
 
@@ -215,7 +217,8 @@ Tooltip.propTypes = {
   eventOn: _propTypes2.default.string,
   eventToggle: _propTypes2.default.string,
   useHover: _propTypes2.default.bool,
-  useDefaultStyles: _propTypes2.default.bool
+  useDefaultStyles: _propTypes2.default.bool,
+  isOpen: _propTypes2.default.bool
 };
 Tooltip.defaultProps = {
   tagName: 'div',
