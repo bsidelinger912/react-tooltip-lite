@@ -27,6 +27,7 @@ class Tooltip extends React.Component {
     eventToggle: PropTypes.string,
     useHover: PropTypes.bool,
     useDefaultStyles: PropTypes.bool,
+    isOpen: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -102,9 +103,11 @@ class Tooltip extends React.Component {
       background,
       color,
       useDefaultStyles,
+      isOpen,
     } = this.props;
 
-    const currentPositions = positions(direction, this.tip, this.target, this.state, {
+    const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
+    const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
       background: useDefaultStyles ? defaultBg : background,
     });
 
@@ -162,12 +165,12 @@ class Tooltip extends React.Component {
             {children}
 
             <Portal>
-              <div className={className}>
-                <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
-                    {content}
-                </span>
-                <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
-              </div>
+                <div className={className}>
+                    <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
+                        {content}
+                    </span>
+                    <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
+                </div>
             </Portal>
         </this.props.tagName>
     );

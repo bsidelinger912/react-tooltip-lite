@@ -4,7 +4,20 @@ import ReactDOM from 'react-dom';
 import Tooltip from '../src/';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { tipOpen: false };
+
+    this.toggleTip = this.toggleTip.bind(this);
+  }
+
+  toggleTip() {
+    this.setState({ tipOpen: !this.state.tipOpen });
+  }
+
   render() {
+    const { tipOpen } = this.state;
     return (
         <div className="wrapper">
             <h1>React tooltip-lite examples</h1>
@@ -151,6 +164,15 @@ class App extends React.Component {
                       See default styles
                     </Tooltip>
                 </p>
+            </section>
+            <section>
+                <h3>Controlled by props</h3>
+
+                <button onClick={this.toggleTip}>{tipOpen ? 'close' : 'open'}</button>
+                <br /><br />
+                <Tooltip content="controlled by the button" isOpen={tipOpen} tagName="span" direction="down">
+                    click the button
+                </Tooltip>
             </section>
         </div>
     );
