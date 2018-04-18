@@ -134,6 +134,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>boolean</td>
       <td>uses default colors for the tooltip, so you don't need to write any CSS for it</td>
     </tr>
+    <tr>
+      <td>isOpen</td>
+      <td>boolean</td>
+      <td>forces open/close state from a prop, overrides hover or click state</td>
+    </tr>
   </tbody>
 </table>
 <br />
