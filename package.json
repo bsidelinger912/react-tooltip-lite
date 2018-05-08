@@ -29,7 +29,7 @@
   "homepage": "https://github.com/bsidelinger912/react-tooltip-lite#readme",
   "dependencies": {
     "prop-types": "^15.5.8",
-    "react-minimalist-portal": "^2.1.1"
+    "react-minimalist-portal": "^2.2.0"
   },
   "peerDependencies": {
     "react": "^15.5.4 || ^16.0.0"
