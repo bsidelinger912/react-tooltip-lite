@@ -32,7 +32,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var hoverDelay = 200;
 var touchToMouseOverDelay = 1000;
 
 // default colors
@@ -55,6 +54,7 @@ var Tooltip = function (_React$Component) {
     _this.cancelTip = _this.cancelTip.bind(_this);
     _this.toggleTip = _this.toggleTip.bind(_this);
     _this.startHover = _this.startHover.bind(_this);
+    _this.endHover = _this.endHover.bind(_this);
     return _this;
   }
 
@@ -80,15 +80,20 @@ var Tooltip = function (_React$Component) {
       if (!this.state.ignoreShow) {
         this.setState({ hasHover: true });
 
-        setTimeout(this.checkHover, hoverDelay);
+        setTimeout(this.checkHover, this.props.hoverDelay);
       }
+    }
+  }, {
+    key: 'endHover',
+    value: function endHover() {
+      this.setState({ hasHover: false });
+
+      setTimeout(this.checkHover, this.props.hoverDelay);
     }
   }, {
     key: 'checkHover',
     value: function checkHover() {
-      if (this.state.hasHover) {
-        this.setState({ showTip: true });
-      }
+      this.setState({ showTip: this.state.hasHover });
     }
   }, {
     key: 'cancelTip',
@@ -120,7 +125,8 @@ var Tooltip = function (_React$Component) {
           background = _props.background,
           color = _props.color,
           useDefaultStyles = _props.useDefaultStyles,
-          isOpen = _props.isOpen;
+          isOpen = _props.isOpen,
+          tipContentHover = _props.tipContentHover;
 
 
       var showTip = typeof isOpen === 'undefined' ? this.state.showTip : isOpen;
@@ -172,7 +178,7 @@ var Tooltip = function (_React$Component) {
         // only use hover if they don't have a toggle event
       } else if (useHover) {
         props.onMouseOver = this.startHover;
-        props.onMouseOut = this.hideTip;
+        props.onMouseOut = tipContentHover ? this.endHover : this.hideTip;
         props.onTouchStart = this.cancelTip;
       }
 
@@ -218,7 +224,9 @@ Tooltip.propTypes = {
   eventToggle: _propTypes2.default.string,
   useHover: _propTypes2.default.bool,
   useDefaultStyles: _propTypes2.default.bool,
-  isOpen: _propTypes2.default.bool
+  isOpen: _propTypes2.default.bool,
+  hoverDelay: _propTypes2.default.number,
+  tipContentHover: _propTypes2.default.bool
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -229,6 +237,8 @@ Tooltip.defaultProps = {
   padding: '10px',
   styles: {},
   useHover: true,
-  useDefaultStyles: false
+  useDefaultStyles: false,
+  hoverDelay: 200,
+  tipContentHover: false
 };
 exports.default = Tooltip;

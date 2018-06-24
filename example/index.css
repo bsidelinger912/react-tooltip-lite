@@ -22,6 +22,10 @@ a {
   cursor: pointer;
 }
 
+.target .react-tooltip-lite {
+  cursor: default;
+}
+
 .flex-spread {
   display: flex;
   justify-content: space-between;
@@ -45,6 +49,15 @@ a {
 .react-tooltip-lite {
   background: #333;
   color: white;
+}
+
+.react-tooltip-lite a {
+  color: #86b0f4;
+  text-decoration: none;
+}
+
+.react-tooltip-lite a:hover {
+  color: #4286f4;
 }
 
 .react-tooltip-lite-up-arrow {

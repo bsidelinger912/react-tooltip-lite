@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Portal from 'react-minimalist-portal';
 import positions from './position';
 
-const hoverDelay = 200;
 const touchToMouseOverDelay = 1000;
 
 // default colors
@@ -28,6 +27,8 @@ class Tooltip extends React.Component {
     useHover: PropTypes.bool,
     useDefaultStyles: PropTypes.bool,
     isOpen: PropTypes.bool,
+    hoverDelay: PropTypes.number,
+    tipContentHover: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -40,6 +41,8 @@ class Tooltip extends React.Component {
     styles: {},
     useHover: true,
     useDefaultStyles: false,
+    hoverDelay: 200,
+    tipContentHover: false,
   }
 
   constructor() {
@@ -53,6 +56,7 @@ class Tooltip extends React.Component {
     this.cancelTip = this.cancelTip.bind(this);
     this.toggleTip = this.toggleTip.bind(this);
     this.startHover = this.startHover.bind(this);
+    this.endHover = this.endHover.bind(this);
   }
 
   toggleTip() {
@@ -72,14 +76,18 @@ class Tooltip extends React.Component {
     if (!this.state.ignoreShow) {
       this.setState({ hasHover: true });
 
-      setTimeout(this.checkHover, hoverDelay);
+      setTimeout(this.checkHover, this.props.hoverDelay);
     }
   }
 
+  endHover() {
+    this.setState({ hasHover: false });
+
+    setTimeout(this.checkHover, this.props.hoverDelay);
+  }
+
   checkHover() {
-    if (this.state.hasHover) {
-      this.setState({ showTip: true });
-    }
+    this.setState({ showTip: this.state.hasHover });
   }
 
   cancelTip() {
@@ -104,6 +112,7 @@ class Tooltip extends React.Component {
       color,
       useDefaultStyles,
       isOpen,
+      tipContentHover,
     } = this.props;
 
     const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
@@ -153,26 +162,26 @@ class Tooltip extends React.Component {
     if (eventToggle) {
       props[eventToggle] = this.toggleTip;
 
-    // only use hover if they don't have a toggle event
+      // only use hover if they don't have a toggle event
     } else if (useHover) {
       props.onMouseOver = this.startHover;
-      props.onMouseOut = this.hideTip;
+      props.onMouseOut = tipContentHover ? this.endHover : this.hideTip;
       props.onTouchStart = this.cancelTip;
     }
 
     return (
-        <this.props.tagName {...props}>
-            {children}
+      <this.props.tagName {...props}>
+        {children}
 
-            <Portal>
-                <div className={className}>
-                    <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
-                        {content}
-                    </span>
-                    <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
-                </div>
-            </Portal>
-        </this.props.tagName>
+        <Portal>
+          <div className={className}>
+            <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
+              {content}
+            </span>
+            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
+          </div>
+        </Portal>
+      </this.props.tagName>
     );
   }
 }

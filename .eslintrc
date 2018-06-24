@@ -49,8 +49,13 @@
         "new-cap": [
             1
         ],
-        "padded-blocks": [ 0 ],
-        "space-before-blocks": [ 1, "always" ],
+        "padded-blocks": [
+            0
+        ],
+        "space-before-blocks": [
+            1,
+            "always"
+        ],
         "space-before-function-paren": [
             2,
             {
@@ -58,35 +63,48 @@
                 "named": "never"
             }
         ],
-
         // overrides errors.js
-        "no-console": [ 0 ],
-
+        "no-console": [
+            0
+        ],
         // overrides variables.js
-        "no-unused-vars": [ 1 ],
-
-        "react/prefer-stateless-function": [ 0 ],
-
-        "react/prop-types": [ 0 ],
-
-        "react/jsx-indent": [ 2, 4 ],
-
-        "max-len": [ 1, 150 ],
-
-        "consistent-return": [ 0 ],
-
+        "no-unused-vars": [
+            1
+        ],
+        "react/prefer-stateless-function": [
+            0
+        ],
+        "react/prop-types": [
+            0
+        ],
+        "react/jsx-indent": [
+            2,
+            2
+        ],
+        "max-len": [
+            1,
+            150
+        ],
+        "consistent-return": [
+            0
+        ],
         //this allows left handed conditionals, though apparently it is not considered a best practice these days, eslint.org/docs/rules/yoda
-        "yoda": [ 0 ],
-
+        "yoda": [
+            0
+        ],
         // warns when trying to use Object.assign()
         "prefer-object-spread/prefer-object-spread": 2,
-
-        "import/no-extraneous-dependencies": [ 0 ],
-        "import/prefer-default-export": [ 0 ],
-
-        "react/forbid-prop-types": [ 0 ]
+        "import/no-extraneous-dependencies": [
+            0
+        ],
+        "import/prefer-default-export": [
+            0
+        ],
+        "react/forbid-prop-types": [
+            0
+        ]
     },
-    "globals" : {
+    "globals": {
         "__CLIENT__": true
     },
     "env": {
