@@ -139,6 +139,17 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>boolean</td>
       <td>forces open/close state from a prop, overrides hover or click state</td>
     </tr>
+    <tr>
+      <td>tipContentHover</td>
+      <td>boolean</td>
+      <td>defines whether you should be able to hover over the tip contents for links and copying content,
+        defaults to true.</a>
+    </tr>
+    <tr>
+      <td>hoverDelay</td>
+      <td>number</td>
+      <td>the number of milliseconds to determine hover intent, defaults to 200</td>
+    </tr>
   </tbody>
 </table>
 <br />
