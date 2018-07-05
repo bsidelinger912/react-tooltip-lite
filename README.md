@@ -143,7 +143,7 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>tipContentHover</td>
       <td>boolean</td>
       <td>defines whether you should be able to hover over the tip contents for links and copying content,
-        defaults to true.</a>
+        defaults to false.</a>
     </tr>
     <tr>
       <td>hoverDelay</td>
