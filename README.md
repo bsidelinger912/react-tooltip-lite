@@ -105,6 +105,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>padding amount for the tooltip contents (defaults to '10px')</td>
     </tr>
     <tr>
+      <td>distance</td>
+      <td>number</td>
+      <td>distance of tooltip from hover target (defaults to '10px')</td>
+    </tr>
+    <tr>
       <td>styles</td>
       <td>object</td>
       <td>style overrides for the target wrapper</td>

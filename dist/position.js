@@ -18,7 +18,6 @@ var _getDirection2 = _interopRequireDefault(_getDirection);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // @TODO: consider which of these should be props that can be passed
-var distance = 10;
 var bodyPadding = 10;
 var minArrowPadding = 5;
 var arrowSize = 10;
@@ -44,7 +43,7 @@ function getTipMaxWidth() {
 /**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
  */
-function getUpDownPosition(tip, target, state, direction) {
+function getUpDownPosition(tip, target, state, direction, distance) {
   var left = -10000000;
   var top = void 0;
 
@@ -81,7 +80,7 @@ function getUpDownPosition(tip, target, state, direction) {
 /**
  * gets top position for left/right arrows
  */
-function getLeftRightPosition(tip, target, state, direction) {
+function getLeftRightPosition(tip, target, state, direction, distance) {
   var left = -10000000;
   var top = 0;
 
@@ -149,7 +148,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     case 'left':
       return {
         top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
-        left: targetRect.left + scrollLeft - distance - 1,
+        left: targetRect.left + scrollLeft - props.distance - 1,
         borderLeft: props.background !== '' ? '10px solid ' + props.background : '',
         borderTop: '10px solid transparent',
         borderBottom: '10px solid transparent'
@@ -158,7 +157,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     case 'up':
       return {
         left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
-        top: targetRect.top + scrollTop - distance,
+        top: targetRect.top + scrollTop - props.distance,
         borderTop: props.background !== '' ? '10px solid ' + props.background : '',
         borderLeft: '10px solid transparent',
         borderRight: '10px solid transparent'
@@ -180,10 +179,10 @@ function getArrowStyles(target, tip, direction, state, props) {
  * Returns the positions style rules
  */
 function positions(direction, tip, target, state, props) {
-  var realDirection = (0, _getDirection2.default)(direction, tip, target, distance, bodyPadding);
+  var realDirection = (0, _getDirection2.default)(direction, tip, target, props.distance, bodyPadding);
   var maxWidth = getTipMaxWidth();
 
-  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection) : getLeftRightPosition(tip, target, state, realDirection);
+  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection, props.distance) : getLeftRightPosition(tip, target, state, realDirection, props.distance);
 
   return {
     tip: _extends({}, tipPosition, {
