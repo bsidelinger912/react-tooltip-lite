@@ -41,18 +41,19 @@ function getTipMaxWidth() {
 }
 
 /**
- * Sets align mode, defaulting to middle
+ * Parses align mode from direction if specified with hyphen, defaulting to middle if not -
+ * e.g. 'left-start' is mode 'start' and 'left' would be the default of 'middle'
  */
-function getAlignMode(direction) {
+function parseAlignMode(direction) {
   var directionArray = direction.split('-');
   if (directionArray.length > 1) {
     return directionArray[1];
   }
-  return direction;
+  return 'middle';
 }
 
 /**
- *  Interpolates a scalr based on possible values of "start", "end" or "middle" (default)
+ *  Interpolates a scalar based on possible values of "start", "end" or "middle" (default)
  */
 function interpolateAlignOffset(alignMode, value) {
   switch (alignMode) {
@@ -204,9 +205,11 @@ function getArrowStyles(target, tip, direction, state, props) {
  * Returns the positions style rules
  */
 function positions(direction, tip, target, state, props) {
-  var alignMode = getAlignMode(direction);
+  var alignMode = parseAlignMode(direction);
   var realDirection = (0, _getDirection2.default)(direction, tip, target, props.distance, bodyPadding);
   var maxWidth = getTipMaxWidth();
+  console.log(alignMode);
+  console.log(realDirection);
 
   var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection, props.distance, alignMode) : getLeftRightPosition(tip, target, state, realDirection, props.distance, alignMode);
 
