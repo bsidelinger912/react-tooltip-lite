@@ -30,7 +30,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @class Tooltip
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description A lightweight and responsive tooltip.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
 
 // default colors
 var defaultColor = '#fff';
@@ -116,12 +120,14 @@ var Tooltip = function (_React$Component) {
           color = _props.color,
           useDefaultStyles = _props.useDefaultStyles,
           isOpen = _props.isOpen,
-          tipContentHover = _props.tipContentHover;
+          tipContentHover = _props.tipContentHover,
+          distance = _props.distance;
 
 
       var showTip = typeof isOpen === 'undefined' ? this.state.showTip : isOpen;
       var currentPositions = (0, _position2.default)(direction, this.tip, this.target, _extends({}, this.state, { showTip: showTip }), {
-        background: useDefaultStyles ? defaultBg : background
+        background: useDefaultStyles ? defaultBg : background,
+        distance: distance
       });
 
       var wrapperStyles = _extends({
@@ -224,7 +230,8 @@ Tooltip.propTypes = {
   useDefaultStyles: _propTypes2.default.bool,
   isOpen: _propTypes2.default.bool,
   hoverDelay: _propTypes2.default.number,
-  tipContentHover: _propTypes2.default.bool
+  tipContentHover: _propTypes2.default.bool,
+  distance: _propTypes2.default.number
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -237,6 +244,7 @@ Tooltip.defaultProps = {
   useHover: true,
   useDefaultStyles: false,
   hoverDelay: 200,
-  tipContentHover: false
+  tipContentHover: false,
+  distance: 10
 };
 exports.default = Tooltip;

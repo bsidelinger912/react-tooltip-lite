@@ -21,9 +21,12 @@ export default function getDirection(currentDirection, tip, target, distance, bo
     return currentDirection;
   }
 
+  // trim off direction alignment suffixes (i.e. any chars after "-")
+  const trimmedDirection = currentDirection.split('-')[0];
+
   const targetRect = target.getBoundingClientRect();
 
-  switch (currentDirection) {
+  switch (trimmedDirection) {
     case 'right':
       // if the window is not wide enough try top (which falls back to down)
       if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkHalfHeightVisible(target)) {

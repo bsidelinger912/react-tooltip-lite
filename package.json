@@ -3,10 +3,11 @@
   "version": "1.5.2",
   "description": "React tooltip, focused on simplicity and performance",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "bundle": "node node_modules/webpack/bin/webpack.js -p --colors --display-error-details --config webpack.dist.config.js",
     "dev": "webpack-dev-server --progress --colors",
-    "transpile": "babel src --out-dir dist",
+    "transpile": "babel src --out-dir dist && cp src/index.d.ts dist/index.d.ts",
     "build": "npm run transpile && npm run bundle",
     "prepublish": "npm run build"
   },
