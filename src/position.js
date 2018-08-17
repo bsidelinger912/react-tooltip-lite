@@ -5,11 +5,10 @@
 
 import getDirection from './getDirection';
 
-// @TODO: consider which of these should be props that can be passed
-const distance = 10;
 const bodyPadding = 10;
 const minArrowPadding = 5;
 const arrowSize = 10;
+const noArrowDistance = 3;
 
 /**
  * cross browser scroll positions
@@ -30,11 +29,25 @@ function getTipMaxWidth() {
 }
 
 /**
+ * Parses align mode from direction if specified with hyphen, defaulting to middle if not -
+ * e.g. 'left-start' is mode 'start' and 'left' would be the default of 'middle'
+ */
+function parseAlignMode(direction) {
+  const directionArray = direction.split('-');
+  if (directionArray.length > 1) {
+    return directionArray[1];
+  }
+  return 'middle';
+}
+
+/**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
  */
-function getUpDownPosition(tip, target, state, direction) {
+function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top;
+
+  const arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
 
   if (tip && state.showTip) {
     // get wrapper left position
@@ -43,9 +56,17 @@ function getUpDownPosition(tip, target, state, direction) {
 
     const halfTargetWidth = Math.round(target.offsetWidth / 2);
     const tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
+    const arrowCenter = targetLeft + halfTargetWidth;
+    const arrowLeft = arrowCenter - arrowSize;
+    const arrowRight = arrowCenter + arrowSize;
 
-    // default is centered, but must be higher than body padding
-    left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+    if (alignMode === 'start') {
+      left = props.arrow ? arrowLeft : targetLeft;
+    } else if (alignMode === 'end') {
+      left = (props.arrow ? arrowRight : (targetLeft + target.offsetWidth)) - tipWidth;
+    } else {
+      left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+    }
 
     // check for right overhang
     const rightOverhang = (left + tipWidth + bodyPadding) - document.documentElement.clientWidth;
@@ -54,9 +75,9 @@ function getUpDownPosition(tip, target, state, direction) {
     }
 
     if (direction === 'up') {
-      top = (targetRect.top + getScrollTop()) - (tip.offsetHeight + distance);
+      top = (targetRect.top + getScrollTop()) - (tip.offsetHeight + arrowSpacing);
     } else {
-      top = targetRect.bottom + getScrollTop() + distance;
+      top = targetRect.bottom + getScrollTop() + arrowSpacing;
     }
   }
 
@@ -70,35 +91,45 @@ function getUpDownPosition(tip, target, state, direction) {
 /**
  * gets top position for left/right arrows
  */
-function getLeftRightPosition(tip, target, state, direction) {
+function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top = 0;
+
+  const arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  const arrowPadding = props.arrow ? minArrowPadding : 0;
 
   if (tip && state.showTip) {
     const scrollTop = getScrollTop();
     const targetRect = target.getBoundingClientRect();
     const targetTop = targetRect.top + scrollTop;
     const halfTargetHeight = Math.round(target.offsetHeight / 2);
+    const arrowTop = (targetTop + halfTargetHeight) - arrowSpacing;
+    const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSpacing;
 
-    // default to middle, but don't go below body
-    top = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
+    // TODO: handle close to edges better
+    if (alignMode === 'start') {
+      top = props.arrow ? arrowTop : targetTop;
+    } else if (alignMode === 'end') {
+      top = ((props.arrow ? (arrowTop + arrowSize) : targetRect.bottom) - tip.offsetHeight) + scrollTop;
+    } else {
+      // default to middle, but don't go below body
+      const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
-    // make sure it doesn't go below the arrow
-    const arrowTop = (targetTop + halfTargetHeight) - arrowSize;
-    top = Math.min(top, arrowTop - minArrowPadding);
+      // make sure it doesn't go below the arrow
+      top = Math.min(centeredTop, arrowTop - arrowPadding);
+    }
 
     // check for bottom overhang
     const bottomOverhang = ((top - scrollTop) + tip.offsetHeight + bodyPadding) - window.innerHeight;
     if (bottomOverhang > 0) {
       // try to add the body padding below the tip, but don't offset too far from the arrow
-      const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
-      top = Math.max(top - bottomOverhang, (arrowBottom + minArrowPadding) - tip.offsetHeight);
+      top = Math.max(top - bottomOverhang, (arrowBottom + arrowPadding) - tip.offsetHeight);
     }
 
     if (direction === 'right') {
-      left = targetRect.right + distance;
+      left = targetRect.right + arrowSpacing;
     } else {
-      left = targetRect.left - distance - tip.offsetWidth;
+      left = targetRect.left - arrowSpacing - tip.offsetWidth;
     }
   }
 
@@ -112,7 +143,7 @@ function getLeftRightPosition(tip, target, state, direction) {
  * sets the Arrow styles based on direction
  */
 function getArrowStyles(target, tip, direction, state, props) {
-  if (!target) {
+  if (!target || !props.arrow) {
     return {
       top: '0',
       left: '-10000000px',
@@ -130,27 +161,27 @@ function getArrowStyles(target, tip, direction, state, props) {
       return {
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
         left: targetRect.right + scrollLeft,
-        borderRight: (props.background !== '') ? `10px solid ${props.background}` : '',
-        borderTop: '10px solid transparent',
-        borderBottom: '10px solid transparent',
+        borderRight: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
+        borderTop: `${arrowSize}px solid transparent`,
+        borderBottom: `${arrowSize}px solid transparent`,
       };
 
     case 'left':
       return {
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
-        left: (targetRect.left + scrollLeft) - distance - 1,
-        borderLeft: (props.background !== '') ? `10px solid ${props.background}` : '',
-        borderTop: '10px solid transparent',
-        borderBottom: '10px solid transparent',
+        left: (targetRect.left + scrollLeft) - arrowSize - 1,
+        borderLeft: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
+        borderTop: `${arrowSize}px solid transparent`,
+        borderBottom: `${arrowSize}px solid transparent`,
       };
 
     case 'up':
       return {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: (targetRect.top + scrollTop) - distance,
-        borderTop: (props.background !== '') ? `10px solid ${props.background}` : '',
-        borderLeft: '10px solid transparent',
-        borderRight: '10px solid transparent',
+        top: (targetRect.top + scrollTop) - arrowSize,
+        borderTop: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
+        borderLeft: `${arrowSize}px solid transparent`,
+        borderRight: `${arrowSize}px solid transparent`,
       };
 
     case 'down':
@@ -159,8 +190,8 @@ function getArrowStyles(target, tip, direction, state, props) {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
         top: targetRect.bottom + scrollTop,
         borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
-        borderLeft: '10px solid transparent',
-        borderRight: '10px solid transparent',
+        borderLeft: `${arrowSize}px solid transparent`,
+        borderRight: `${arrowSize}px solid transparent`,
       };
   }
 }
@@ -169,12 +200,13 @@ function getArrowStyles(target, tip, direction, state, props) {
  * Returns the positions style rules
  */
 export default function positions(direction, tip, target, state, props) {
-  const realDirection = getDirection(direction, tip, target, distance, bodyPadding);
+  const alignMode = parseAlignMode(direction);
+  const realDirection = getDirection(direction, tip, target, props.arrow ? arrowSize : 0, bodyPadding);
   const maxWidth = getTipMaxWidth();
 
   const tipPosition = (realDirection === 'up' || realDirection === 'down')
-    ? getUpDownPosition(tip, target, state, realDirection)
-    : getLeftRightPosition(tip, target, state, realDirection);
+    ? getUpDownPosition(tip, target, state, realDirection, alignMode, props)
+    : getLeftRightPosition(tip, target, state, realDirection, alignMode, props);
 
   return {
     tip: {

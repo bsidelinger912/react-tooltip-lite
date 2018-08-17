@@ -35,7 +35,80 @@ class App extends React.Component {
             </Tooltip>
 
             <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target">
-              Target
+              t
+            </Tooltip>
+          </div>
+        </section>
+
+        <section>
+          <h3>Compound Alignment</h3>
+
+          <div className="flex-spread">
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target" distance={3} arrow={false}>
+              right-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target" distance={3} arrow={false}>
+              right-end
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target" distance={10} arrow={false}>
+              left-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target" distance={3} arrow={false}>
+              left-end
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3} arrow={false}>
+              top-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3} arrow={false}>
+              top-end
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target" distance={3} arrow={false}>
+              down-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target" distance={3} arrow={false}>
+              down-end
+            </Tooltip>
+          </div>
+          <br />
+          <br />
+          <div className="flex-spread">
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target" distance={3}>
+              right-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target" distance={3}>
+              right-end
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target" distance={10}>
+              left-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target" distance={3}>
+              left-end
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3}>
+              s
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3}>
+              e
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target" distance={3}>
+              down-start
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target" distance={3}>
+              down-end
             </Tooltip>
           </div>
         </section>
