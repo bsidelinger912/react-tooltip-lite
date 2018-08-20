@@ -3,7 +3,7 @@ declare module 'react-tooltip-lite' {
   import * as React from 'react';
 
   export interface TooltipProps {
-    tagName: string,
+    tagName?: string,
     direction?: string,
     className?: string,
     content: React.ReactNode,
