@@ -105,11 +105,6 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>padding amount for the tooltip contents (defaults to '10px')</td>
     </tr>
     <tr>
-      <td>distance</td>
-      <td>number</td>
-      <td>distance of tooltip from hover target (defaults to '10px')</td>
-    </tr>
-    <tr>
       <td>styles</td>
       <td>object</td>
       <td>style overrides for the target wrapper</td>
@@ -154,6 +149,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>hoverDelay</td>
       <td>number</td>
       <td>the number of milliseconds to determine hover intent, defaults to 200</td>
+    </tr>
+    <tr>
+      <td>arrow</td>
+      <td>boolean</td>
+      <td>Whether or not to have an arrow on the tooltip, defaults to true</td>
     </tr>
   </tbody>
 </table>
