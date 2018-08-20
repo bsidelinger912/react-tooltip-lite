@@ -17,10 +17,10 @@ var _getDirection2 = _interopRequireDefault(_getDirection);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// @TODO: consider which of these should be props that can be passed
 var bodyPadding = 10;
 var minArrowPadding = 5;
 var arrowSize = 10;
+var noArrowDistance = 3;
 
 /**
  * cross browser scroll positions
@@ -53,36 +53,34 @@ function parseAlignMode(direction) {
 }
 
 /**
- *  Interpolates a scalar based on possible values of "start", "end" or "middle" (default)
- */
-function interpolateAlignOffset(alignMode, value) {
-  switch (alignMode) {
-    case 'start':
-      return 0;
-    case 'end':
-      return value;
-    default:
-      return Math.round(value / 2);
-  }
-}
-
-/**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
  */
-function getUpDownPosition(tip, target, state, direction, distance, alignMode) {
+function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   var left = -10000000;
   var top = void 0;
+
+  var arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
 
   if (tip && state.showTip) {
     // get wrapper left position
     var targetRect = target.getBoundingClientRect();
     var targetLeft = targetRect.left + getScrollLeft();
 
-    var targetWidth = interpolateAlignOffset(alignMode, target.offsetWidth);
+    var halfTargetWidth = Math.round(target.offsetWidth / 2);
     var tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
+    var arrowCenter = targetLeft + halfTargetWidth;
+    var arrowLeft = arrowCenter - arrowSize;
+    var arrowRight = arrowCenter + arrowSize;
 
-    // default to positioning specifed by offset, but must be higher than body padding
-    left = Math.max(targetLeft + targetWidth - interpolateAlignOffset(alignMode, tipWidth), bodyPadding + getScrollLeft());
+    if (alignMode === 'start') {
+      left = props.arrow ? Math.min(arrowLeft, targetLeft) : targetLeft;
+    } else if (alignMode === 'end') {
+      var rightWithArrow = Math.max(arrowRight, targetLeft + target.offsetWidth);
+      var rightEdge = props.arrow ? rightWithArrow : targetLeft + target.offsetWidth;
+      left = rightEdge - tipWidth;
+    } else {
+      left = Math.max(targetLeft + halfTargetWidth - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+    }
 
     // check for right overhang
     var rightOverhang = left + tipWidth + bodyPadding - document.documentElement.clientWidth;
@@ -91,9 +89,9 @@ function getUpDownPosition(tip, target, state, direction, distance, alignMode) {
     }
 
     if (direction === 'up') {
-      top = targetRect.top + getScrollTop() - (tip.offsetHeight + distance);
+      top = targetRect.top + getScrollTop() - (tip.offsetHeight + arrowSpacing);
     } else {
-      top = targetRect.bottom + getScrollTop() + distance;
+      top = targetRect.bottom + getScrollTop() + arrowSpacing;
     }
   }
 
@@ -106,35 +104,45 @@ function getUpDownPosition(tip, target, state, direction, distance, alignMode) {
 /**
  * gets top position for left/right arrows
  */
-function getLeftRightPosition(tip, target, state, direction, distance, alignMode) {
+function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   var left = -10000000;
   var top = 0;
+
+  var arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  var arrowPadding = props.arrow ? minArrowPadding : 0;
 
   if (tip && state.showTip) {
     var scrollTop = getScrollTop();
     var targetRect = target.getBoundingClientRect();
     var targetTop = targetRect.top + scrollTop;
-    var targetHeight = interpolateAlignOffset(alignMode, target.offsetHeight);
+    var halfTargetHeight = Math.round(target.offsetHeight / 2);
+    var arrowTop = targetTop + halfTargetHeight - arrowSpacing;
+    var arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSpacing;
 
-    // default to positioning specifed by offset, but don't go below body
-    top = Math.max(targetTop + targetHeight - interpolateAlignOffset(alignMode, tip.offsetHeight), bodyPadding + scrollTop);
+    // TODO: handle close to edges better
+    if (alignMode === 'start') {
+      top = Math.min(targetTop, arrowTop);
+    } else if (alignMode === 'end') {
+      top = Math.max(targetRect.bottom + scrollTop - tip.offsetHeight, arrowBottom - tip.offsetHeight);
+    } else {
+      // default to middle, but don't go below body
+      var centeredTop = Math.max(targetTop + halfTargetHeight - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
-    // make sure it doesn't go below the arrow
-    var arrowTop = targetTop + targetHeight - arrowSize;
-    top = Math.min(top, arrowTop - minArrowPadding);
+      // make sure it doesn't go below the arrow
+      top = Math.min(centeredTop, arrowTop - arrowPadding);
+    }
 
     // check for bottom overhang
     var bottomOverhang = top - scrollTop + tip.offsetHeight + bodyPadding - window.innerHeight;
     if (bottomOverhang > 0) {
       // try to add the body padding below the tip, but don't offset too far from the arrow
-      var arrowBottom = targetRect.top + scrollTop + targetHeight + arrowSize;
-      top = Math.max(top - bottomOverhang, arrowBottom + minArrowPadding - tip.offsetHeight);
+      top = Math.max(top - bottomOverhang, arrowBottom + arrowPadding - tip.offsetHeight);
     }
 
     if (direction === 'right') {
-      left = targetRect.right + distance;
+      left = targetRect.right + arrowSpacing;
     } else {
-      left = targetRect.left - distance - tip.offsetWidth;
+      left = targetRect.left - arrowSpacing - tip.offsetWidth;
     }
   }
 
@@ -148,7 +156,7 @@ function getLeftRightPosition(tip, target, state, direction, distance, alignMode
  * sets the Arrow styles based on direction
  */
 function getArrowStyles(target, tip, direction, state, props) {
-  if (!target) {
+  if (!target || !props.arrow) {
     return {
       top: '0',
       left: '-10000000px'
@@ -166,27 +174,27 @@ function getArrowStyles(target, tip, direction, state, props) {
       return {
         top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
         left: targetRect.right + scrollLeft,
-        borderRight: props.background !== '' ? '10px solid ' + props.background : '',
-        borderTop: '10px solid transparent',
-        borderBottom: '10px solid transparent'
+        borderRight: props.background !== '' ? arrowSize + 'px solid ' + props.background : '',
+        borderTop: arrowSize + 'px solid transparent',
+        borderBottom: arrowSize + 'px solid transparent'
       };
 
     case 'left':
       return {
         top: state.showTip && tip ? targetRect.top + scrollTop + halfTargetHeight - arrowSize : '-10000000px',
-        left: targetRect.left + scrollLeft - props.distance - 1,
-        borderLeft: props.background !== '' ? '10px solid ' + props.background : '',
-        borderTop: '10px solid transparent',
-        borderBottom: '10px solid transparent'
+        left: targetRect.left + scrollLeft - arrowSize - 1,
+        borderLeft: props.background !== '' ? arrowSize + 'px solid ' + props.background : '',
+        borderTop: arrowSize + 'px solid transparent',
+        borderBottom: arrowSize + 'px solid transparent'
       };
 
     case 'up':
       return {
         left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
-        top: targetRect.top + scrollTop - props.distance,
-        borderTop: props.background !== '' ? '10px solid ' + props.background : '',
-        borderLeft: '10px solid transparent',
-        borderRight: '10px solid transparent'
+        top: targetRect.top + scrollTop - arrowSize,
+        borderTop: props.background !== '' ? arrowSize + 'px solid ' + props.background : '',
+        borderLeft: arrowSize + 'px solid transparent',
+        borderRight: arrowSize + 'px solid transparent'
       };
 
     case 'down':
@@ -195,8 +203,8 @@ function getArrowStyles(target, tip, direction, state, props) {
         left: state.showTip && tip ? targetRect.left + scrollLeft + halfTargetWidth - arrowSize : '-10000000px',
         top: targetRect.bottom + scrollTop,
         borderBottom: props.background !== '' ? '10px solid ' + props.background : '',
-        borderLeft: '10px solid transparent',
-        borderRight: '10px solid transparent'
+        borderLeft: arrowSize + 'px solid transparent',
+        borderRight: arrowSize + 'px solid transparent'
       };
   }
 }
@@ -206,12 +214,10 @@ function getArrowStyles(target, tip, direction, state, props) {
  */
 function positions(direction, tip, target, state, props) {
   var alignMode = parseAlignMode(direction);
-  var realDirection = (0, _getDirection2.default)(direction, tip, target, props.distance, bodyPadding);
+  var realDirection = (0, _getDirection2.default)(direction, tip, target, props.arrow ? arrowSize : 0, bodyPadding);
   var maxWidth = getTipMaxWidth();
-  console.log(alignMode);
-  console.log(realDirection);
 
-  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection, props.distance, alignMode) : getLeftRightPosition(tip, target, state, realDirection, props.distance, alignMode);
+  var tipPosition = realDirection === 'up' || realDirection === 'down' ? getUpDownPosition(tip, target, state, realDirection, alignMode, props) : getLeftRightPosition(tip, target, state, realDirection, alignMode, props);
 
   return {
     tip: _extends({}, tipPosition, {

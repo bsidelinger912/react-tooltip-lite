@@ -64,6 +64,16 @@ var Tooltip = function (_React$Component) {
   }
 
   _createClass(Tooltip, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // if the isOpen prop is passed on first render we need to immediately trigger a second render,
+      // because the tip ref is needed to calculate the position
+      if (this.props.isOpen) {
+        // eslint-disable-next-line react/no-did-mount-set-state
+        this.setState({ isOpen: true });
+      }
+    }
+  }, {
     key: 'toggleTip',
     value: function toggleTip() {
       this.setState({ showTip: !this.state.showTip });
@@ -121,13 +131,13 @@ var Tooltip = function (_React$Component) {
           useDefaultStyles = _props.useDefaultStyles,
           isOpen = _props.isOpen,
           tipContentHover = _props.tipContentHover,
-          distance = _props.distance;
+          arrow = _props.arrow;
 
 
       var showTip = typeof isOpen === 'undefined' ? this.state.showTip : isOpen;
       var currentPositions = (0, _position2.default)(direction, this.tip, this.target, _extends({}, this.state, { showTip: showTip }), {
         background: useDefaultStyles ? defaultBg : background,
-        distance: distance
+        arrow: arrow
       });
 
       var wrapperStyles = _extends({
@@ -231,7 +241,7 @@ Tooltip.propTypes = {
   isOpen: _propTypes2.default.bool,
   hoverDelay: _propTypes2.default.number,
   tipContentHover: _propTypes2.default.bool,
-  distance: _propTypes2.default.number
+  arrow: _propTypes2.default.bool
 };
 Tooltip.defaultProps = {
   tagName: 'div',
@@ -245,6 +255,6 @@ Tooltip.defaultProps = {
   useDefaultStyles: false,
   hoverDelay: 200,
   tipContentHover: false,
-  distance: 10
+  arrow: true
 };
 exports.default = Tooltip;

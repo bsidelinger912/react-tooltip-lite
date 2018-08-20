@@ -64,6 +64,15 @@ class Tooltip extends React.Component {
     this.endHover = this.endHover.bind(this);
   }
 
+  componentDidMount() {
+    // if the isOpen prop is passed on first render we need to immediately trigger a second render,
+    // because the tip ref is needed to calculate the position
+    if (this.props.isOpen) {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({ isOpen: true });
+    }
+  }
+
   toggleTip() {
     this.setState({ showTip: !this.state.showTip });
   }

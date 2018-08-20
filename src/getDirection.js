@@ -9,10 +9,11 @@ function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
   return (tip.offsetWidth + target.offsetWidth + distance + bodyPadding + deadSpace < document.documentElement.clientWidth);
 }
 
-function checkHalfHeightVisible(target) {
-  const targetCenterFromWindow = target.getBoundingClientRect().top + Math.round(target.offsetHeight / 2);
+function checkTargetFullyVisible(target) {
+  const bottomOverhang = target.getBoundingClientRect().bottom > window.innerHeight;
+  const topOverhang = target.getBoundingClientRect().top < 0;
 
-  return (targetCenterFromWindow < window.innerHeight && targetCenterFromWindow > 0);
+  return (!bottomOverhang && !topOverhang);
 }
 
 export default function getDirection(currentDirection, tip, target, distance, bodyPadding) {
@@ -29,7 +30,7 @@ export default function getDirection(currentDirection, tip, target, distance, bo
   switch (trimmedDirection) {
     case 'right':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkHalfHeightVisible(target)) {
+      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkTargetFullyVisible(target)) {
         return getDirection('up', tip, target, distance, bodyPadding);
       }
 
@@ -41,7 +42,7 @@ export default function getDirection(currentDirection, tip, target, distance, bo
 
     case 'left':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkHalfHeightVisible(target)) {
+      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkTargetFullyVisible(target)) {
         return getDirection('up', tip, target, distance, bodyPadding);
       }
 

@@ -61,9 +61,11 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
     const arrowRight = arrowCenter + arrowSize;
 
     if (alignMode === 'start') {
-      left = props.arrow ? arrowLeft : targetLeft;
+      left = props.arrow ? Math.min(arrowLeft, targetLeft) : targetLeft;
     } else if (alignMode === 'end') {
-      left = (props.arrow ? arrowRight : (targetLeft + target.offsetWidth)) - tipWidth;
+      const rightWithArrow = Math.max(arrowRight, (targetLeft + target.offsetWidth));
+      const rightEdge = props.arrow ? rightWithArrow : (targetLeft + target.offsetWidth);
+      left = rightEdge - tipWidth;
     } else {
       left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
     }
@@ -108,9 +110,10 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
 
     // TODO: handle close to edges better
     if (alignMode === 'start') {
-      top = props.arrow ? arrowTop : targetTop;
+      top = props.arrow ? Math.min(targetTop, arrowTop) : targetTop;
     } else if (alignMode === 'end') {
-      top = ((props.arrow ? (arrowTop + arrowSize) : targetRect.bottom) - tip.offsetHeight) + scrollTop;
+      const topForBottomAlign = (targetRect.bottom + scrollTop) - tip.offsetHeight;
+      top = props.arrow ? Math.max(topForBottomAlign, arrowBottom - tip.offsetHeight) : topForBottomAlign;
     } else {
       // default to middle, but don't go below body
       const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);

@@ -3,7 +3,7 @@ declare module 'react-tooltip-lite' {
   import * as React from 'react';
 
   export interface TooltipProps {
-    tagName:string,
+    tagName: string,
     direction?: string,
     className?: string,
     content: React.ReactNode,
@@ -20,6 +20,7 @@ declare module 'react-tooltip-lite' {
     isOpen?: boolean,
     hoverDelay?: number,
     tipContentHover?: boolean,
+    arrow?: boolean;
   }
 
   export default class Tooltip extends React.Component<TooltipProps> {

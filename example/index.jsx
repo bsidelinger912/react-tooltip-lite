@@ -80,36 +80,37 @@ class App extends React.Component {
           <br />
           <div className="flex-spread">
             <Tooltip content="you can have compound alignments" direction="right-start" className="target" distance={3}>
-              right-start
+              right-start with arrow
             </Tooltip>
 
             <Tooltip content="you can have compound alignments" direction="right-end" className="target" distance={3}>
-              right-end
+              right-end with arrow
             </Tooltip>
 
             <Tooltip content="you can have compound alignments" direction="left-start" className="target" distance={10}>
-              left-start
+              left-start with arrow
             </Tooltip>
 
             <Tooltip content="you can have compound alignments" direction="left-end" className="target" distance={3}>
-              left-end
-            </Tooltip>
-
-            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3}>
-              s
-            </Tooltip>
-
-            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3}>
-              e
+              left-end with arrow
             </Tooltip>
 
             <Tooltip content="you can have compound alignments" direction="down-start" className="target" distance={3}>
-              down-start
+              down-start with arrow
             </Tooltip>
 
             <Tooltip content="you can have compound alignments" direction="down-end" className="target" distance={3}>
-              down-end
+              down-end with arrow
             </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3}>
+              up-start with arrow
+            </Tooltip>
+
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3}>
+              up-end with arrow
+            </Tooltip>
+
           </div>
         </section>
 
@@ -162,6 +163,7 @@ class App extends React.Component {
                   You can copy this text, or click this <a href="https://www.npmjs.com/package/react-tooltip-lite" target="_blank" rel="noopener noreferrer">link</a>
                 </div>
               )}
+              tagName="span"
               direction="right"
               className="target"
               tipContentHover
