@@ -1,3 +1,7 @@
+/**
+ * @class Tooltip
+ * @description A lightweight and responsive tooltip.
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -29,6 +33,7 @@ class Tooltip extends React.Component {
     isOpen: PropTypes.bool,
     hoverDelay: PropTypes.number,
     tipContentHover: PropTypes.bool,
+    arrow: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -43,6 +48,7 @@ class Tooltip extends React.Component {
     useDefaultStyles: false,
     hoverDelay: 200,
     tipContentHover: false,
+    arrow: true,
   }
 
   constructor() {
@@ -56,6 +62,15 @@ class Tooltip extends React.Component {
     this.toggleTip = this.toggleTip.bind(this);
     this.startHover = this.startHover.bind(this);
     this.endHover = this.endHover.bind(this);
+  }
+
+  componentDidMount() {
+    // if the isOpen prop is passed on first render we need to immediately trigger a second render,
+    // because the tip ref is needed to calculate the position
+    if (this.props.isOpen) {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({ isOpen: true });
+    }
   }
 
   toggleTip() {
@@ -106,11 +121,13 @@ class Tooltip extends React.Component {
       useDefaultStyles,
       isOpen,
       tipContentHover,
+      arrow,
     } = this.props;
 
     const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
     const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
       background: useDefaultStyles ? defaultBg : background,
+      arrow,
     });
 
     const wrapperStyles = {

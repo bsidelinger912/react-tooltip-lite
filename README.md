@@ -82,7 +82,7 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
     <tr>
       <td>direction</td>
       <td>string</td>
-      <td>the tip direction, defaults to up</td>
+      <td>the tip direction, defaults to up.   Possible values are "up", "down", "left", "right" with optional modifer for alignment of "start" and "end".    e.g. "left-start" will attempt tooltip on left and align it with the start of the target.   If alignment modifier is not specified the default behavior is to align "middle".</td>
     </tr>
     <tr>
       <td>className</td>
@@ -149,6 +149,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>hoverDelay</td>
       <td>number</td>
       <td>the number of milliseconds to determine hover intent, defaults to 200</td>
+    </tr>
+    <tr>
+      <td>arrow</td>
+      <td>boolean</td>
+      <td>Whether or not to have an arrow on the tooltip, defaults to true</td>
     </tr>
   </tbody>
 </table>
