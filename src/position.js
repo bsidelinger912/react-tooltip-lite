@@ -47,7 +47,8 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top;
 
-  const arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  const defaultArrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  const arrowSpacing = typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
 
   if (tip && state.showTip) {
     // get wrapper left position
@@ -97,7 +98,8 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top = 0;
 
-  const arrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  const defaultArrowSpacing = props.arrow ? arrowSize : noArrowDistance;
+  const arrowSpacing = typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
   const arrowPadding = props.arrow ? minArrowPadding : 0;
 
   if (tip && state.showTip) {
