@@ -44,70 +44,70 @@ class App extends React.Component {
           <h3>Compound Alignment</h3>
 
           <div className="flex-spread">
-            <Tooltip content="you can have compound alignments" direction="right-start" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target" arrow={false}>
               right-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="right-end" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target" arrow={false}>
               right-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-start" className="target" distance={10} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target" arrow={false}>
               left-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-end" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target" arrow={false}>
               left-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" arrow={false}>
               top-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" arrow={false}>
               top-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-start" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target" arrow={false}>
               down-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-end" className="target" distance={3} arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target" arrow={false}>
               down-end
             </Tooltip>
           </div>
           <br />
           <br />
           <div className="flex-spread">
-            <Tooltip content="you can have compound alignments" direction="right-start" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target">
               right-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="right-end" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target">
               right-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-start" className="target" distance={10}>
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target">
               left-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-end" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target">
               left-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-start" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target">
               down-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-end" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target">
               down-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-start" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target">
               up-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-end" className="target" distance={3}>
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target">
               up-end with arrow
             </Tooltip>
 

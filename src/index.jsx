@@ -34,6 +34,7 @@ class Tooltip extends React.Component {
     hoverDelay: PropTypes.number,
     tipContentHover: PropTypes.bool,
     arrow: PropTypes.bool,
+    distance: PropTypes.number,
   }
 
   static defaultProps = {
@@ -49,6 +50,7 @@ class Tooltip extends React.Component {
     hoverDelay: 200,
     tipContentHover: false,
     arrow: true,
+    distance: undefined,
   }
 
   constructor() {
@@ -122,12 +124,14 @@ class Tooltip extends React.Component {
       isOpen,
       tipContentHover,
       arrow,
+      distance,
     } = this.props;
 
     const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
     const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
       background: useDefaultStyles ? defaultBg : background,
       arrow,
+      distance,
     });
 
     const wrapperStyles = {

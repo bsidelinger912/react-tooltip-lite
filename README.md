@@ -155,6 +155,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>boolean</td>
       <td>Whether or not to have an arrow on the tooltip, defaults to true</td>
     </tr>
+    <tr>
+      <td>distance</td>
+      <td>number</td>
+      <td>The distance from the tooltip to the target, defaults to 10px with an arrow and 3px without an arrow</td>
+    </tr>
   </tbody>
 </table>
 <br />
