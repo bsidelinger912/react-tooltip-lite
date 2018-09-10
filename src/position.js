@@ -160,6 +160,7 @@ function getArrowStyles(target, tip, direction, state, props) {
   const halfTargetWidth = Math.round(target.offsetWidth / 2);
   const scrollTop = getScrollTop();
   const scrollLeft = getScrollLeft();
+  const arrowSpacing = typeof props.distance === 'number' ? props.distance : arrowSize;
 
   switch (direction) {
     case 'right':
@@ -183,7 +184,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     case 'up':
       return {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: (targetRect.top + scrollTop) - arrowSize,
+        top: (targetRect.top + scrollTop) - arrowSpacing,
         borderTop: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
@@ -193,7 +194,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     default:
       return {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: targetRect.bottom + scrollTop,
+        top: targetRect.bottom + scrollTop + arrowSpacing - arrowSize,
         borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
