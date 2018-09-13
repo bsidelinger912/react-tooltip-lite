@@ -7,7 +7,7 @@ import getDirection from './getDirection';
 
 const bodyPadding = 10;
 const minArrowPadding = 5;
-const arrowSize = 10;
+export const arrowSize = 10;
 const noArrowDistance = 3;
 
 /**
@@ -17,7 +17,7 @@ function getScrollTop() {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 }
 
-function getScrollLeft() {
+export function getScrollLeft() {
   return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
 }
 
@@ -52,8 +52,9 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
 
   if (tip && state.showTip) {
     // get wrapper left position
+    const scrollLeft = getScrollLeft();
     const targetRect = target.getBoundingClientRect();
-    const targetLeft = targetRect.left + getScrollLeft();
+    const targetLeft = targetRect.left + scrollLeft;
 
     const halfTargetWidth = Math.round(target.offsetWidth / 2);
     const tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
@@ -66,9 +67,9 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
     } else if (alignMode === 'end') {
       const rightWithArrow = Math.max(arrowRight, (targetLeft + target.offsetWidth));
       const rightEdge = props.arrow ? rightWithArrow : (targetLeft + target.offsetWidth);
-      left = rightEdge - tipWidth;
+      left = Math.max(rightEdge - tipWidth, bodyPadding + scrollLeft);
     } else {
-      left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + getScrollLeft());
+      left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + scrollLeft);
     }
 
     // check for right overhang
@@ -104,11 +105,12 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
 
   if (tip && state.showTip) {
     const scrollTop = getScrollTop();
+    const scrollLeft = getScrollLeft();
     const targetRect = target.getBoundingClientRect();
     const targetTop = targetRect.top + scrollTop;
     const halfTargetHeight = Math.round(target.offsetHeight / 2);
-    const arrowTop = (targetTop + halfTargetHeight) - arrowSpacing;
-    const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSpacing;
+    const arrowTop = (targetTop + halfTargetHeight) - arrowSize;
+    const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
 
     // TODO: handle close to edges better
     if (alignMode === 'start') {
@@ -119,7 +121,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     } else {
       // default to middle, but don't go below body
       const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
-
+      
       // make sure it doesn't go below the arrow
       top = Math.min(centeredTop, arrowTop + arrowSpacing);
     }
@@ -132,9 +134,9 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     }
 
     if (direction === 'right') {
-      left = targetRect.right + arrowSpacing;
+      left = targetRect.right + arrowSpacing + scrollLeft;
     } else {
-      left = targetRect.left - arrowSpacing - tip.offsetWidth;
+      left = (targetRect.left - arrowSpacing - tip.offsetWidth) + scrollLeft;
     }
   }
 
@@ -207,7 +209,14 @@ function getArrowStyles(target, tip, direction, state, props) {
  */
 export default function positions(direction, tip, target, state, props) {
   const alignMode = parseAlignMode(direction);
-  const realDirection = getDirection(direction, tip, target, props.arrow ? arrowSize : 0, bodyPadding);
+  const trimmedDirection = direction.split('-')[0];
+  
+  let realDirection = trimmedDirection;
+  if (tip && state.showTip) {
+    const testArrowStyles = getArrowStyles(target, tip, trimmedDirection, state, props);
+    realDirection = getDirection(trimmedDirection, tip, target, props.arrow ? arrowSize : 0, bodyPadding, props.arrow && testArrowStyles);
+  }
+  
   const maxWidth = getTipMaxWidth();
 
   const tipPosition = (realDirection === 'up' || realDirection === 'down')
