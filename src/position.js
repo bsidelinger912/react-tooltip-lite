@@ -121,7 +121,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
       const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
       // make sure it doesn't go below the arrow
-      top = Math.min(centeredTop, arrowTop - arrowPadding);
+      top = Math.min(centeredTop, arrowTop + arrowSpacing);
     }
 
     // check for bottom overhang
@@ -160,12 +160,13 @@ function getArrowStyles(target, tip, direction, state, props) {
   const halfTargetWidth = Math.round(target.offsetWidth / 2);
   const scrollTop = getScrollTop();
   const scrollLeft = getScrollLeft();
+  const arrowSpacing = typeof props.distance === 'number' ? props.distance : arrowSize;
 
   switch (direction) {
     case 'right':
       return {
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
-        left: targetRect.right + scrollLeft,
+        left: targetRect.right + scrollLeft + arrowSpacing - arrowSize,
         borderRight: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
         borderTop: `${arrowSize}px solid transparent`,
         borderBottom: `${arrowSize}px solid transparent`,
@@ -174,7 +175,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     case 'left':
       return {
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
-        left: (targetRect.left + scrollLeft) - arrowSize - 1,
+        left: (targetRect.left + scrollLeft) - arrowSpacing - 1,
         borderLeft: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
         borderTop: `${arrowSize}px solid transparent`,
         borderBottom: `${arrowSize}px solid transparent`,
@@ -183,7 +184,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     case 'up':
       return {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: (targetRect.top + scrollTop) - arrowSize,
+        top: (targetRect.top + scrollTop) - arrowSpacing,
         borderTop: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
@@ -193,7 +194,7 @@ function getArrowStyles(target, tip, direction, state, props) {
     default:
       return {
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: targetRect.bottom + scrollTop,
+        top: targetRect.bottom + scrollTop + arrowSpacing - arrowSize,
         borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
