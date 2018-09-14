@@ -132,7 +132,6 @@ class Tooltip extends React.Component {
       background: useDefaultStyles ? defaultBg : background,
       arrow,
       distance,
-      padding,
     });
 
     const wrapperStyles = {

@@ -70,9 +70,9 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
       left = Math.max(rightEdge - tipWidth, bodyPadding + scrollLeft);
     } else {
       const centeredLeft = (targetLeft + halfTargetWidth) - Math.round(tipWidth / 2);
-      const whyThis = bodyPadding + scrollLeft;
+      const availableSpaceOnLeft = bodyPadding + scrollLeft;
 
-      left = Math.max(centeredLeft, whyThis);
+      left = Math.max(centeredLeft, availableSpaceOnLeft);
     }
 
     // check for right overhang
