@@ -120,7 +120,7 @@ class App extends React.Component {
             For <Tooltip content="Go to google" direction="right" tagName="span">
               <a href="http://google.com" target="_blank" rel="noopener noreferrer">inline text</a>
             </Tooltip>, a right or left tip works nicely. The tip will try to go the desired way and flip if there is not
-            enough <Tooltip content="Go to google" direction="right" tagName="span">
+            enough <Tooltip content="Go to google" direction="right" tagName="span" distance={20}>
               <a href="http://google.com" target="_blank" rel="noopener noreferrer">space</a>
             </Tooltip>.
             Shrink the window and see how the tip behaves when close to

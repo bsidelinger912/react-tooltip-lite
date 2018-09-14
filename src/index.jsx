@@ -164,7 +164,10 @@ class Tooltip extends React.Component {
       className,
     };
 
-    const portalProps = {};
+    const portalProps = {
+      // keep clicks on the tip from closing click controlled tips
+      onClick: stopProp,
+    };
 
     // event handling
     if (eventOff) {
