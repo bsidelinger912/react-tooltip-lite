@@ -69,11 +69,16 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
       const rightEdge = props.arrow ? rightWithArrow : (targetLeft + target.offsetWidth);
       left = Math.max(rightEdge - tipWidth, bodyPadding + scrollLeft);
     } else {
-      left = Math.max((targetLeft + halfTargetWidth) - Math.round(tipWidth / 2), bodyPadding + scrollLeft);
+      const centeredLeft = (targetLeft + halfTargetWidth) - Math.round(tipWidth / 2);
+      const whyThis = bodyPadding + scrollLeft;
+
+      left = Math.max(centeredLeft, whyThis);
     }
 
     // check for right overhang
-    const rightOverhang = (left + tipWidth + bodyPadding) - document.documentElement.clientWidth;
+    const rightOfTip = left + tipWidth;
+    const rightOfScreen = (scrollLeft + document.documentElement.clientWidth) - bodyPadding;
+    const rightOverhang = rightOfTip - rightOfScreen;
     if (rightOverhang > 0) {
       left -= rightOverhang;
     }
@@ -121,7 +126,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     } else {
       // default to middle, but don't go below body
       const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
-      
+
       // make sure it doesn't go below the arrow
       top = Math.min(centeredTop, arrowTop + arrowSpacing);
     }
@@ -210,14 +215,22 @@ function getArrowStyles(target, tip, direction, state, props) {
 export default function positions(direction, tip, target, state, props) {
   const alignMode = parseAlignMode(direction);
   const trimmedDirection = direction.split('-')[0];
-  
+
   let realDirection = trimmedDirection;
   if (tip && state.showTip) {
     const testArrowStyles = getArrowStyles(target, tip, trimmedDirection, state, props);
     realDirection = getDirection(trimmedDirection, tip, target, props.arrow ? arrowSize : 0, bodyPadding, props.arrow && testArrowStyles);
   }
-  
+
   const maxWidth = getTipMaxWidth();
+
+  // force the tip to display the width we measured everything at when visible, when scrolled
+  let width;
+  if (tip && state.showTip && getScrollLeft() > 0) {
+    // adding the exact width on the first render forces a bogus line break, so add 1px the first time
+    const spacer = tip.style.width ? 0 : 1;
+    width = Math.min(tip.offsetWidth, maxWidth) + spacer;
+  }
 
   const tipPosition = (realDirection === 'up' || realDirection === 'down')
     ? getUpDownPosition(tip, target, state, realDirection, alignMode, props)
@@ -227,6 +240,7 @@ export default function positions(direction, tip, target, state, props) {
     tip: {
       ...tipPosition,
       maxWidth,
+      width,
     },
     arrow: getArrowStyles(target, tip, realDirection, state, props),
     realDirection,
