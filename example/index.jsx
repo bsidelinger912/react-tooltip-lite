@@ -22,13 +22,14 @@ class App extends React.Component {
   }
 
   tipContentRef;
+  buttonRef;
 
   toggleTip() {
     this.setState({ tipOpen: !this.state.tipOpen });
   }
 
   bodyClick(e) {
-    if (this.tipContentRef.contains(e.target)) {
+    if (this.tipContentRef.contains(e.target) || this.buttonRef.contains(e.target)) {
       return;
     }
 
@@ -278,14 +279,7 @@ class App extends React.Component {
         <section>
           <h3>Controlled by props</h3>
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              this.toggleTip();
-            }}
-          >
-            {tipOpen ? 'close' : 'open'}
-          </button>
+          <button ref={(el) => { this.buttonRef = el; }} onClick={this.toggleTip}>{tipOpen ? 'close' : 'open'}</button>
           <br /><br />
           <Tooltip
             content={
@@ -302,7 +296,7 @@ class App extends React.Component {
             direction="down"
           >
             click the button
-          </Tooltip>
+</Tooltip>
         </section>
       </div>
     );
