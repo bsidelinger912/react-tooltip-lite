@@ -10,10 +10,29 @@ class App extends React.Component {
     this.state = { tipOpen: false };
 
     this.toggleTip = this.toggleTip.bind(this);
+    this.bodyClick = this.bodyClick.bind(this);
   }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.bodyClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.bodyClick);
+  }
+
+  tipContentRef;
 
   toggleTip() {
     this.setState({ tipOpen: !this.state.tipOpen });
+  }
+
+  bodyClick(e) {
+    if (this.tipContentRef.contains(e.target)) {
+      return;
+    }
+
+    this.setState({ tipOpen: false });
   }
 
   render() {
@@ -259,9 +278,29 @@ class App extends React.Component {
         <section>
           <h3>Controlled by props</h3>
 
-          <button onClick={this.toggleTip}>{tipOpen ? 'close' : 'open'}</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              this.toggleTip();
+            }}
+          >
+            {tipOpen ? 'close' : 'open'}
+          </button>
           <br /><br />
-          <Tooltip content="controlled by the button" isOpen={tipOpen} tagName="span" direction="down">
+          <Tooltip
+            content={
+              <div ref={(el) => { this.tipContentRef = el; }} className="controlled-example">
+                <div className="controlled-example_header">
+                  Hello
+                  <span className="controlled-example_close-button" onClick={this.toggleTip}>&times;</span>
+                </div>
+                This tip is controlled by the button, you can also click outside the tip or on the "x" to close it
+              </div>
+            }
+            isOpen={tipOpen}
+            tagName="span"
+            direction="down"
+          >
             click the button
           </Tooltip>
         </section>

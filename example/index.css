@@ -17,7 +17,6 @@ a {
 }
 
 .target {
-  display: inline-block;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -164,4 +163,24 @@ a {
 
 .imageWrapper img {
   width: 500px;
+}
+
+.controlled-example {
+  max-width: 250px;
+}
+
+.controlled-example_header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #fff;
+}
+
+.controlled-example_close-button {
+  cursor: pointer;
+}
+
+.controlled-example_close-button:hover {
+  color: grey;
 }
