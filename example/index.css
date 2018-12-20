@@ -59,101 +59,61 @@ a {
   color: #4286f4;
 }
 
-.react-tooltip-lite-up-arrow {
-  border-top: 10px solid #333;
-}
-
-.react-tooltip-lite-down-arrow {
-  border-bottom: 10px solid #333;
-}
-
-.react-tooltip-lite-right-arrow {
-  border-right: 10px solid #333;
-}
-
-.react-tooltip-lite-left-arrow {
-  border-left: 10px solid #333;
+.react-tooltip-lite-arrow {
+  border-color: #333;
 }
 
 /* overrides with a custom class */
 .customTip .react-tooltip-lite {
   border: 1px solid #888;
-  border: 1px solid #888;
   background: #ccc;
   color: black;
 }
 
-.customTip .react-tooltip-lite-up-arrow {
-  border-top: 10px solid #444;
+.customTip .react-tooltip-lite-arrow {
+  border-color:  #444;
   position: relative;
 }
 
-.customTip .react-tooltip-lite-up-arrow::before {
+.customTip .react-tooltip-lite-arrow::before {
   content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 99;
+  display: block;
+}
+
+.customTip .react-tooltip-lite-up-arrow::before {
   border-top: 10px solid #ccc;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  position: absolute;
   left: -10px;
   top: -11px;
-  width: 0;
-  height: 0;
-  z-index: 99;
-  display: block;
-}
-
-.customTip .react-tooltip-lite-down-arrow {
-  border-bottom: 10px solid #444;
 }
 
 .customTip .react-tooltip-lite-down-arrow::before {
-  content: '';
   border-bottom: 10px solid #ccc;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  position: absolute;
   left: -10px;
   bottom: -11px;
-  width: 0;
-  height: 0;
-  z-index: 99;
-  display: block;
-}
-
-.customTip .react-tooltip-lite-right-arrow {
-  border-right: 10px solid #444;
 }
 
 .customTip .react-tooltip-lite-right-arrow::before {
-  content: '';
   border-right: 10px solid #ccc;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  position: absolute;
   right: -11px;
   top: -10px;
-  width: 0;
-  height: 0;
-  z-index: 99;
-  display: block;
-}
-
-.customTip .react-tooltip-lite-left-arrow {
-  border-left: 10px solid #444;
 }
 
 .customTip .react-tooltip-lite-left-arrow::before {
-  content: '';
   border-left: 10px solid #ccc;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  position: absolute;
   left: -11px;
   top: -10px;
-  width: 0;
-  height: 0;
-  z-index: 99;
-  display: block;
 }
 
 .imageWrapper {

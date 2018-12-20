@@ -128,7 +128,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
       const centeredTop = Math.max((targetTop + halfTargetHeight) - Math.round(tip.offsetHeight / 2), bodyPadding + scrollTop);
 
       // make sure it doesn't go below the arrow
-      top = Math.min(centeredTop, arrowTop + arrowSpacing);
+      top = Math.min(centeredTop, arrowTop - arrowPadding);
     }
 
     // check for bottom overhang
@@ -168,43 +168,77 @@ function getArrowStyles(target, tip, direction, state, props) {
   const scrollTop = getScrollTop();
   const scrollLeft = getScrollLeft();
   const arrowSpacing = typeof props.distance === 'number' ? props.distance : arrowSize;
+  const borderStyles = {};
 
   switch (direction) {
     case 'right':
+      borderStyles.borderTop = `${arrowSize}px solid transparent`;
+      borderStyles.borderBottom = `${arrowSize}px solid transparent`;
+
+      if (props.background) {
+        borderStyles.borderRight = `${arrowSize}px solid ${props.background}`;
+      } else {
+        borderStyles.borderRightWidth = `${arrowSize}px`;
+        borderStyles.borderRightStyle = 'solid';
+      }
+
       return {
+        ...borderStyles,
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
-        left: targetRect.right + scrollLeft + arrowSpacing - arrowSize,
-        borderRight: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
-        borderTop: `${arrowSize}px solid transparent`,
-        borderBottom: `${arrowSize}px solid transparent`,
+        left: (targetRect.right + scrollLeft + arrowSpacing) - arrowSize,
       };
 
     case 'left':
+      borderStyles.borderTop = `${arrowSize}px solid transparent`;
+      borderStyles.borderBottom = `${arrowSize}px solid transparent`;
+
+      if (props.background) {
+        borderStyles.borderLeft = `${arrowSize}px solid ${props.background}`;
+      } else {
+        borderStyles.borderLeftWidth = `${arrowSize}px`;
+        borderStyles.borderLeftStyle = 'solid';
+      }
+
       return {
+        ...borderStyles,
         top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
         left: (targetRect.left + scrollLeft) - arrowSpacing - 1,
-        borderLeft: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
-        borderTop: `${arrowSize}px solid transparent`,
-        borderBottom: `${arrowSize}px solid transparent`,
       };
 
     case 'up':
+      borderStyles.borderLeft = `${arrowSize}px solid transparent`;
+      borderStyles.borderRight = `${arrowSize}px solid transparent`;
+
+      // if color is styled with css, we need everything except border-color, if styled with props, we add entire border rule
+      if (props.background) {
+        borderStyles.borderTop = `${arrowSize}px solid ${props.background}`;
+      } else {
+        borderStyles.borderTopWidth = `${arrowSize}px`;
+        borderStyles.borderTopStyle = 'solid';
+      }
+
       return {
+        ...borderStyles,
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
         top: (targetRect.top + scrollTop) - arrowSpacing,
-        borderTop: (props.background !== '') ? `${arrowSize}px solid ${props.background}` : '',
-        borderLeft: `${arrowSize}px solid transparent`,
-        borderRight: `${arrowSize}px solid transparent`,
       };
 
     case 'down':
     default:
+      borderStyles.borderLeft = `${arrowSize}px solid transparent`;
+      borderStyles.borderRight = `${arrowSize}px solid transparent`;
+
+      if (props.background) {
+        borderStyles.borderBottom = `10px solid ${props.background}`;
+      } else {
+        borderStyles.borderBottomWidth = `${arrowSize}px`;
+        borderStyles.borderBottomStyle = 'solid';
+      }
+
       return {
+        ...borderStyles,
         left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: targetRect.bottom + scrollTop + arrowSpacing - arrowSize,
-        borderBottom: (props.background !== '') ? `10px solid ${props.background}` : '',
-        borderLeft: `${arrowSize}px solid transparent`,
-        borderRight: `${arrowSize}px solid transparent`,
+        top: (targetRect.bottom + scrollTop + arrowSpacing) - arrowSize,
       };
   }
 }
