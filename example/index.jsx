@@ -93,7 +93,7 @@ class App extends React.Component {
                   </ul>
                 </div>
               )}
-              direction="up"
+              direction="down"
               tagName="span"
               className="target"
             >
@@ -145,7 +145,7 @@ class App extends React.Component {
             iaculis leo. Donec lobortis, turpis nec pulvinar venenatis, orci nunc semper sem, nec ornare nisl nisi ut ligula. Integer
             ut tempus elit. Cras luctus, tellus id vestibulum accumsan, purus velit mattis erat, euismod tempor mauris elit eget metus.
             Vivamus interdum ex sed egestas tincidunt.
-                </Tooltip>
+          </Tooltip>
 
           <div className="imageWrapper">
             <Tooltip content="you can wrap images of course too" styles={{ display: 'inline-block' }} direction="right">
@@ -169,7 +169,7 @@ class App extends React.Component {
           <p>
             <Tooltip content="this uses hover but also closes on click" className="target" tagName="span" eventOff="onClick">
               Close on click
-                    </Tooltip>
+            </Tooltip>
           </p>
 
           <p>
@@ -222,7 +222,18 @@ class App extends React.Component {
             direction="down"
           >
             click the button
-</Tooltip>
+          </Tooltip>
+        </section>
+
+        <section>
+          <h3>Distance and arrow size</h3>
+
+          <div className="flex-spread">
+            <Tooltip content="This has an arrowSize of 20, where the default is 10" className="target" arrowSize={20}>Larger arrowSize</Tooltip>
+            <Tooltip content="This has an arrowSize of 5, where the default is 10" className="target" arrowSize={5}>Smaller arrowSize</Tooltip>
+            <Tooltip content="This has a distance prop of 20, where the default is arrowSize" className="target" distance={20}>Increase distance</Tooltip>
+            <Tooltip content="This has a distance prop of 0, where the default is the arrowSize" className="target" distance={0}>Decrease distance</Tooltip>
+          </div>
         </section>
 
         <section>

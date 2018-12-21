@@ -7,7 +7,6 @@ import getDirection from './getDirection';
 
 const bodyPadding = 10;
 const minArrowPadding = 5;
-export const arrowSize = 10;
 const noArrowDistance = 3;
 
 /**
@@ -40,6 +39,11 @@ function parseAlignMode(direction) {
   return 'middle';
 }
 
+export function getArrowSpacing(props) {
+  const defaultArrowSpacing = props.arrow ? props.arrowSize : noArrowDistance;
+  return typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
+}
+
 /**
  * Gets wrapper's left position for top/bottom tooltips as well as needed width restriction
  */
@@ -47,10 +51,10 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top;
 
-  const defaultArrowSpacing = props.arrow ? arrowSize : noArrowDistance;
-  const arrowSpacing = typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
+  const arrowSpacing = getArrowSpacing(props);
 
   if (tip && state.showTip) {
+
     // get wrapper left position
     const scrollLeft = getScrollLeft();
     const targetRect = target.getBoundingClientRect();
@@ -59,8 +63,8 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
     const halfTargetWidth = Math.round(target.offsetWidth / 2);
     const tipWidth = Math.min(getTipMaxWidth(), tip.offsetWidth);
     const arrowCenter = targetLeft + halfTargetWidth;
-    const arrowLeft = arrowCenter - arrowSize;
-    const arrowRight = arrowCenter + arrowSize;
+    const arrowLeft = arrowCenter - props.arrowSize;
+    const arrowRight = arrowCenter + props.arrowSize;
 
     if (alignMode === 'start') {
       left = props.arrow ? Math.min(arrowLeft, targetLeft) : targetLeft;
@@ -104,8 +108,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top = 0;
 
-  const defaultArrowSpacing = props.arrow ? arrowSize : noArrowDistance;
-  const arrowSpacing = typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
+  const arrowSpacing = getArrowSpacing(props);
   const arrowPadding = props.arrow ? minArrowPadding : 0;
 
   if (tip && state.showTip) {
@@ -114,8 +117,8 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     const targetRect = target.getBoundingClientRect();
     const targetTop = targetRect.top + scrollTop;
     const halfTargetHeight = Math.round(target.offsetHeight / 2);
-    const arrowTop = (targetTop + halfTargetHeight) - arrowSize;
-    const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + arrowSize;
+    const arrowTop = (targetTop + halfTargetHeight) - props.arrowSize;
+    const arrowBottom = targetRect.top + scrollTop + halfTargetHeight + props.arrowSize;
 
     // TODO: handle close to edges better
     if (alignMode === 'start') {
@@ -167,78 +170,78 @@ function getArrowStyles(target, tip, direction, state, props) {
   const halfTargetWidth = Math.round(target.offsetWidth / 2);
   const scrollTop = getScrollTop();
   const scrollLeft = getScrollLeft();
-  const arrowSpacing = typeof props.distance === 'number' ? props.distance : arrowSize;
+  const arrowSpacing = getArrowSpacing(props);
   const borderStyles = {};
 
   switch (direction) {
     case 'right':
-      borderStyles.borderTop = `${arrowSize}px solid transparent`;
-      borderStyles.borderBottom = `${arrowSize}px solid transparent`;
+      borderStyles.borderTop = `${props.arrowSize}px solid transparent`;
+      borderStyles.borderBottom = `${props.arrowSize}px solid transparent`;
 
       if (props.background) {
-        borderStyles.borderRight = `${arrowSize}px solid ${props.background}`;
+        borderStyles.borderRight = `${props.arrowSize}px solid ${props.background}`;
       } else {
-        borderStyles.borderRightWidth = `${arrowSize}px`;
+        borderStyles.borderRightWidth = `${props.arrowSize}px`;
         borderStyles.borderRightStyle = 'solid';
       }
 
       return {
         ...borderStyles,
-        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
-        left: (targetRect.right + scrollLeft + arrowSpacing) - arrowSize,
+        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px',
+        left: (targetRect.right + scrollLeft + arrowSpacing) - props.arrowSize,
       };
 
     case 'left':
-      borderStyles.borderTop = `${arrowSize}px solid transparent`;
-      borderStyles.borderBottom = `${arrowSize}px solid transparent`;
+      borderStyles.borderTop = `${props.arrowSize}px solid transparent`;
+      borderStyles.borderBottom = `${props.arrowSize}px solid transparent`;
 
       if (props.background) {
-        borderStyles.borderLeft = `${arrowSize}px solid ${props.background}`;
+        borderStyles.borderLeft = `${props.arrowSize}px solid ${props.background}`;
       } else {
-        borderStyles.borderLeftWidth = `${arrowSize}px`;
+        borderStyles.borderLeftWidth = `${props.arrowSize}px`;
         borderStyles.borderLeftStyle = 'solid';
       }
 
       return {
         ...borderStyles,
-        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - arrowSize : '-10000000px',
+        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px',
         left: (targetRect.left + scrollLeft) - arrowSpacing - 1,
       };
 
     case 'up':
-      borderStyles.borderLeft = `${arrowSize}px solid transparent`;
-      borderStyles.borderRight = `${arrowSize}px solid transparent`;
+      borderStyles.borderLeft = `${props.arrowSize}px solid transparent`;
+      borderStyles.borderRight = `${props.arrowSize}px solid transparent`;
 
       // if color is styled with css, we need everything except border-color, if styled with props, we add entire border rule
       if (props.background) {
-        borderStyles.borderTop = `${arrowSize}px solid ${props.background}`;
+        borderStyles.borderTop = `${props.arrowSize}px solid ${props.background}`;
       } else {
-        borderStyles.borderTopWidth = `${arrowSize}px`;
+        borderStyles.borderTopWidth = `${props.arrowSize}px`;
         borderStyles.borderTopStyle = 'solid';
       }
 
       return {
         ...borderStyles,
-        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
+        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px',
         top: (targetRect.top + scrollTop) - arrowSpacing,
       };
 
     case 'down':
     default:
-      borderStyles.borderLeft = `${arrowSize}px solid transparent`;
-      borderStyles.borderRight = `${arrowSize}px solid transparent`;
+      borderStyles.borderLeft = `${props.arrowSize}px solid transparent`;
+      borderStyles.borderRight = `${props.arrowSize}px solid transparent`;
 
       if (props.background) {
         borderStyles.borderBottom = `10px solid ${props.background}`;
       } else {
-        borderStyles.borderBottomWidth = `${arrowSize}px`;
+        borderStyles.borderBottomWidth = `${props.arrowSize}px`;
         borderStyles.borderBottomStyle = 'solid';
       }
 
       return {
         ...borderStyles,
-        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - arrowSize : '-10000000px',
-        top: (targetRect.bottom + scrollTop + arrowSpacing) - arrowSize,
+        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px',
+        top: (targetRect.bottom + scrollTop + arrowSpacing) - props.arrowSize,
       };
   }
 }
@@ -252,8 +255,8 @@ export default function positions(direction, tip, target, state, props) {
 
   let realDirection = trimmedDirection;
   if (tip && state.showTip) {
-    const testArrowStyles = getArrowStyles(target, tip, trimmedDirection, state, props);
-    realDirection = getDirection(trimmedDirection, tip, target, props.arrow ? arrowSize : 0, bodyPadding, props.arrow && testArrowStyles);
+    const testArrowStyles = props.arrow && getArrowStyles(target, tip, trimmedDirection, state, props);
+    realDirection = getDirection(trimmedDirection, tip, target, props, bodyPadding, testArrowStyles);
   }
 
   const maxWidth = getTipMaxWidth();
