@@ -34,6 +34,7 @@ class Tooltip extends React.Component {
     hoverDelay: PropTypes.number,
     tipContentHover: PropTypes.bool,
     arrow: PropTypes.bool,
+    arrowSize: PropTypes.number,
     distance: PropTypes.number,
   }
 
@@ -50,6 +51,7 @@ class Tooltip extends React.Component {
     hoverDelay: 200,
     tipContentHover: false,
     arrow: true,
+    arrowSize: 10,
     distance: undefined,
   }
 
@@ -124,6 +126,7 @@ class Tooltip extends React.Component {
       isOpen,
       tipContentHover,
       arrow,
+      arrowSize,
       distance,
     } = this.props;
 
@@ -131,6 +134,7 @@ class Tooltip extends React.Component {
     const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
       background: useDefaultStyles ? defaultBg : background,
       arrow,
+      arrowSize,
       distance,
     });
 

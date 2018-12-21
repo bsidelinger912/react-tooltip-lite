@@ -21,6 +21,7 @@ declare module 'react-tooltip-lite' {
     hoverDelay?: number;
     tipContentHover?: boolean;
     arrow?: boolean;
+    arrowSize?: number;
   }
 
   export default class Tooltip extends React.Component<TooltipProps> {

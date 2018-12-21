@@ -1,7 +1,7 @@
 /**
  * Checks the intended tip direction and falls back if not enough space
  */
-import { arrowSize, getScrollLeft } from "./position";
+import { getScrollLeft, getArrowSpacing } from './position';
 
 function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
   const targetRect = target.getBoundingClientRect();
@@ -17,24 +17,25 @@ function checkTargetFullyVisible(target) {
   return (!bottomOverhang && !topOverhang);
 }
 
-function checkForArrowOverhang(tip, arrowStyles, bodyPadding) {
+function checkForArrowOverhang(props, arrowStyles, bodyPadding) {
   const scrollLeft = getScrollLeft();
   const hasLeftClearance = arrowStyles.left - scrollLeft > bodyPadding;
-  const hasRightClearance = arrowStyles.left + (arrowSize * 2) < (scrollLeft + document.documentElement.clientWidth) - bodyPadding;
+  const hasRightClearance = arrowStyles.left + (props.arrowSize * 2) < (scrollLeft + document.documentElement.clientWidth) - bodyPadding;
 
   return (!hasLeftClearance || !hasRightClearance);
 }
 
-export default function getDirection(currentDirection, tip, target, distance, bodyPadding, arrowStyles, recursive) {
+export default function getDirection(currentDirection, tip, target, props, bodyPadding, arrowStyles, recursive) {
   // can't switch until target is rendered
   if (!target) {
     return currentDirection;
   }
 
   const targetRect = target.getBoundingClientRect();
+  const arrowSpacing = getArrowSpacing(props);
 
   // this is how much space is needed to display the tip above or below the target
-  const heightOfTipWithArrow = tip.offsetHeight + distance + bodyPadding;
+  const heightOfTipWithArrow = tip.offsetHeight + arrowSpacing + bodyPadding;
 
   const spaceBelowTarget = window.innerHeight - targetRect.bottom;
   const spaceAboveTarget = targetRect.top;
@@ -45,11 +46,11 @@ export default function getDirection(currentDirection, tip, target, distance, bo
   switch (currentDirection) {
     case 'right':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkTargetFullyVisible(target)) {
-        return getDirection('up', tip, target, distance, bodyPadding, arrowStyles, true);
+      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetFullyVisible(target)) {
+        return getDirection('up', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 
-      if (document.documentElement.clientWidth - targetRect.right < tip.offsetWidth + distance + bodyPadding) {
+      if (document.documentElement.clientWidth - targetRect.right < tip.offsetWidth + arrowSpacing + bodyPadding) {
         return 'left';
       }
 
@@ -57,26 +58,26 @@ export default function getDirection(currentDirection, tip, target, distance, bo
 
     case 'left':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) || !checkTargetFullyVisible(target)) {
-        return getDirection('up', tip, target, distance, bodyPadding, arrowStyles, true);
+      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetFullyVisible(target)) {
+        return getDirection('up', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 
-      if (targetRect.left < tip.offsetWidth + distance + bodyPadding) {
+      if (targetRect.left < tip.offsetWidth + arrowSpacing + bodyPadding) {
         return 'right';
       }
 
       return 'left';
 
     case 'up':
-      if (!recursive && arrowStyles && checkForArrowOverhang(tip, arrowStyles, bodyPadding)) {
-        return getDirection('left', tip, target, distance, bodyPadding, arrowStyles, true);
+      if (!recursive && arrowStyles && checkForArrowOverhang(props, arrowStyles, bodyPadding)) {
+        return getDirection('left', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 
       if (!hasSpaceAbove) {
         if (hasSpaceBelow) {
           return 'down';
-        } else if (checkLeftRightWidthSufficient(tip, target, distance, bodyPadding)) {
-          return getDirection('right', tip, target, distance, bodyPadding, arrowStyles, true);
+        } else if (checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
+          return getDirection('right', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
         }
       }
 
@@ -84,8 +85,8 @@ export default function getDirection(currentDirection, tip, target, distance, bo
 
     case 'down':
     default:
-      if (!recursive && arrowStyles && checkForArrowOverhang(tip, arrowStyles, bodyPadding)) {
-        return getDirection('right', tip, target, distance, bodyPadding, arrowStyles, true);
+      if (!recursive && arrowStyles && checkForArrowOverhang(props, arrowStyles, bodyPadding)) {
+        return getDirection('right', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 
       if (!hasSpaceBelow) {
@@ -94,8 +95,8 @@ export default function getDirection(currentDirection, tip, target, distance, bo
           return 'up';
 
           // if there's not space above or below, check if there would be space left or right
-        } else if (checkLeftRightWidthSufficient(tip, target, distance, bodyPadding)) {
-          return getDirection('right', tip, target, distance, bodyPadding, arrowStyles, true);
+        } else if (checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
+          return getDirection('right', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
         }
 
         // if there's no space in any direction, default to the original direction
