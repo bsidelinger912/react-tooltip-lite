@@ -20,6 +20,7 @@ class Tooltip extends React.Component {
     tagName: PropTypes.string,
     direction: PropTypes.string,
     className: PropTypes.string,
+    tooltipClassName: PropTypes.string,
     content: PropTypes.node.isRequired,
     background: PropTypes.string,
     color: PropTypes.string,
@@ -36,12 +37,12 @@ class Tooltip extends React.Component {
     arrow: PropTypes.bool,
     arrowSize: PropTypes.number,
     distance: PropTypes.number,
-  }
-
+  };
   static defaultProps = {
     tagName: 'div',
     direction: 'up',
     className: '',
+    tooltipClassName: '',
     background: '',
     color: '',
     padding: '10px',
@@ -53,7 +54,7 @@ class Tooltip extends React.Component {
     arrow: true,
     arrowSize: 10,
     distance: undefined,
-  }
+  };
 
   constructor() {
     super();
@@ -112,6 +113,7 @@ class Tooltip extends React.Component {
     const {
       direction,
       className,
+      tooltipClassName,
       padding,
       children,
       content,
@@ -203,7 +205,7 @@ class Tooltip extends React.Component {
         {children}
 
         <Portal>
-          <div {...portalProps} className={className}>
+          <div {...portalProps} className={tooltipClassName}>
             <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
               {content}
             </span>
