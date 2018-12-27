@@ -128,8 +128,10 @@ class Tooltip extends React.Component {
       arrow,
       arrowSize,
       distance,
-      ...others,
+      tagName: TagName,
+      ...others
     } = this.props;
+    delete others.hoverDelay;
 
     const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
     const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
@@ -200,7 +202,7 @@ class Tooltip extends React.Component {
     }
 
     return (
-      <this.props.tagName {...others} {...props}>
+      <TagName {...others} {...props}>
         {children}
 
         <Portal>
@@ -211,7 +213,7 @@ class Tooltip extends React.Component {
             <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
           </div>
         </Portal>
-      </this.props.tagName>
+      </TagName>
     );
   }
 }
