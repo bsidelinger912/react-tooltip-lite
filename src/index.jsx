@@ -128,6 +128,7 @@ class Tooltip extends React.Component {
       arrow,
       arrowSize,
       distance,
+      ...others,
     } = this.props;
 
     const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
@@ -199,7 +200,7 @@ class Tooltip extends React.Component {
     }
 
     return (
-      <this.props.tagName {...props}>
+      <this.props.tagName {...others} {...props}>
         {children}
 
         <Portal>
