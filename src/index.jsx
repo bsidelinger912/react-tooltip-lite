@@ -55,10 +55,14 @@ class Tooltip extends React.Component {
     distance: undefined,
   }
 
+  static getDerivedStateFromProps(nextProps) {
+    return nextProps.isOpen ? { hasBeenShown: true } : null;
+  }
+
   constructor() {
     super();
 
-    this.state = { showTip: false, hasHover: false, ignoreShow: false };
+    this.state = { showTip: false, hasHover: false, ignoreShow: false, hasBeenShown: false };
 
     this.showTip = this.showTip.bind(this);
     this.hideTip = this.hideTip.bind(this);
@@ -77,11 +81,31 @@ class Tooltip extends React.Component {
     }
   }
 
+  componentDidUpdate(_, prevState) {
+    // older versions of react won't leverage getDerivedStateFromProps, TODO: remove when < 16.3 support is dropped
+    if (!this.state.hasBeenShown && this.props.isOpen) {
+      this.setState({ hasBeenShown: true });
+
+      return setTimeout(this.showTip, 0);
+    }
+
+    // we need to render once to get refs in place, then we can make the calculations on a followup render
+    // this only has to happen the first time the tip is shown, and allows us to not render every tip on the page with initial render.
+    if (!prevState.hasBeenShown && this.state.hasBeenShown) {
+      this.showTip();
+    }
+  }
+
   toggleTip() {
-    this.setState({ showTip: !this.state.showTip });
+    this.state.showTip ? this.hideTip() : this.showTip();
   }
 
   showTip() {
+    if (!this.state.hasBeenShown) {
+      // this will render once, then fire componentDidUpdate, which will show the tip
+      return this.setState({ hasBeenShown: true });
+    }
+
     this.setState({ showTip: true });
   }
 
@@ -105,7 +129,7 @@ class Tooltip extends React.Component {
   }
 
   checkHover() {
-    this.setState({ showTip: this.state.hasHover });
+    this.state.hasHover ? this.showTip() : this.hideTip();
   }
 
   render() {
@@ -130,37 +154,8 @@ class Tooltip extends React.Component {
       distance,
     } = this.props;
 
-    const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
-    const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
-      background: useDefaultStyles ? defaultBg : background,
-      arrow,
-      arrowSize,
-      distance,
-    });
-
-    const wrapperStyles = {
-      position: 'relative',
-      ...styles,
-    };
-
-    const tipStyles = {
-      ...currentPositions.tip,
-      background: useDefaultStyles ? defaultBg : background,
-      color: useDefaultStyles ? defaultColor : color,
-      padding,
-      boxSizing: 'border-box',
-      zIndex: 1000,
-      position: 'absolute',
-      display: 'inline-block',
-    };
-
-    const arrowStyles = {
-      ...currentPositions.arrow,
-      position: 'absolute',
-      width: '0px',
-      height: '0px',
-      zIndex: 1001,
-    };
+    const isControlledByProps = !(typeof isOpen === 'undefined');
+    const showTip = isControlledByProps ? isOpen : this.state.showTip;
 
     const props = {
       style: wrapperStyles,
@@ -186,7 +181,7 @@ class Tooltip extends React.Component {
       props[eventToggle] = this.toggleTip;
 
       // only use hover if they don't have a toggle event
-    } else if (useHover) {
+    } else if (useHover && !isControlledByProps) {
       props.onMouseOver = this.startHover;
       props.onMouseOut = tipContentHover ? this.endHover : this.hideTip;
       props.onTouchStart = this.toggleTip;
@@ -198,10 +193,42 @@ class Tooltip extends React.Component {
       }
     }
 
-    return (
-      <this.props.tagName {...props}>
-        {children}
+    const wrapperStyles = {
+      position: 'relative',
+      ...styles,
+    };
 
+    // conditional rendering of tip
+    let tipPortal;
+
+    if (this.state.hasBeenShown) {
+      const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
+        background: useDefaultStyles ? defaultBg : background,
+        arrow,
+        arrowSize,
+        distance,
+      });
+
+      const tipStyles = {
+        ...currentPositions.tip,
+        background: useDefaultStyles ? defaultBg : background,
+        color: useDefaultStyles ? defaultColor : color,
+        padding,
+        boxSizing: 'border-box',
+        zIndex: 1000,
+        position: 'absolute',
+        display: 'inline-block',
+      };
+  
+      const arrowStyles = {
+        ...currentPositions.arrow,
+        position: 'absolute',
+        width: '0px',
+        height: '0px',
+        zIndex: 1001,
+      };
+
+      tipPortal = (
         <Portal>
           <div {...portalProps} className={className}>
             <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
@@ -210,6 +237,14 @@ class Tooltip extends React.Component {
             <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
           </div>
         </Portal>
+      );
+    }
+
+    return (
+      <this.props.tagName {...props}>
+        {children}
+
+        {tipPortal}
       </this.props.tagName>
     );
   }
