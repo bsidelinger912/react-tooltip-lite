@@ -14,6 +14,12 @@ const defaultBg = '#333';
 
 const stopProp = e => e.stopPropagation();
 
+// TODO: 
+// use translate instead of left -10000000000
+// seperate out TipPortal component that's conditionally rendered
+// add forceDirection prop
+// add tooltipClassName prop
+
 class Tooltip extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/no-unused-prop-types
