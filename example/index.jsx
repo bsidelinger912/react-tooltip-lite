@@ -73,7 +73,8 @@ class App extends React.Component {
             the <Tooltip content="Go to google" direction="right" tagName="span">
               <a href="http://google.com" target="_blank" rel="noopener noreferrer"> edge</a>
             </Tooltip>.
-            </p>
+            You can also force the direction of the tip and it will allow itself <Tooltip className="target" content="this direction is forced" direction="right" tagName="span" forceDirection>to go off screen</Tooltip>.
+          </p>
         </section>
 
         <section>

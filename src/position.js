@@ -249,12 +249,12 @@ function getArrowStyles(target, tip, direction, state, props) {
 /**
  * Returns the positions style rules
  */
-export default function positions(direction, tip, target, state, props) {
+export default function positions(direction, forceDirection, tip, target, state, props) {
   const alignMode = parseAlignMode(direction);
   const trimmedDirection = direction.split('-')[0];
 
   let realDirection = trimmedDirection;
-  if (tip && state.showTip) {
+  if (!forceDirection && tip && state.showTip) {
     const testArrowStyles = props.arrow && getArrowStyles(target, tip, trimmedDirection, state, props);
     realDirection = getDirection(trimmedDirection, tip, target, props, bodyPadding, testArrowStyles);
   }
