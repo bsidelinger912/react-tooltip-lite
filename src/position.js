@@ -107,6 +107,7 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
 function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top = 0;
+  let right;
 
   const arrowSpacing = getArrowSpacing(props);
   const arrowPadding = props.arrow ? minArrowPadding : 0;
@@ -142,7 +143,12 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     }
 
     if (direction === 'right') {
-      left = targetRect.right + arrowSpacing + scrollLeft;
+      // a right pointing tip who is hanging off the edge of the window (with forceDirection) will be constrained with a "left position",
+      // forcing unnecessary line breaks, but that doesn't happen with a right position
+      left = undefined;  // targetRect.right + arrowSpacing + scrollLeft;
+      const spaceToRight = document.documentElement.clientWidth - targetRect.right;
+
+      right = ((spaceToRight - arrowSpacing - tip.offsetWidth) + 1) - scrollLeft;
     } else {
       left = (targetRect.left - arrowSpacing - tip.offsetWidth) + scrollLeft;
     }
@@ -150,6 +156,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
 
   return {
     left,
+    right,
     top,
   };
 }
