@@ -10,6 +10,7 @@ function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
   return (tip.offsetWidth + target.offsetWidth + distance + bodyPadding + deadSpace < document.documentElement.clientWidth);
 }
 
+// TODO: this logic is flawed, because the target doesn't need to be fully visible for a left/right tip to be shown.
 function checkTargetFullyVisible(target) {
   const bottomOverhang = target.getBoundingClientRect().bottom > window.innerHeight;
   const topOverhang = target.getBoundingClientRect().top < 0;

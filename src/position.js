@@ -260,7 +260,7 @@ export default function positions(direction, forceDirection, tip, target, state,
   const trimmedDirection = direction.split('-')[0];
 
   let realDirection = trimmedDirection;
-  if (!forceDirection && tip && state.showTip) {
+  if (!forceDirection && tip) {
     const testArrowStyles = props.arrow && getArrowStyles(target, tip, trimmedDirection, state, props);
     realDirection = getDirection(trimmedDirection, tip, target, props, bodyPadding, testArrowStyles);
   }
