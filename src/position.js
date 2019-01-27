@@ -51,9 +51,11 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top;
 
+  const transform = state.showTip ? undefined : 'translateX(-10000000px)';
+
   const arrowSpacing = getArrowSpacing(props);
 
-  if (tip && state.showTip) {
+  if (tip) {
 
     // get wrapper left position
     const scrollLeft = getScrollLeft();
@@ -97,6 +99,7 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
   return {
     left,
     top,
+    transform,
   };
 }
 
@@ -107,12 +110,13 @@ function getUpDownPosition(tip, target, state, direction, alignMode, props) {
 function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
   let left = -10000000;
   let top = 0;
-  let right;
+
+  const transform = state.showTip ? undefined : 'translateX(-10000000px)';
 
   const arrowSpacing = getArrowSpacing(props);
   const arrowPadding = props.arrow ? minArrowPadding : 0;
 
-  if (tip && state.showTip) {
+  if (tip) {
     const scrollTop = getScrollTop();
     const scrollLeft = getScrollLeft();
     const targetRect = target.getBoundingClientRect();
@@ -143,12 +147,7 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
     }
 
     if (direction === 'right') {
-      // a right pointing tip who is hanging off the edge of the window (with forceDirection) will be constrained with a "left position",
-      // forcing unnecessary line breaks, but that doesn't happen with a right position
-      left = undefined;  // targetRect.right + arrowSpacing + scrollLeft;
-      const spaceToRight = document.documentElement.clientWidth - targetRect.right;
-
-      right = ((spaceToRight - arrowSpacing - tip.offsetWidth) + 1) - scrollLeft;
+      left = targetRect.right + arrowSpacing + scrollLeft;
     } else {
       left = (targetRect.left - arrowSpacing - tip.offsetWidth) + scrollLeft;
     }
@@ -156,8 +155,8 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
 
   return {
     left,
-    right,
     top,
+    transform,
   };
 }
 
@@ -268,9 +267,12 @@ export default function positions(direction, forceDirection, tip, target, state,
 
   const maxWidth = getTipMaxWidth();
 
-  // force the tip to display the width we measured everything at when visible, when scrolled
+  // force the tip to display the width we measured everything at when visible,
+  // when scrolled or forced out of the window, this avoids odd size limitiation of the tooltip in those scenarios
+  // TODO: are there more scenarios where we experience odd width issues?
   let width;
-  if (tip && state.showTip && getScrollLeft() > 0) {
+  const forcedRight = realDirection === 'right' && forceDirection;
+  if (tip && (getScrollLeft() > 0 || forcedRight)) {
     // adding the exact width on the first render forces a bogus line break, so add 1px the first time
     const spacer = tip.style.width ? 0 : 1;
     width = Math.min(tip.offsetWidth, maxWidth) + spacer;

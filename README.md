@@ -89,9 +89,15 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       </td>
     </tr>
     <tr>
-      <td>tooltipClassName</td>
+      <td>tipContenClassName</td>
       <td>string</td>
       <td>css class added to the tooltip</td>
+    </tr>
+    <tr>
+      <td>tipContentHover</td>
+      <td>boolean</td>
+      <td>defines whether you should be able to hover over the tip contents for links and copying content,
+        defaults to false.</a>
     </tr>
     <tr>
       <td>background</td>
@@ -142,12 +148,6 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>isOpen</td>
       <td>boolean</td>
       <td>forces open/close state from a prop, overrides hover or click state</td>
-    </tr>
-    <tr>
-      <td>tipContentHover</td>
-      <td>boolean</td>
-      <td>defines whether you should be able to hover over the tip contents for links and copying content,
-        defaults to false.</a>
     </tr>
     <tr>
       <td>hoverDelay</td>

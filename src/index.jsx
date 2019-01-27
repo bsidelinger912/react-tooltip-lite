@@ -12,12 +12,14 @@ import positions from './position';
 const defaultColor = '#fff';
 const defaultBg = '#333';
 
+const resizeThrottle = 100;
+const resizeThreshold = 5;
+
 const stopProp = e => e.stopPropagation();
 
-// TODO:
-// use translate instead of left -10000000000
-// figure out width issue with forceDirection prop
-// show example of tooltipClassName
+// TODO: check on issues with image targets in example where absolute image displays wrong on second hover
+// and where if the image bottom isn't shown visible we send the tip up or down instead of right/left
+// that's probably due to some logic that assumes the tip is taller than the target
 
 class Tooltip extends React.Component {
   static propTypes = {
@@ -40,7 +42,7 @@ class Tooltip extends React.Component {
     styles: PropTypes.object,
     tagName: PropTypes.string,
     tipContentHover: PropTypes.bool,
-    tooltipClassName: PropTypes.string,
+    tipContentClassName: PropTypes.string,
     useDefaultStyles: PropTypes.bool,
     useHover: PropTypes.bool,
   }
@@ -59,7 +61,7 @@ class Tooltip extends React.Component {
     styles: {},
     tagName: 'div',
     tipContentHover: false,
-    tooltipClassName: undefined,
+    tipContentClassName: undefined,
     useDefaultStyles: false,
     useHover: true,
   }
@@ -79,6 +81,8 @@ class Tooltip extends React.Component {
     this.toggleTip = this.toggleTip.bind(this);
     this.startHover = this.startHover.bind(this);
     this.endHover = this.endHover.bind(this);
+    this.listenResize = this.listenResize.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
@@ -88,6 +92,8 @@ class Tooltip extends React.Component {
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ isOpen: true });
     }
+
+    window.addEventListener('resize', this.listenResize);
   }
 
   componentDidUpdate(_, prevState) {
@@ -103,6 +109,27 @@ class Tooltip extends React.Component {
     // this only has to happen the first time the tip is shown, and allows us to not render every tip on the page with initial render.
     if (!prevState.hasBeenShown && this.state.hasBeenShown) {
       this.showTip();
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.listenResize);
+    clearTimeout(this.debounceTimeout);
+  }
+
+  debounceTimeout = false;
+
+  listenResize() {
+    clearTimeout(this.debounceTimeout);
+
+    this.debounceTimeout = setTimeout(this.handleResize, resizeThrottle);
+  }
+
+  handleResize() {
+    if (this.state.showTip) {
+      // if we're showing the tip and the resize was actually a signifigant change, then setState to re-render and calculate position
+      const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;
+      this.setState({ clientWidth });
     }
   }
 
@@ -124,18 +151,22 @@ class Tooltip extends React.Component {
     this.setState({ showTip: false });
   }
 
+  hoverTimeout = false;
+
   startHover() {
     if (!this.state.ignoreShow) {
       this.setState({ hasHover: true });
 
-      setTimeout(this.checkHover, this.props.hoverDelay);
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = setTimeout(this.checkHover, this.props.hoverDelay);
     }
   }
 
   endHover() {
     this.setState({ hasHover: false });
 
-    setTimeout(this.checkHover, this.props.hoverDelay);
+    clearTimeout(this.hoverTimeout);
+    this.hoverTimeout = setTimeout(this.checkHover, this.props.hoverDelay);
   }
 
   checkHover() {
@@ -162,7 +193,7 @@ class Tooltip extends React.Component {
       styles,
       tagName: TagName,
       tipContentHover,
-      tooltipClassName,
+      tipContentClassName,
       useDefaultStyles,
       useHover,
     } = this.props;
@@ -243,7 +274,7 @@ class Tooltip extends React.Component {
 
       tipPortal = (
         <Portal>
-          <div {...portalProps} className={tooltipClassName || className}>
+          <div {...portalProps} className={typeof tipContentClassName !== 'undefined' ? tipContentClassName : className}>
             <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
               {content}
             </span>
