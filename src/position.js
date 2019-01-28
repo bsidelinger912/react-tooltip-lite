@@ -5,8 +5,8 @@
 
 import getDirection from './getDirection';
 
+export const minArrowPadding = 5;
 const bodyPadding = 10;
-const minArrowPadding = 5;
 const noArrowDistance = 3;
 
 /**

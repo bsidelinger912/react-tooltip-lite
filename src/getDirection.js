@@ -1,7 +1,7 @@
 /**
  * Checks the intended tip direction and falls back if not enough space
  */
-import { getScrollLeft, getArrowSpacing } from './position';
+import { getScrollLeft, getArrowSpacing, minArrowPadding } from './position';
 
 function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
   const targetRect = target.getBoundingClientRect();
@@ -11,10 +11,31 @@ function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
 }
 
 // TODO: this logic is flawed, because the target doesn't need to be fully visible for a left/right tip to be shown.
-function checkTargetFullyVisible(target) {
-  const bottomOverhang = target.getBoundingClientRect().bottom > window.innerHeight;
-  const topOverhang = target.getBoundingClientRect().top < 0;
+function checkTargetSufficientlyVisible(target, tip, props) {
+  const targetRect = target.getBoundingClientRect();
+  const bottomOverhang = targetRect.bottom > window.innerHeight;
+  const topOverhang = targetRect.top < 0;
 
+  // if the target is taller than the viewport (and we know there's sufficient left/right width before this is called),
+  // then go with the left/right direction as top/bottom will both be off screen
+  if (topOverhang && bottomOverhang) {
+    return true;
+  }
+
+  // if the target is bigger than the tip, we need to check if enough of the target is visible
+  if (target.offsetHeight > tip.offsetHeight) {
+    const halfTargetHeight = target.offsetHeight / 2;
+    const arrowClearance = props.arrowSize + minArrowPadding;
+    const bottomOverhangAmount = targetRect.bottom - window.innerHeight;
+    const topOverhangAmount = -targetRect.top;
+
+    const targetCenterToBottomOfWindow = halfTargetHeight - bottomOverhangAmount;
+    const targetCenterToTopOfWindow = halfTargetHeight - topOverhangAmount;
+
+    return (targetCenterToBottomOfWindow >= arrowClearance && targetCenterToTopOfWindow >= arrowClearance);
+  }
+
+  // otherwise just check that the whole target is visible
   return (!bottomOverhang && !topOverhang);
 }
 
@@ -47,7 +68,7 @@ export default function getDirection(currentDirection, tip, target, props, bodyP
   switch (currentDirection) {
     case 'right':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetFullyVisible(target)) {
+      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetSufficientlyVisible(target, tip, props)) {
         return getDirection('up', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 
@@ -59,7 +80,7 @@ export default function getDirection(currentDirection, tip, target, props, bodyP
 
     case 'left':
       // if the window is not wide enough try top (which falls back to down)
-      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetFullyVisible(target)) {
+      if (!checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding) || !checkTargetSufficientlyVisible(target, tip, props)) {
         return getDirection('up', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
       }
 

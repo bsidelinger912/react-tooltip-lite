@@ -81,8 +81,8 @@ class Tooltip extends React.Component {
     this.toggleTip = this.toggleTip.bind(this);
     this.startHover = this.startHover.bind(this);
     this.endHover = this.endHover.bind(this);
-    this.listenResize = this.listenResize.bind(this);
-    this.handleResize = this.handleResize.bind(this);
+    this.listenResizeScroll = this.listenResizeScroll.bind(this);
+    this.handleResizeScroll = this.handleResizeScroll.bind(this);
   }
 
   componentDidMount() {
@@ -93,7 +93,8 @@ class Tooltip extends React.Component {
       this.setState({ isOpen: true });
     }
 
-    window.addEventListener('resize', this.listenResize);
+    window.addEventListener('resize', this.listenResizeScroll);
+    window.addEventListener('scroll', this.listenResizeScroll);
   }
 
   componentDidUpdate(_, prevState) {
@@ -113,19 +114,20 @@ class Tooltip extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.listenResize);
+    window.removeEventListener('resize', this.listenResizeScroll);
+    window.removeEventListener('scroll', this.listenResizeScroll);
     clearTimeout(this.debounceTimeout);
   }
 
   debounceTimeout = false;
 
-  listenResize() {
+  listenResizeScroll() {
     clearTimeout(this.debounceTimeout);
 
-    this.debounceTimeout = setTimeout(this.handleResize, resizeThrottle);
+    this.debounceTimeout = setTimeout(this.handleResizeScroll, resizeThrottle);
   }
 
-  handleResize() {
+  handleResizeScroll() {
     if (this.state.showTip) {
       // if we're showing the tip and the resize was actually a signifigant change, then setState to re-render and calculate position
       const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;

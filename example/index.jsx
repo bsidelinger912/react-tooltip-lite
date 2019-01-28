@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   bodyClick(e) {
-    if (this.tipContentRef.contains(e.target) || this.buttonRef.contains(e.target)) {
+    if ((this.tipContentRef && this.tipContentRef.contains(e.target)) || this.buttonRef.contains(e.target)) {
       return;
     }
 
