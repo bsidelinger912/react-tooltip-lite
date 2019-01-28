@@ -89,7 +89,7 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       </td>
     </tr>
     <tr>
-      <td>tipContenClassName</td>
+      <td>tipContentClassName</td>
       <td>string</td>
       <td>css class added to the tooltip</td>
     </tr>

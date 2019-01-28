@@ -21,7 +21,7 @@ declare module 'react-tooltip-lite' {
     styles?: object;
     tagName?: string;
     tipContentHover?: boolean;
-    tipContenClassName?: string;
+    tipContentClassName?: string;
     useHover?: boolean;
     useDefaultStyles?: boolean;
   }
