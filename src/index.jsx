@@ -17,10 +17,6 @@ const resizeThreshold = 5;
 
 const stopProp = e => e.stopPropagation();
 
-// TODO: check on issues with image targets in example where absolute image displays wrong on second hover
-// and where if the image bottom isn't shown visible we send the tip up or down instead of right/left
-// that's probably due to some logic that assumes the tip is taller than the target
-
 class Tooltip extends React.Component {
   static propTypes = {
     arrow: PropTypes.bool,
