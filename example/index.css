@@ -8,10 +8,6 @@ section {
   margin-bottom: 50px;
 }
 
-section:last-child {
-  margin-bottom: 400px;
-}
-
 a {
   display: inline-block;
 }

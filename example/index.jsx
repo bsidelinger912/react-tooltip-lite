@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   bodyClick(e) {
-    if (this.tipContentRef.contains(e.target) || this.buttonRef.contains(e.target)) {
+    if ((this.tipContentRef && this.tipContentRef.contains(e.target)) || this.buttonRef.contains(e.target)) {
       return;
     }
 
@@ -46,15 +46,15 @@ class App extends React.Component {
           <h3>Basic:</h3>
 
           <div className="flex-spread">
-            <Tooltip content="By default the text is above the element" className="target">
+            <Tooltip content="By default the text is above the element" className="target" tipContentClassName="foo">
               Target
             </Tooltip>
 
-            <Tooltip content="It'll center if it has room" className="target">
+            <Tooltip content="It'll center if it has room" className="target" tipContentClassName="">
               Target
             </Tooltip>
 
-            <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target">
+            <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target" tipContentClassName="">
               t
             </Tooltip>
           </div>
@@ -73,7 +73,8 @@ class App extends React.Component {
             the <Tooltip content="Go to google" direction="right" tagName="span">
               <a href="http://google.com" target="_blank" rel="noopener noreferrer"> edge</a>
             </Tooltip>.
-            </p>
+            You can also force the direction of the tip and it will allow itself <Tooltip className="target" tipContentClassName="" content="this direction is forced" direction="right" tagName="span" forceDirection>to go off screen</Tooltip>.
+          </p>
         </section>
 
         <section>
@@ -96,6 +97,7 @@ class App extends React.Component {
               direction="down"
               tagName="span"
               className="target"
+              tipContentClassName=""
             >
               Html content
             </Tooltip>.
@@ -112,6 +114,7 @@ class App extends React.Component {
               tagName="span"
               direction="right"
               className="target"
+              tipContentClassName=""
               tipContentHover
             >
               example
@@ -122,7 +125,7 @@ class App extends React.Component {
         <section>
           <h3>Colors</h3>
 
-          You can pass <Tooltip tagName="span" className="target" color="blue" background="red" content="The color for this is defined by props">
+          You can pass <Tooltip tagName="span" className="target" tipContentClassName="" color="blue" background="red" content="The color for this is defined by props">
             color options as props
           </Tooltip> or use a&nbsp;
           <Tooltip
@@ -167,7 +170,7 @@ class App extends React.Component {
         <section>
           <h3>Custom events</h3>
           <p>
-            <Tooltip content="this uses hover but also closes on click" className="target" tagName="span" eventOff="onClick">
+            <Tooltip content="this uses hover but also closes on click" className="target" tipContentClassName="" tagName="span" eventOff="onClick">
               Close on click
             </Tooltip>
           </p>
@@ -176,6 +179,7 @@ class App extends React.Component {
             <Tooltip
               content="opens on a click and closes on mouse out"
               className="target"
+              tipContentClassName=""
               tagName="span"
               eventOn="onClick"
               eventOff="onMouseOut"
@@ -186,7 +190,7 @@ class App extends React.Component {
           </p>
 
           <p>
-            <Tooltip content="this uses hover but also closes on click" className="target" tagName="span" eventToggle="onClick">
+            <Tooltip content="this uses hover but also closes on click" className="target" tipContentClassName="" tagName="span" eventToggle="onClick">
               Toggle on click
             </Tooltip>
           </p>
@@ -197,7 +201,7 @@ class App extends React.Component {
             pass the {'"defaultStyles"'} prop as true to get up and running quick and easy
                 </p>
           <p>
-            <Tooltip content="styled with defaults" className="target" useDefaultStyles tagName="span">
+            <Tooltip content="styled with defaults" className="target" tipContentClassName="" useDefaultStyles tagName="span">
               See default styles
             </Tooltip>
           </p>
@@ -220,6 +224,7 @@ class App extends React.Component {
             isOpen={tipOpen}
             tagName="span"
             direction="down"
+            forceDirection
           >
             click the button
           </Tooltip>
@@ -229,10 +234,10 @@ class App extends React.Component {
           <h3>Distance and arrow size</h3>
 
           <div className="flex-spread">
-            <Tooltip content="This has an arrowSize of 20, where the default is 10" className="target" arrowSize={20}>Larger arrowSize</Tooltip>
-            <Tooltip content="This has an arrowSize of 5, where the default is 10" className="target" arrowSize={5}>Smaller arrowSize</Tooltip>
-            <Tooltip content="This has a distance prop of 20, where the default is arrowSize" className="target" distance={20}>Increase distance</Tooltip>
-            <Tooltip content="This has a distance prop of 0, where the default is the arrowSize" className="target" distance={0}>Decrease distance</Tooltip>
+            <Tooltip content="This has an arrowSize of 20, where the default is 10" className="target" tipContentClassName="" arrowSize={20}>Larger arrowSize</Tooltip>
+            <Tooltip content="This has an arrowSize of 5, where the default is 10" className="target" tipContentClassName="" arrowSize={5}>Smaller arrowSize</Tooltip>
+            <Tooltip content="This has a distance prop of 20, where the default is arrowSize" className="target" tipContentClassName="" distance={20}>Increase distance</Tooltip>
+            <Tooltip content="This has a distance prop of 0, where the default is the arrowSize" className="target" tipContentClassName="" distance={0}>Decrease distance</Tooltip>
           </div>
         </section>
 
@@ -240,70 +245,70 @@ class App extends React.Component {
           <h3>Compound Alignment</h3>
 
           <div className="flex-spread">
-            <Tooltip content="you can have compound alignments" direction="right-start" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target" tipContentClassName="" arrow={false}>
               right-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="right-end" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target" tipContentClassName="" arrow={false}>
               right-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-start" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target" tipContentClassName="" arrow={false}>
               left-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-end" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target" tipContentClassName="" arrow={false}>
               left-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-start" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" tipContentClassName="" arrow={false}>
               top-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-end" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" tipContentClassName="" arrow={false}>
               top-end
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-start" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target" tipContentClassName="" arrow={false}>
               down-start
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-end" className="target" arrow={false}>
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target" tipContentClassName="" arrow={false}>
               down-end
             </Tooltip>
           </div>
           <br />
           <br />
           <div className="flex-spread">
-            <Tooltip content="you can have compound alignments" direction="right-start" className="target">
+            <Tooltip content="you can have compound alignments" direction="right-start" className="target" tipContentClassName="">
               right-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="right-end" className="target">
+            <Tooltip content="you can have compound alignments" direction="right-end" className="target" tipContentClassName="">
               right-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-start" className="target">
+            <Tooltip content="you can have compound alignments" direction="left-start" className="target" tipContentClassName="">
               left-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="left-end" className="target">
+            <Tooltip content="you can have compound alignments" direction="left-end" className="target" tipContentClassName="">
               left-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-start" className="target">
+            <Tooltip content="you can have compound alignments" direction="down-start" className="target" tipContentClassName="">
               down-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="down-end" className="target">
+            <Tooltip content="you can have compound alignments" direction="down-end" className="target" tipContentClassName="">
               down-end with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-start" className="target">
+            <Tooltip content="you can have compound alignments" direction="up-start" className="target" tipContentClassName="">
               up-start with arrow
             </Tooltip>
 
-            <Tooltip content="you can have compound alignments" direction="up-end" className="target">
+            <Tooltip content="you can have compound alignments" direction="up-end" className="target" tipContentClassName="">
               up-end with arrow
             </Tooltip>
           </div>
