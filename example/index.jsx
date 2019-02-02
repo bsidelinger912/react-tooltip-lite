@@ -160,7 +160,6 @@ class App extends React.Component {
               styles={{ display: 'inline-block', position: 'absolute', top: '0', right: 0 }}
               direction="right"
               className="image2"
-              eventToggle="onClick"
             >
               <img src="/example/reactLogo.svg" alt="react logo" />
             </Tooltip>

@@ -267,12 +267,9 @@ export default function positions(direction, forceDirection, tip, target, state,
 
   const maxWidth = getTipMaxWidth();
 
-  // force the tip to display the width we measured everything at when visible,
-  // when scrolled or forced out of the window, this avoids odd size limitiation of the tooltip in those scenarios
-  // TODO: are there more scenarios where we experience odd width issues?
+  // force the tip to display the width we measured everything at when visible
   let width;
-  const forcedRight = realDirection === 'right' && forceDirection;
-  if (tip && (getScrollLeft() > 0 || forcedRight)) {
+  if (tip) {
     // adding the exact width on the first render forces a bogus line break, so add 1px the first time
     const spacer = tip.style.width ? 0 : 1;
     width = Math.min(tip.offsetWidth, maxWidth) + spacer;
