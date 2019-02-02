@@ -76,9 +76,28 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>the tip direction, defaults to up.   Possible values are "up", "down", "left", "right" with optional modifer for alignment of "start" and "end".    e.g. "left-start" will attempt tooltip on left and align it with the start of the target.   If alignment modifier is not specified the default behavior is to align "middle".</td>
     </tr>
     <tr>
+      <td>forceDirection</td>
+      <td>boolean</td>
+      <td>Tells the tip to allow itself to render out of view if there's not room for the specified direction.  If undefined or false, the tip will change direction as needed to render within the confines of the window.</td>
+    </tr>
+    <tr>
       <td>className</td>
       <td>string</td>
-      <td>css class added to the rendered wrapper</td>
+      <td>
+        css class added to the rendered wrapper (and the tooltip if tooltipClassName is undefined)
+        NOTE: in future versions className will only be applied to the wrapper element and not the tooltip
+      </td>
+    </tr>
+    <tr>
+      <td>tipContentClassName</td>
+      <td>string</td>
+      <td>css class added to the tooltip</td>
+    </tr>
+    <tr>
+      <td>tipContentHover</td>
+      <td>boolean</td>
+      <td>defines whether you should be able to hover over the tip contents for links and copying content,
+        defaults to false.</a>
     </tr>
     <tr>
       <td>background</td>
@@ -129,12 +148,6 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>isOpen</td>
       <td>boolean</td>
       <td>forces open/close state from a prop, overrides hover or click state</td>
-    </tr>
-    <tr>
-      <td>tipContentHover</td>
-      <td>boolean</td>
-      <td>defines whether you should be able to hover over the tip contents for links and copying content,
-        defaults to false.</a>
     </tr>
     <tr>
       <td>hoverDelay</td>

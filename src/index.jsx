@@ -12,53 +12,64 @@ import positions from './position';
 const defaultColor = '#fff';
 const defaultBg = '#333';
 
+const resizeThrottle = 100;
+const resizeThreshold = 5;
+
 const stopProp = e => e.stopPropagation();
 
 class Tooltip extends React.Component {
   static propTypes = {
-    // eslint-disable-next-line react/no-unused-prop-types
-    tagName: PropTypes.string,
-    direction: PropTypes.string,
-    className: PropTypes.string,
-    content: PropTypes.node.isRequired,
+    arrow: PropTypes.bool,
+    arrowSize: PropTypes.number,
     background: PropTypes.string,
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
     color: PropTypes.string,
-    padding: PropTypes.string,
-    styles: PropTypes.object,
+    content: PropTypes.node.isRequired,
+    direction: PropTypes.string,
+    distance: PropTypes.number,
     eventOff: PropTypes.string,
     eventOn: PropTypes.string,
     eventToggle: PropTypes.string,
-    useHover: PropTypes.bool,
-    useDefaultStyles: PropTypes.bool,
-    isOpen: PropTypes.bool,
+    forceDirection: PropTypes.bool,
     hoverDelay: PropTypes.number,
+    isOpen: PropTypes.bool,
+    padding: PropTypes.string,
+    styles: PropTypes.object,
+    tagName: PropTypes.string,
     tipContentHover: PropTypes.bool,
-    arrow: PropTypes.bool,
-    arrowSize: PropTypes.number,
-    distance: PropTypes.number,
+    tipContentClassName: PropTypes.string,
+    useDefaultStyles: PropTypes.bool,
+    useHover: PropTypes.bool,
   }
 
   static defaultProps = {
-    tagName: 'div',
-    direction: 'up',
-    className: '',
-    background: '',
-    color: '',
-    padding: '10px',
-    styles: {},
-    useHover: true,
-    useDefaultStyles: false,
-    hoverDelay: 200,
-    tipContentHover: false,
     arrow: true,
     arrowSize: 10,
+    background: '',
+    className: '',
+    color: '',
+    direction: 'up',
     distance: undefined,
+    forceDirection: false,
+    hoverDelay: 200,
+    padding: '10px',
+    styles: {},
+    tagName: 'div',
+    tipContentHover: false,
+    tipContentClassName: undefined,
+    useDefaultStyles: false,
+    useHover: true,
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    return nextProps.isOpen ? { hasBeenShown: true } : null;
   }
 
   constructor() {
     super();
 
-    this.state = { showTip: false, hasHover: false, ignoreShow: false };
+    this.state = { showTip: false, hasHover: false, ignoreShow: false, hasBeenShown: false };
 
     this.showTip = this.showTip.bind(this);
     this.hideTip = this.hideTip.bind(this);
@@ -66,6 +77,8 @@ class Tooltip extends React.Component {
     this.toggleTip = this.toggleTip.bind(this);
     this.startHover = this.startHover.bind(this);
     this.endHover = this.endHover.bind(this);
+    this.listenResizeScroll = this.listenResizeScroll.bind(this);
+    this.handleResizeScroll = this.handleResizeScroll.bind(this);
   }
 
   componentDidMount() {
@@ -75,13 +88,59 @@ class Tooltip extends React.Component {
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ isOpen: true });
     }
+
+    window.addEventListener('resize', this.listenResizeScroll);
+    window.addEventListener('scroll', this.listenResizeScroll);
+  }
+
+  componentDidUpdate(_, prevState) {
+    // older versions of react won't leverage getDerivedStateFromProps, TODO: remove when < 16.3 support is dropped
+    if (!this.state.hasBeenShown && this.props.isOpen) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ hasBeenShown: true });
+
+      return setTimeout(this.showTip, 0);
+    }
+
+    // we need to render once to get refs in place, then we can make the calculations on a followup render
+    // this only has to happen the first time the tip is shown, and allows us to not render every tip on the page with initial render.
+    if (!prevState.hasBeenShown && this.state.hasBeenShown) {
+      this.showTip();
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.listenResizeScroll);
+    window.removeEventListener('scroll', this.listenResizeScroll);
+    clearTimeout(this.debounceTimeout);
+  }
+
+  debounceTimeout = false;
+
+  listenResizeScroll() {
+    clearTimeout(this.debounceTimeout);
+
+    this.debounceTimeout = setTimeout(this.handleResizeScroll, resizeThrottle);
+  }
+
+  handleResizeScroll() {
+    if (this.state.showTip) {
+      // if we're showing the tip and the resize was actually a signifigant change, then setState to re-render and calculate position
+      const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;
+      this.setState({ clientWidth });
+    }
   }
 
   toggleTip() {
-    this.setState({ showTip: !this.state.showTip });
+    this.state.showTip ? this.hideTip() : this.showTip();
   }
 
   showTip() {
+    if (!this.state.hasBeenShown) {
+      // this will render once, then fire componentDidUpdate, which will show the tip
+      return this.setState({ hasBeenShown: true });
+    }
+
     this.setState({ showTip: true });
   }
 
@@ -90,76 +149,59 @@ class Tooltip extends React.Component {
     this.setState({ showTip: false });
   }
 
+  hoverTimeout = false;
+
   startHover() {
     if (!this.state.ignoreShow) {
       this.setState({ hasHover: true });
 
-      setTimeout(this.checkHover, this.props.hoverDelay);
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = setTimeout(this.checkHover, this.props.hoverDelay);
     }
   }
 
   endHover() {
     this.setState({ hasHover: false });
 
-    setTimeout(this.checkHover, this.props.hoverDelay);
+    clearTimeout(this.hoverTimeout);
+    this.hoverTimeout = setTimeout(this.checkHover, this.props.hoverDelay);
   }
 
   checkHover() {
-    this.setState({ showTip: this.state.hasHover });
+    this.state.hasHover ? this.showTip() : this.hideTip();
   }
 
   render() {
     const {
-      direction,
-      className,
-      padding,
-      children,
-      content,
-      styles,
-      eventOn,
-      eventOff,
-      eventToggle,
-      useHover,
-      background,
-      color,
-      useDefaultStyles,
-      isOpen,
-      tipContentHover,
       arrow,
       arrowSize,
+      background,
+      className,
+      children,
+      color,
+      content,
+      direction,
       distance,
+      eventOff,
+      eventOn,
+      eventToggle,
+      forceDirection,
+      isOpen,
+      padding,
+      styles,
+      tagName: TagName,
+      tipContentHover,
+      tipContentClassName,
+      useDefaultStyles,
+      useHover,
     } = this.props;
 
-    const showTip = (typeof isOpen === 'undefined') ? this.state.showTip : isOpen;
-    const currentPositions = positions(direction, this.tip, this.target, { ...this.state, showTip }, {
-      background: useDefaultStyles ? defaultBg : background,
-      arrow,
-      arrowSize,
-      distance,
-    });
+    const isControlledByProps = !(typeof isOpen === 'undefined');
+    const showTip = isControlledByProps ? isOpen : this.state.showTip;
 
     const wrapperStyles = {
       position: 'relative',
       ...styles,
-    };
-
-    const tipStyles = {
-      ...currentPositions.tip,
-      background: useDefaultStyles ? defaultBg : background,
-      color: useDefaultStyles ? defaultColor : color,
-      padding,
-      boxSizing: 'border-box',
-      zIndex: 1000,
-      position: 'absolute',
-      display: 'inline-block',
-    };
-
-    const arrowStyles = {
-      ...currentPositions.arrow,
-      position: 'absolute',
-      width: '0px',
-      height: '0px',
-      zIndex: 1001,
     };
 
     const props = {
@@ -186,7 +228,7 @@ class Tooltip extends React.Component {
       props[eventToggle] = this.toggleTip;
 
       // only use hover if they don't have a toggle event
-    } else if (useHover) {
+    } else if (useHover && !isControlledByProps) {
       props.onMouseOver = this.startHover;
       props.onMouseOut = tipContentHover ? this.endHover : this.hideTip;
       props.onTouchStart = this.toggleTip;
@@ -198,19 +240,53 @@ class Tooltip extends React.Component {
       }
     }
 
-    return (
-      <this.props.tagName {...props}>
-        {children}
+    // conditional rendering of tip
+    let tipPortal;
 
+    if (this.state.hasBeenShown) {
+      const currentPositions = positions(direction, forceDirection, this.tip, this.target, { ...this.state, showTip }, {
+        background: useDefaultStyles ? defaultBg : background,
+        arrow,
+        arrowSize,
+        distance,
+      });
+
+      const tipStyles = {
+        ...currentPositions.tip,
+        background: useDefaultStyles ? defaultBg : background,
+        color: useDefaultStyles ? defaultColor : color,
+        padding,
+        boxSizing: 'border-box',
+        zIndex: 1000,
+        position: 'absolute',
+        display: 'inline-block',
+      };
+
+      const arrowStyles = {
+        ...currentPositions.arrow,
+        position: 'absolute',
+        width: '0px',
+        height: '0px',
+        zIndex: 1001,
+      };
+
+      tipPortal = (
         <Portal>
-          <div {...portalProps} className={className}>
+          <div {...portalProps} className={typeof tipContentClassName !== 'undefined' ? tipContentClassName : className}>
             <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
               {content}
             </span>
             <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
           </div>
         </Portal>
-      </this.props.tagName>
+      );
+    }
+
+    return (
+      <TagName {...props}>
+        {children}
+        {tipPortal}
+      </TagName>
     );
   }
 }

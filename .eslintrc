@@ -71,10 +71,8 @@
         "no-unused-vars": [
             1
         ],
+        "no-unused-expressions": [ 0 ],
         "react/prefer-stateless-function": [
-            0
-        ],
-        "react/prop-types": [
             0
         ],
         "react/jsx-indent": [
