@@ -7,10 +7,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { tipOpen: false };
+    this.state = { tipOpen: false, dynamicContent: 'ASDFASDFASD' };
 
     this.toggleTip = this.toggleTip.bind(this);
     this.bodyClick = this.bodyClick.bind(this);
+    this.setDynamicContent = this.setDynamicContent.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +20,10 @@ class App extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.bodyClick);
+  }
+
+  setDynamicContent(content) {
+    this.setState({ dynamicContent: content });
   }
 
   tipContentRef;
@@ -227,6 +232,19 @@ class App extends React.Component {
             forceDirection
           >
             click the button
+          </Tooltip>
+        </section>
+
+        <section>
+          <h3>With dynamic contents</h3>
+        
+          <Tooltip
+            eventOn="onFocus"
+            eventOff="onBlur"
+            tagName="span"
+            content={this.state.dynamicContent}
+          >
+            <input type="text" onChange={e => this.setDynamicContent(e.target.value)} />
           </Tooltip>
         </section>
 
