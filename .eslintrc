@@ -12,26 +12,6 @@
         "prefer-object-spread"
     ],
     "rules": {
-        // overrides best practices.js
-        "curly": [
-            1,
-            "all"
-        ],
-        "eqeqeq": [
-            2,
-            "allow-null"
-        ],
-        // Temporarily disabled due to a possible bug in babel-eslint (todomvc example)
-        "block-scoped-var": 0,
-        "wrap-iife": [
-            2,
-            "inside"
-        ],
-        // overrides style.js
-        "comma-dangle": [
-            1,
-            "always-multiline"
-        ],
         "indent": [
             1,
             2,
@@ -39,19 +19,13 @@
                 "SwitchCase": 1
             }
         ],
-        "keyword-spacing": [
-            1
-        ],
+        "keyword-spacing": [1],
         "linebreak-style": [
             2,
             "unix"
         ],
-        "new-cap": [
-            1
-        ],
-        "padded-blocks": [
-            0
-        ],
+        "new-cap": [1],
+        "padded-blocks": [0],
         "space-before-blocks": [
             1,
             "always"
@@ -63,44 +37,23 @@
                 "named": "never"
             }
         ],
-        // overrides errors.js
-        "no-console": [
-            0
-        ],
-        // overrides variables.js
-        "no-unused-vars": [
-            1
-        ],
-        "no-unused-expressions": [ 0 ],
-        "react/prefer-stateless-function": [
-            0
-        ],
         "react/jsx-indent": [
             2,
             2
         ],
+        "react/destructuring-assignment": [0],
         "max-len": [
             1,
             150
         ],
-        "consistent-return": [
-            0
-        ],
-        //this allows left handed conditionals, though apparently it is not considered a best practice these days, eslint.org/docs/rules/yoda
-        "yoda": [
-            0
-        ],
         // warns when trying to use Object.assign()
         "prefer-object-spread/prefer-object-spread": 2,
-        "import/no-extraneous-dependencies": [
-            0
-        ],
-        "import/prefer-default-export": [
-            0
-        ],
-        "react/forbid-prop-types": [
-            0
-        ]
+        // TODO: remove after refactor
+        "import/no-cycle": [0],
+        "react/forbid-prop-types": [0],
+        "consistent-return": [0],
+        "no-unused-expressions": [0],
+        "import/no-extraneous-dependencies": [0]
     },
     "globals": {
         "__CLIENT__": true

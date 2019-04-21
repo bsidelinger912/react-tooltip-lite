@@ -51,8 +51,12 @@ class Tooltip extends React.Component {
     color: '',
     direction: 'up',
     distance: undefined,
+    eventOff: undefined,
+    eventOn: undefined,
+    eventToggle: undefined,
     forceDirection: false,
     hoverDelay: 200,
+    isOpen: false,
     padding: '10px',
     styles: {},
     tagName: 'div',
@@ -66,10 +70,19 @@ class Tooltip extends React.Component {
     return nextProps.isOpen ? { hasBeenShown: true } : null;
   }
 
+  debounceTimeout = false;
+
+  hoverTimeout = false;
+
   constructor() {
     super();
 
-    this.state = { showTip: false, hasHover: false, ignoreShow: false, hasBeenShown: false };
+    this.state = {
+      showTip: false,
+      hasHover: false,
+      ignoreShow: false,
+      hasBeenShown: false,
+    };
 
     this.showTip = this.showTip.bind(this);
     this.hideTip = this.hideTip.bind(this);
@@ -115,8 +128,6 @@ class Tooltip extends React.Component {
     clearTimeout(this.debounceTimeout);
   }
 
-  debounceTimeout = false;
-
   listenResizeScroll() {
     clearTimeout(this.debounceTimeout);
 
@@ -148,8 +159,6 @@ class Tooltip extends React.Component {
     this.setState({ hasHover: false });
     this.setState({ showTip: false });
   }
-
-  hoverTimeout = false;
 
   startHover() {
     if (!this.state.ignoreShow) {
