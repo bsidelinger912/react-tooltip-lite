@@ -1,0 +1,14 @@
+/* Tooltip styles */
+.react-tooltip-lite {
+  background: #333;
+  color: white;
+}
+
+.react-tooltip-lite-arrow {
+  border-color: #333;
+}
+
+/* Demo Styles */
+.target {
+  text-decoration: underline;
+}

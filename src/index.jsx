@@ -56,7 +56,7 @@ class Tooltip extends React.Component {
     eventToggle: undefined,
     forceDirection: false,
     hoverDelay: 200,
-    isOpen: false,
+    isOpen: undefined,
     padding: '10px',
     styles: {},
     tagName: 'div',

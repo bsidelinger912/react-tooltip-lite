@@ -283,7 +283,7 @@ export default function positions(direction, forceDirection, tip, target, state,
     tip: {
       ...tipPosition,
       maxWidth,
-      width,
+      // width,
     },
     arrow: getArrowStyles(target, tip, realDirection, state, props),
     realDirection,

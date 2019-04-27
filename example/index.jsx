@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Tooltip from '../src/';
+import Tooltip from '../src/index';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class App extends React.Component {
   }
 
   tipContentRef;
+  
   buttonRef;
 
   toggleTip() {
@@ -63,17 +64,22 @@ class App extends React.Component {
         <section>
           <h3>In a paragraph</h3>
           <p>
-            For <Tooltip content="Go to google" direction="right" tagName="span">
+            For&nbsp;
+            <Tooltip content="Go to google" direction="right" tagName="span">
               <a href="http://google.com" target="_blank" rel="noopener noreferrer">inline text</a>
-            </Tooltip>, a right or left tip works nicely. The tip will try to go the desired way and flip if there is not
-            enough <Tooltip content="Go to google" direction="right" tagName="span" distance={20}>
+            </Tooltip>
+            , a right or left tip works nicely. The tip will try to go the desired way and flip if there is not
+            enough&nbsp;
+            <Tooltip content="Go to google" direction="right" tagName="span" distance={20}>
               <a href="http://google.com" target="_blank" rel="noopener noreferrer">space</a>
-            </Tooltip>.
-            Shrink the window and see how the tip behaves when close to
-            the <Tooltip content="Go to google" direction="right" tagName="span">
+            </Tooltip>
+            . Shrink the window and see how the tip behaves when close to the
+            <Tooltip content="Go to google" direction="right" tagName="span">
               <a href="http://google.com" target="_blank" rel="noopener noreferrer"> edge</a>
-            </Tooltip>.
-            You can also force the direction of the tip and it will allow itself <Tooltip className="target" tipContentClassName="" content="this direction is forced" direction="right" tagName="span" forceDirection>to go off screen</Tooltip>.
+            </Tooltip>
+            . You can also force the direction of the tip and it will allow itself
+            <Tooltip className="target" tipContentClassName="" content="this direction is forced" direction="right" tagName="span" forceDirection>to go off screen</Tooltip>
+            .
           </p>
         </section>
 
@@ -81,7 +87,8 @@ class App extends React.Component {
           <h3>Html Contents</h3>
 
           <p>
-            You can also have a tooltip with <Tooltip
+            You can also have a tooltip with&nbsp;
+            <Tooltip
               content={(
                 <div>
                   <h4 className="tip-heading">An unordered list to demo some html content</h4>
@@ -100,15 +107,18 @@ class App extends React.Component {
               tipContentClassName=""
             >
               Html content
-            </Tooltip>.
+            </Tooltip>
+            .
           </p>
 
           <p>
             By specifying the prop &quot;tipContentHover&quot; as true, you can persist hover state when cursor is over the tip.  This allows for links
-            in your tip, copying contents and other behaviors.  Here&apos;s an <Tooltip
+            in your tip, copying contents and other behaviors.  Here&apos;s an
+            <Tooltip
               content={(
                 <div>
-                  You can copy this text, or click this <a href="https://www.npmjs.com/package/react-tooltip-lite" target="_blank" rel="noopener noreferrer">link</a>
+                  You can copy this text, or click this
+                  <a href="https://www.npmjs.com/package/react-tooltip-lite" target="_blank" rel="noopener noreferrer">link</a>
                 </div>
               )}
               tagName="span"
@@ -118,7 +128,8 @@ class App extends React.Component {
               tipContentHover
             >
               example
-            </Tooltip>.
+            </Tooltip>
+            .
           </p>
         </section>
 
