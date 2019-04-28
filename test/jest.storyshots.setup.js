@@ -16,10 +16,15 @@ registerRequireContextHook();
       });
   });
 }; */
+const getMatchOptions = () => ({ // ({ context: { kind, story }, url }) => {
+  failureThreshold: 0.2,
+  failureThresholdType: 'percent',
+});
 
 initStoryshots({
   suite: 'Storyshots',
   test: imageSnapshot({
+    getMatchOptions,
     storybookUrl: 'http://localhost:6006',
   }),
 });
