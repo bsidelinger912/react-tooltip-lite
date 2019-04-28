@@ -61,6 +61,6 @@
     "env": {
         "browser": true,
         "node": true,
-        "mocha": true
+        "jest": true
     }
 }

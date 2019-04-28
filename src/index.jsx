@@ -205,7 +205,7 @@ class Tooltip extends React.Component {
       useHover,
     } = this.props;
 
-    const isControlledByProps = !(typeof isOpen === 'undefined');
+    const isControlledByProps = typeof isOpen !== 'undefined' && isOpen !== null;
     const showTip = isControlledByProps ? isOpen : this.state.showTip;
 
     const wrapperStyles = {

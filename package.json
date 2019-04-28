@@ -12,7 +12,9 @@
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest --config ./test/jest.config.json"
+    "test:jest": "jest --config ./test/jest.config.json",
+    "test:storyshots": "jest --config ./test/jest.storyshots.config.json",
+    "test": "yarn test:jest && yarn test:storyshots"
   },
   "files": [
     "dist",

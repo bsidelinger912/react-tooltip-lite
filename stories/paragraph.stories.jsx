@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 
 import Tooltip from '../src/index';
 
@@ -8,12 +8,18 @@ import './stories.css';
 
 storiesOf('Tooltip', module)
   .add('In a Paragraph', () => {
-    const isOpen = boolean('isOpen', undefined);
+    const options = {
+      True: true,
+      False: false,
+      Uncontrolled: null,
+    };
+
+    const isOpen = select('isOpen', options, true);
 
     return (
       <p style={{ marginTop: 100 }}>
         For&nbsp;
-        <Tooltip content="Go to google" direction="right" tagName="span" isOpen={isOpen}>
+        <Tooltip content="Go to google" direction="left" tagName="span" isOpen={isOpen} className="target" forceDirection>
           <a href="http://google.com" target="_blank" rel="noopener noreferrer">inline text</a>
         </Tooltip>
         , a right or left tip works nicely. The tip will try to go the desired way and flip if there is not
