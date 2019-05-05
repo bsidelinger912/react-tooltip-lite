@@ -4,15 +4,14 @@ import { select } from '@storybook/addon-knobs';
 
 import Tooltip from '../src/index';
 import { isOpenOptions } from './shared';
-
-import './stories.css';
+import Wrapper from './Wrapper';
 
 storiesOf('Tooltip', module)
   .add('Html content', () => {
     const isOpen = select('isOpen', isOpenOptions, true);
 
     return (
-      <div style={{ marginTop: 100 }}>
+      <Wrapper>
         <p>
           You can also have a tooltip with&nbsp;
           <Tooltip
@@ -60,6 +59,6 @@ storiesOf('Tooltip', module)
           </Tooltip>
           .
         </p>
-      </div>
+      </Wrapper>
     );
   });

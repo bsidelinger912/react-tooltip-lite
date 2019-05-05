@@ -53,7 +53,8 @@
         "react/forbid-prop-types": [0],
         "consistent-return": [0],
         "no-unused-expressions": [0],
-        "import/no-extraneous-dependencies": [0]
+        "import/no-extraneous-dependencies": [0],
+        "object-curly-newline": [0]
     },
     "globals": {
         "__CLIENT__": true

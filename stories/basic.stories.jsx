@@ -4,15 +4,14 @@ import { select } from '@storybook/addon-knobs';
 
 import Tooltip from '../src/index';
 import { isOpenOptions } from './shared';
-
-import './stories.css';
+import Wrapper from './Wrapper';
 
 storiesOf('Tooltip', module)
   .add('Basic usage', () => {
     const isOpen = select('isOpen', isOpenOptions, true);
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 100 }}>
+      <Wrapper extraProps={{ display: 'flex', justifyContent: 'space-between' }}>
         <Tooltip
           content="By default the text is above the element"
           isOpen={isOpen}
@@ -38,6 +37,6 @@ storiesOf('Tooltip', module)
         >
           Target is here
         </Tooltip>
-      </div>
+      </Wrapper>
     );
   });

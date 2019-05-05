@@ -26,3 +26,56 @@
   margin: 5px 0;
   padding: 0;
 }
+
+/* overrides with a custom class */
+.customTip .react-tooltip-lite {
+  border: 1px solid #888;
+  background: #ccc;
+  color: black;
+}
+
+.customTip .react-tooltip-lite-arrow {
+  border-color:  #444;
+  position: relative;
+}
+
+.customTip .react-tooltip-lite-arrow::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 99;
+  display: block;
+}
+
+.customTip .react-tooltip-lite-up-arrow::before {
+  border-top: 10px solid #ccc;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  left: -10px;
+  top: -11px;
+}
+
+.customTip .react-tooltip-lite-down-arrow::before {
+  border-bottom: 10px solid #ccc;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  left: -10px;
+  bottom: -11px;
+}
+
+.customTip .react-tooltip-lite-right-arrow::before {
+  border-right: 10px solid #ccc;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  right: -11px;
+  top: -10px;
+}
+
+.customTip .react-tooltip-lite-left-arrow::before {
+  border-left: 10px solid #ccc;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  left: -11px;
+  top: -10px;
+}

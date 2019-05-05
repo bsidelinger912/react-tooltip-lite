@@ -2,6 +2,8 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
+import '../stories/stories.css';
+
 // automatically import all files ending in *.stories.js
 const req = require.context('../stories', true, /\.stories\.jsx?$/);
 

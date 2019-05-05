@@ -4,15 +4,14 @@ import { select } from '@storybook/addon-knobs';
 
 import Tooltip from '../src/index';
 import { isOpenOptions } from './shared';
-
-import './stories.css';
+import Wrapper from './Wrapper';
 
 storiesOf('Tooltip', module)
   .add('In a Paragraph', () => {
     const isOpen = select('isOpen', isOpenOptions, true);
 
     return (
-      <p style={{ marginTop: 100 }}>
+      <Wrapper>
         For&nbsp;
         <Tooltip content="Go to google" direction="right" tagName="span" isOpen={isOpen}>
           <a href="http://google.com" target="_blank" rel="noopener noreferrer">inline text</a>
@@ -31,6 +30,6 @@ storiesOf('Tooltip', module)
           </Tooltip>
           .
         </p>
-      </p>
+      </Wrapper>
     );
   });
