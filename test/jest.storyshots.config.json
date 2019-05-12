@@ -1,0 +1,8 @@
+{
+  "rootDir": "..",
+  "setupFilesAfterEnv": ["<rootDir>/test/jest.storyshots.setup.js"],
+  "moduleNameMapper": {
+    "\\.(css|scss)$": "<rootDir>/test/styleMock.js"
+  },
+  "testMatch": ["**/__tests__/storyshots.test.jsx"]
+}

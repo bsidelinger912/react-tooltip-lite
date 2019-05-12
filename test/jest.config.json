@@ -1,0 +1,4 @@
+{
+  "rootDir": "..",
+  "testPathIgnorePatterns": ["/node_modules/", "storyshots.test.jsx"]
+}

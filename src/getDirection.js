@@ -97,7 +97,9 @@ export default function getDirection(currentDirection, tip, target, props, bodyP
       if (!hasSpaceAbove) {
         if (hasSpaceBelow) {
           return 'down';
-        } else if (!recursive && checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
+        }
+
+        if (!recursive && checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
           return getDirection('right', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
         }
       }
@@ -116,7 +118,9 @@ export default function getDirection(currentDirection, tip, target, props, bodyP
           return 'up';
 
           // if there's not space above or below, check if there would be space left or right
-        } else if (!recursive && checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
+        }
+
+        if (!recursive && checkLeftRightWidthSufficient(tip, target, arrowSpacing, bodyPadding)) {
           return getDirection('right', tip, target, arrowSpacing, bodyPadding, arrowStyles, true);
         }
 

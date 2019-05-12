@@ -1,29 +1,16 @@
-#react-root {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 10px;
+/* Tooltip styles */
+.react-tooltip-lite {
+  background: #333;
+  color: white;
 }
 
-section {
-  margin-bottom: 50px;
+.react-tooltip-lite-arrow {
+  border-color: #333;
 }
 
-a {
-  display: inline-block;
-}
-
+/* Demo Styles */
 .target {
   text-decoration: underline;
-  cursor: pointer;
-}
-
-.target .react-tooltip-lite {
-  cursor: default;
-}
-
-.flex-spread {
-  display: flex;
-  justify-content: space-between;
 }
 
 .tip-heading {
@@ -38,25 +25,6 @@ a {
 .tip-list li {
   margin: 5px 0;
   padding: 0;
-}
-
-/* tooltip styles */
-.react-tooltip-lite {
-  background: #333;
-  color: white;
-}
-
-.react-tooltip-lite a {
-  color: #86b0f4;
-  text-decoration: none;
-}
-
-.react-tooltip-lite a:hover {
-  color: #4286f4;
-}
-
-.react-tooltip-lite-arrow {
-  border-color: #333;
 }
 
 /* overrides with a custom class */
@@ -112,37 +80,7 @@ a {
   top: -10px;
 }
 
-.imageWrapper {
-  margin: 50px 0 0;
-  position: relative;
-}
-
-.imageWrapper img {
-  width: 500px;
-  height: 500px;
-}
-
-.controlled-example {
-  max-width: 250px;
-}
-
-.controlled-example_header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #fff;
-}
-
-.controlled-example_close-button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 16px;
-  padding: 0;
-}
-
-.controlled-example_close-button:hover {
-  color: grey;
+/* demo layouts */
+.stacked-examples > div {
+  margin: 0 50px 100px;
 }
