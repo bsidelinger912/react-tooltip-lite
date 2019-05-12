@@ -79,3 +79,8 @@
   left: -11px;
   top: -10px;
 }
+
+/* demo layouts */
+.stacked-examples > div {
+  margin: 0 50px 100px;
+}

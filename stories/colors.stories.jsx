@@ -35,6 +35,18 @@ storiesOf('Tooltip', module)
         >
           css stylesheet.
         </Tooltip>
+
+        <h3>Default Styles</h3>
+        <p>
+          pass the
+          {'"defaultStyles"'}
+          prop as true to get up and running quick and easy
+        </p>
+        <p>
+          <Tooltip content="styled with defaults" className="target" tipContentClassName="" useDefaultStyles tagName="span">
+            See default styles
+          </Tooltip>
+        </p>
       </Wrapper>
     );
   });
