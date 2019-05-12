@@ -22,11 +22,11 @@ class App extends React.Component {
   }
 
   tipContentRef;
-  
+
   buttonRef;
 
   toggleTip() {
-    this.setState({ tipOpen: !this.state.tipOpen });
+    this.setState(prevState => ({ tipOpen: !prevState.tipOpen }));
   }
 
   bodyClick(e) {
@@ -73,11 +73,11 @@ class App extends React.Component {
             <Tooltip content="Go to google" direction="right" tagName="span" distance={20}>
               <a href="http://google.com" target="_blank" rel="noopener noreferrer">space</a>
             </Tooltip>
-            . Shrink the window and see how the tip behaves when close to the
+            . Shrink the window and see how the tip behaves when close to the&nbsp;
             <Tooltip content="Go to google" direction="right" tagName="span">
-              <a href="http://google.com" target="_blank" rel="noopener noreferrer"> edge</a>
+              <a href="http://google.com" target="_blank" rel="noopener noreferrer">edge</a>
             </Tooltip>
-            . You can also force the direction of the tip and it will allow itself
+            . You can also force the direction of the tip and it will allow itself&nbsp;
             <Tooltip className="target" tipContentClassName="" content="this direction is forced" direction="right" tagName="span" forceDirection>to go off screen</Tooltip>
             .
           </p>
@@ -113,11 +113,11 @@ class App extends React.Component {
 
           <p>
             By specifying the prop &quot;tipContentHover&quot; as true, you can persist hover state when cursor is over the tip.  This allows for links
-            in your tip, copying contents and other behaviors.  Here&apos;s an
+            in your tip, copying contents and other behaviors.  Here&apos;s an&nbsp;
             <Tooltip
               content={(
                 <div>
-                  You can copy this text, or click this
+                  You can copy this text, or click this&nbsp;
                   <a href="https://www.npmjs.com/package/react-tooltip-lite" target="_blank" rel="noopener noreferrer">link</a>
                 </div>
               )}
@@ -136,9 +136,19 @@ class App extends React.Component {
         <section>
           <h3>Colors</h3>
 
-          You can pass <Tooltip tagName="span" className="target" tipContentClassName="" color="blue" background="red" content="The color for this is defined by props">
+          You can pass&nbsp;
+          <Tooltip
+            tagName="span"
+            className="target"
+            tipContentClassName=""
+            color="blue"
+            background="red"
+            content="The color for this is defined by props"
+          >
             color options as props
-          </Tooltip> or use a&nbsp;
+          </Tooltip>
+          &nbsp;
+          or use a&nbsp;
           <Tooltip
             tagName="span"
             className="target customTip"
@@ -209,8 +219,10 @@ class App extends React.Component {
         <section>
           <h3>Default styles</h3>
           <p>
-            pass the {'"defaultStyles"'} prop as true to get up and running quick and easy
-                </p>
+            pass the
+            {'"defaultStyles"'}
+            prop as true to get up and running quick and easy
+          </p>
           <p>
             <Tooltip content="styled with defaults" className="target" tipContentClassName="" useDefaultStyles tagName="span">
               See default styles
@@ -220,18 +232,27 @@ class App extends React.Component {
         <section>
           <h3>Controlled by props</h3>
 
-          <button ref={(el) => { this.buttonRef = el; }} onClick={this.toggleTip}>{tipOpen ? 'close' : 'open'}</button>
-          <br /><br />
+          <button
+            type="button"
+            ref={(el) => { this.buttonRef = el; }}
+            onClick={this.toggleTip}
+          >
+            {tipOpen ? 'close' : 'open'}
+          </button>
+          <br />
+          <br />
           <Tooltip
-            content={
+            content={(
               <div ref={(el) => { this.tipContentRef = el; }} className="controlled-example">
                 <div className="controlled-example_header">
                   Hello
-                  <span className="controlled-example_close-button" onClick={this.toggleTip}>&times;</span>
+                  <button type="button" className="controlled-example_close-button" onClick={this.toggleTip}>&times;</button>
                 </div>
-                This tip is controlled by the button, you can also click outside the tip or on the "x" to close it
+                This tip is controlled by the button, you can also click outside the tip or on the&nbsp;
+                {'"x"'}
+                &nbsp;to close it
               </div>
-            }
+            )}
             isOpen={tipOpen}
             tagName="span"
             direction="down"
