@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Portal from 'react-minimalist-portal';
+import Portal, { isBrowser } from './Portal';
 import positions from './position';
 
 // default colors
@@ -67,7 +67,7 @@ class Tooltip extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps) {
-    return nextProps.isOpen ? { hasBeenShown: true } : null;
+    return isBrowser && nextProps.isOpen ? { hasBeenShown: true } : null;
   }
 
   debounceTimeout = false;
@@ -238,13 +238,13 @@ class Tooltip extends React.Component {
 
       // only use hover if they don't have a toggle event
     } else if (useHover && !isControlledByProps) {
-      props.onMouseOver = this.startHover;
-      props.onMouseOut = tipContentHover ? this.endHover : this.hideTip;
+      props.onMouseEnter = this.startHover;
+      props.onMouseLeave = tipContentHover ? this.endHover : this.hideTip;
       props.onTouchStart = this.toggleTip;
 
       if (tipContentHover) {
-        portalProps.onMouseOver = this.startHover;
-        portalProps.onMouseOut = this.endHover;
+        portalProps.onMouseEnter = this.startHover;
+        portalProps.onMouseLeave = this.endHover;
         portalProps.onTouchStart = stopProp;
       }
     }

@@ -8,7 +8,7 @@
     "bundle": "node node_modules/webpack/bin/webpack.js -p --colors --display-error-details --config webpack.dist.config.js",
     "dev": "webpack-dev-server --progress --colors",
     "transpile": "babel src --out-dir dist --ignore ./src/**/*.test.jsx && cp src/index.d.ts dist/index.d.ts",
-    "build": "rm -r dist && mkdir dist && npm run transpile && npm run bundle",
+    "build": "rm -rf dist && mkdir dist && npm run transpile && npm run bundle",
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -34,11 +34,11 @@
   },
   "homepage": "https://github.com/bsidelinger912/react-tooltip-lite#readme",
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "react-minimalist-portal": "^2.2.0"
+    "prop-types": "^15.5.8"
   },
   "peerDependencies": {
-    "react": "^15.5.4 || ^16.0.0"
+    "react": "^15.5.4 || ^16.0.0",
+    "react-dom": "^15.5.4 || ^16.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

@@ -43,7 +43,14 @@ storiesOf('Tooltip', module)
           prop as true to get up and running quick and easy
         </p>
         <p>
-          <Tooltip content="styled with defaults" className="target" tipContentClassName="" useDefaultStyles tagName="span">
+          <Tooltip
+            content="styled with defaults"
+            className="target"
+            tipContentClassName=""
+            useDefaultStyles
+            tagName="span"
+            isOpen={isOpen}
+          >
             See default styles
           </Tooltip>
         </p>

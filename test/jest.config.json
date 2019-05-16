@@ -1,4 +1,4 @@
 {
   "rootDir": "..",
-  "testPathIgnorePatterns": ["/node_modules/", "storyshots.test.jsx"]
+  "testPathIgnorePatterns": ["/node_modules/", "/dist/", "storyshots.test.jsx"]
 }
