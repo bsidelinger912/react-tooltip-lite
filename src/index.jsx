@@ -126,6 +126,7 @@ class Tooltip extends React.Component {
     window.removeEventListener('resize', this.listenResizeScroll);
     window.removeEventListener('scroll', this.listenResizeScroll);
     clearTimeout(this.debounceTimeout);
+    clearTimeout(this.hoverTimeout);
   }
 
   listenResizeScroll() {
