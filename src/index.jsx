@@ -33,6 +33,7 @@ class Tooltip extends React.Component {
     eventToggle: PropTypes.string,
     forceDirection: PropTypes.bool,
     hoverDelay: PropTypes.number,
+    unhoverDelay: PropTypes.number,
     isOpen: PropTypes.bool,
     padding: PropTypes.string,
     styles: PropTypes.object,
@@ -174,7 +175,7 @@ class Tooltip extends React.Component {
     this.setState({ hasHover: false });
 
     clearTimeout(this.hoverTimeout);
-    this.hoverTimeout = setTimeout(this.checkHover, this.props.hoverDelay);
+    this.hoverTimeout = setTimeout(this.checkHover, this.props.unhoverDelay || this.props.hoverDelay);
   }
 
   checkHover() {
