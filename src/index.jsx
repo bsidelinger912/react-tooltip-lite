@@ -33,8 +33,8 @@ class Tooltip extends React.Component {
     eventToggle: PropTypes.string,
     forceDirection: PropTypes.bool,
     hoverDelay: PropTypes.number,
-    unhoverDelay: PropTypes.number,
     isOpen: PropTypes.bool,
+    mouseOutDelay: PropTypes.number,
     padding: PropTypes.string,
     styles: PropTypes.object,
     tagName: PropTypes.string,
@@ -58,6 +58,7 @@ class Tooltip extends React.Component {
     forceDirection: false,
     hoverDelay: 200,
     isOpen: undefined,
+    mouseOutDelay: undefined,
     padding: '10px',
     styles: {},
     tagName: 'div',
@@ -175,7 +176,7 @@ class Tooltip extends React.Component {
     this.setState({ hasHover: false });
 
     clearTimeout(this.hoverTimeout);
-    this.hoverTimeout = setTimeout(this.checkHover, this.props.unhoverDelay || this.props.hoverDelay);
+    this.hoverTimeout = setTimeout(this.checkHover, this.props.mouseOutDelay || this.props.hoverDelay);
   }
 
   checkHover() {
@@ -198,6 +199,7 @@ class Tooltip extends React.Component {
       eventToggle,
       forceDirection,
       isOpen,
+      mouseOutDelay,
       padding,
       styles,
       tagName: TagName,
@@ -241,7 +243,7 @@ class Tooltip extends React.Component {
       // only use hover if they don't have a toggle event
     } else if (useHover && !isControlledByProps) {
       props.onMouseEnter = this.startHover;
-      props.onMouseLeave = tipContentHover ? this.endHover : this.hideTip;
+      props.onMouseLeave = (tipContentHover || mouseOutDelay) ? this.endHover : this.hideTip;
       props.onTouchStart = this.toggleTip;
 
       if (tipContentHover) {

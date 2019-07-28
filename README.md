@@ -155,7 +155,7 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>the number of milliseconds to determine hover intent, defaults to 200</td>
     </tr>
     <tr>
-      <td>unhoverDelay</td>
+      <td>mouseOutDelay</td>
       <td>number</td>
       <td>the number of milliseconds to determine hover-end intent, defaults to the hoverDelay value</td>
     </tr>
