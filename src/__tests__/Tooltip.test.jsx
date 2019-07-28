@@ -15,6 +15,14 @@ describe('Tooltip', () => {
   const targetContent = 'Hello world';
   const tipContent = 'Tip content';
 
+  function assertTipHidden(getByText) {
+    expect(getByText(tipContent).style.transform).toEqual('translateX(-10000000px)');
+  }
+
+  function assertTipVisible(getByText) {
+    expect(getByText(tipContent).style.transform).toBeFalsy();
+  }
+
   it('should render and open with hover', () => {
     const { getByText } = render(
       <Tooltip content={tipContent}>
@@ -27,7 +35,7 @@ describe('Tooltip', () => {
     fireEvent.mouseOver(target);
     jest.runAllTimers();
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
   });
 
   it('should handle controlled state', () => {
@@ -50,7 +58,7 @@ describe('Tooltip', () => {
       </Tooltip>
     );
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
   });
 
   it('should handle null as undefined for isOpen prop', () => {
@@ -65,7 +73,7 @@ describe('Tooltip', () => {
     fireEvent.mouseOver(target);
     jest.runAllTimers();
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
   });
 
   it('should handle eventOn prop and use mouseout', () => {
@@ -80,12 +88,12 @@ describe('Tooltip', () => {
     fireEvent.click(target);
     jest.runAllTimers();
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
 
     fireEvent.mouseOut(target);
     jest.runAllTimers();
 
-    expect(getByText(tipContent).style.transform).toEqual('translateX(-10000000px)');
+    assertTipHidden(getByText);
   });
 
   it('should handle eventOff prop and use mouseover', () => {
@@ -100,12 +108,12 @@ describe('Tooltip', () => {
     fireEvent.mouseOver(target);
     jest.runAllTimers();
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
 
     fireEvent.click(target);
     jest.runAllTimers();
 
-    expect(getByText(tipContent).style.transform).toEqual('translateX(-10000000px)');
+    assertTipHidden(getByText);
   });
 
   it('should handle eventToggle prop', () => {
@@ -125,11 +133,76 @@ describe('Tooltip', () => {
     fireEvent.click(target);
     jest.runAllTimers();
 
-    getByText(tipContent);
+    assertTipVisible(getByText);
 
     fireEvent.click(target);
     jest.runAllTimers();
 
-    expect(getByText(tipContent).style.transform).toEqual('translateX(-10000000px)');
+    assertTipHidden(getByText);
+  });
+
+  it('should use hoverDelay prop', () => {
+    const hoverDelay = 1000;
+    const { getByText, queryByText, rerender } = render(
+      <Tooltip content={tipContent} hoverDelay={hoverDelay}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    expect(queryByText(tipContent)).toBeNull();
+
+    jest.advanceTimersByTime(hoverDelay);
+    assertTipVisible(getByText);
+
+    // hoverDelay is not used on mouseout for tips without the tipContentHoverProp prop
+    fireEvent.mouseOut(target);
+    assertTipHidden(getByText);
+
+    // with the tipContentHoverProp hoverDelay should be used with mouseOut
+    rerender(
+      <Tooltip content={tipContent} hoverDelay={hoverDelay} tipContentHover>
+        {targetContent}
+      </Tooltip>
+    );
+
+    fireEvent.mouseOver(target);
+    assertTipHidden(getByText);
+
+    jest.advanceTimersByTime(hoverDelay);
+    assertTipVisible(getByText);
+
+    fireEvent.mouseOut(target);
+    assertTipVisible(getByText);
+
+    jest.advanceTimersByTime(hoverDelay);
+    assertTipHidden(getByText);
+  });
+
+  it('should use mouseOutDelay prop', () => {
+    const hoverDelay = 500;
+    const mouseOutDelay = 1000;
+
+    const { getByText, queryByText } = render(
+      <Tooltip content={tipContent} hoverDelay={hoverDelay} mouseOutDelay={mouseOutDelay}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    expect(queryByText(tipContent)).toBeNull();
+
+    jest.advanceTimersByTime(hoverDelay);
+    assertTipVisible(getByText);
+
+    fireEvent.mouseOut(target);
+    assertTipVisible(getByText);
+
+    jest.advanceTimersByTime(mouseOutDelay);
+    assertTipHidden(getByText);
   });
 });

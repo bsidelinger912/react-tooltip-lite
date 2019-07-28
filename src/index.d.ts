@@ -16,8 +16,8 @@ declare module 'react-tooltip-lite' {
     eventToggle?: string;
     forceDirection?: boolean;
     hoverDelay?: number;
-    unhoverDelay?: number;
     isOpen?: boolean;
+    mouseOutDelay?: number;
     padding?: string;
     styles?: object;
     tagName?: string;

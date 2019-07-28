@@ -44,5 +44,18 @@ storiesOf('Tooltip', module)
           Toggle on click
         </Tooltip>
       </p>
+
+      <p>
+        <Tooltip
+          content="this has a different delay for mousein and mouseout"
+          className="target"
+          tipContentClassName=""
+          tagName="span"
+          hoverDelay={400}
+          mouseOutDelay={800}
+        >
+          With mouseOutDelay
+        </Tooltip>
+      </p>
     </Wrapper>
   ));
