@@ -58,6 +58,10 @@ class App extends React.Component {
             <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target" tipContentClassName="">
               t
             </Tooltip>
+            
+            <Tooltip onToggle={(isOpen) => {alert(`Is tooltip open ? \n Answer : ${isOpen? 'Yes' : 'No' }`) }} content="alert shown" className="target" tipContentClassName="">
+              Hover Me 
+            </Tooltip>
           </div>
         </section>
 
