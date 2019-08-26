@@ -157,14 +157,18 @@ class Tooltip extends React.Component {
     }
 
     this.setState({ showTip: true }, () => {
-      this.props.onToggle(this.state.showTip);
+      if (typeof this.props.onToggle === 'function') {
+        this.props.onToggle(this.state.showTip);
+      }
     });
   }
 
   hideTip() {
     this.setState({ hasHover: false });
     this.setState({ showTip: false }, () => {
-      this.props.onToggle(this.state.showTip);
+      if (typeof this.props.onToggle === 'function') {
+        this.props.onToggle(this.state.showTip);
+      }
     });
   }
 
