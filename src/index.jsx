@@ -32,6 +32,7 @@ class Tooltip extends React.Component {
     eventOn: PropTypes.string,
     eventToggle: PropTypes.string,
     forceDirection: PropTypes.bool,
+    hideOnScroll: PropTypes.bool,
     hoverDelay: PropTypes.number,
     isOpen: PropTypes.bool,
     mouseOutDelay: PropTypes.number,
@@ -56,6 +57,7 @@ class Tooltip extends React.Component {
     eventOn: undefined,
     eventToggle: undefined,
     forceDirection: false,
+    hideOnScroll: false,
     hoverDelay: 200,
     isOpen: undefined,
     mouseOutDelay: undefined,
@@ -133,16 +135,19 @@ class Tooltip extends React.Component {
 
   listenResizeScroll() {
     clearTimeout(this.debounceTimeout);
-
     this.debounceTimeout = setTimeout(this.handleResizeScroll, resizeThrottle);
   }
 
   handleResizeScroll() {
-    if (this.state.showTip) {
-      // if we're showing the tip and the resize was actually a signifigant change, then setState to re-render and calculate position
-      const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;
-      this.setState({ clientWidth });
+    if (!this.state.showTip) return;
+    
+    if (this.props.hideOnScroll) {
+      this.hideTip();
     }
+
+    // if we're showing the tip and the resize was actually a signifigant change, then setState to re-render and calculate position
+    const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;
+    this.setState({ clientWidth });
   }
 
   toggleTip() {
