@@ -150,6 +150,11 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>forces open/close state from a prop, overrides hover or click state</td>
     </tr>
     <tr>
+      <td>hideOnScroll</td>
+      <td>boolean</td>
+      <td>whether to hide the tip on window scroll, defaults to false</td>
+    </tr>
+    <tr>
       <td>hoverDelay</td>
       <td>number</td>
       <td>the number of milliseconds to determine hover intent, defaults to 200</td>
