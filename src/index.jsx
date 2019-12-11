@@ -42,7 +42,8 @@ class Tooltip extends React.Component {
     tipContentClassName: PropTypes.string,
     useDefaultStyles: PropTypes.bool,
     useHover: PropTypes.bool,
-    zIndex: PropTypes.number
+    zIndex: PropTypes.number,
+    onToggle: PropTypes.func,
   }
 
   static defaultProps = {
@@ -157,12 +158,20 @@ class Tooltip extends React.Component {
       return this.setState({ hasBeenShown: true });
     }
 
-    this.setState({ showTip: true });
+    this.setState({ showTip: true }, () => {
+      if (typeof this.props.onToggle === 'function') {
+        this.props.onToggle(this.state.showTip);
+      }
+    });
   }
 
   hideTip() {
     this.setState({ hasHover: false });
-    this.setState({ showTip: false });
+    this.setState({ showTip: false }, () => {
+      if (typeof this.props.onToggle === 'function') {
+        this.props.onToggle(this.state.showTip);
+      }
+    });
   }
 
   startHover() {
