@@ -42,6 +42,7 @@ class Tooltip extends React.Component {
     tipContentClassName: PropTypes.string,
     useDefaultStyles: PropTypes.bool,
     useHover: PropTypes.bool,
+    zIndex: PropTypes.number,
     onToggle: PropTypes.func,
   }
 
@@ -67,6 +68,7 @@ class Tooltip extends React.Component {
     tipContentClassName: undefined,
     useDefaultStyles: false,
     useHover: true,
+    zIndex: 1000
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -279,7 +281,7 @@ class Tooltip extends React.Component {
         color: useDefaultStyles ? defaultColor : color,
         padding,
         boxSizing: 'border-box',
-        zIndex: 1000,
+        zIndex: this.props.zIndex,
         position: 'absolute',
         display: 'inline-block',
       };
@@ -289,7 +291,7 @@ class Tooltip extends React.Component {
         position: 'absolute',
         width: '0px',
         height: '0px',
-        zIndex: 1001,
+        zIndex: this.props.zIndex + 1,
       };
 
       tipPortal = (
