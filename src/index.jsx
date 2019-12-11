@@ -94,7 +94,7 @@ class Tooltip extends React.Component {
     this.endHover = this.endHover.bind(this);
     this.listenResizeScroll = this.listenResizeScroll.bind(this);
     this.handleResizeScroll = this.handleResizeScroll.bind(this);
-    this.bodyTap = this.bodyTap.bind(this);
+    this.bodyTouchStart = this.bodyTouchStart.bind(this);
     this.bodyTouchEnd = this.bodyTouchEnd.bind(this);
     this.targetTouchStart = this.targetTouchStart.bind(this);
     this.targetTouchEnd = this.targetTouchEnd.bind(this);
@@ -110,7 +110,7 @@ class Tooltip extends React.Component {
 
     window.addEventListener('resize', this.listenResizeScroll);
     window.addEventListener('scroll', this.listenResizeScroll);
-    window.addEventListener('touchstart', this.bodyTap);
+    window.addEventListener('touchstart', this.bodyTouchStart);
     window.addEventListener('touchEnd', this.bodyTouchEnd);
   }
 
@@ -133,7 +133,8 @@ class Tooltip extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.listenResizeScroll);
     window.removeEventListener('scroll', this.listenResizeScroll);
-    window.removeEventListener('touchstart', this.bodyTap);
+    window.removeEventListener('touchstart', this.bodyTouchStart);
+    window.removeEventListener('touchEnd', this.bodyTouchEnd);
     clearTimeout(this.debounceTimeout);
     clearTimeout(this.hoverTimeout);
   }
@@ -172,7 +173,7 @@ class Tooltip extends React.Component {
     }
   }
 
-  bodyTap(e) {
+  bodyTouchStart(e) {
     // if it's a controlled tip we don't want to auto-dismiss, otherwise we just ignore taps inside the tip
     if (!(this.target && this.target.contains(e.target)) && !(this.tip && this.tip.contains(e.target)) && !this.props.isOpen) {
       this.hideTip();
