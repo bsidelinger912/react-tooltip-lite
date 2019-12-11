@@ -94,6 +94,7 @@ class Tooltip extends React.Component {
     this.endHover = this.endHover.bind(this);
     this.listenResizeScroll = this.listenResizeScroll.bind(this);
     this.handleResizeScroll = this.handleResizeScroll.bind(this);
+    this.bodyTap = this.bodyTap.bind(this);
   }
 
   componentDidMount() {
@@ -106,6 +107,7 @@ class Tooltip extends React.Component {
 
     window.addEventListener('resize', this.listenResizeScroll);
     window.addEventListener('scroll', this.listenResizeScroll);
+    window.addEventListener('touchstart', this.bodyTap);
   }
 
   componentDidUpdate(_, prevState) {
@@ -127,6 +129,7 @@ class Tooltip extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.listenResizeScroll);
     window.removeEventListener('scroll', this.listenResizeScroll);
+    window.removeEventListener('touchstart', this.bodyTap);
     clearTimeout(this.debounceTimeout);
     clearTimeout(this.hoverTimeout);
   }
@@ -143,6 +146,14 @@ class Tooltip extends React.Component {
       const clientWidth = Math.round(document.documentElement.clientWidth / resizeThreshold) * resizeThreshold;
       this.setState({ clientWidth });
     }
+  }
+
+  bodyTap(e) {
+    // if it's a controlled tip we don't want to auto-dismiss otherwise we just ignore taps inside the tip
+    if ((this.target && this.target.contains(e.target)) || this.props.isOpen) {
+      return;
+    }
+    this.hideTip();
   }
 
   toggleTip() {
