@@ -38,6 +38,7 @@ describe('Tooltip', () => {
     const target = getByText(targetContent);
 
     fireEvent.touchStart(target);
+    fireEvent.touchEnd(target);
     jest.runAllTimers();
 
     assertTipVisible(getByText);

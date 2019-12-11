@@ -95,6 +95,9 @@ class Tooltip extends React.Component {
     this.listenResizeScroll = this.listenResizeScroll.bind(this);
     this.handleResizeScroll = this.handleResizeScroll.bind(this);
     this.bodyTap = this.bodyTap.bind(this);
+    this.bodyTouchEnd = this.bodyTouchEnd.bind(this);
+    this.targetTouchStart = this.targetTouchStart.bind(this);
+    this.targetTouchEnd = this.targetTouchEnd.bind(this);
   }
 
   componentDidMount() {
@@ -108,6 +111,7 @@ class Tooltip extends React.Component {
     window.addEventListener('resize', this.listenResizeScroll);
     window.addEventListener('scroll', this.listenResizeScroll);
     window.addEventListener('touchstart', this.bodyTap);
+    window.addEventListener('touchEnd', this.bodyTouchEnd);
   }
 
   componentDidUpdate(_, prevState) {
@@ -138,6 +142,10 @@ class Tooltip extends React.Component {
     clearTimeout(this.debounceTimeout);
 
     this.debounceTimeout = setTimeout(this.handleResizeScroll, resizeThrottle);
+
+    if (this.state.targetTouch) {
+      this.setState({ targetTouch: undefined });
+    }
   }
 
   handleResizeScroll() {
@@ -148,12 +156,27 @@ class Tooltip extends React.Component {
     }
   }
 
-  bodyTap(e) {
-    // if it's a controlled tip we don't want to auto-dismiss otherwise we just ignore taps inside the tip
-    if ((this.target && this.target.contains(e.target)) || this.props.isOpen) {
-      return;
+  targetTouchStart() {
+    this.setState({ targetTouch: true });
+  }
+
+  targetTouchEnd() {
+    if (this.state.targetTouch) {
+      this.toggleTip();
     }
-    this.hideTip();
+  }
+
+  bodyTouchEnd() {
+    if (this.state.targetTouch) {
+      this.setState({ targetTouch: undefined });
+    }
+  }
+
+  bodyTap(e) {
+    // if it's a controlled tip we don't want to auto-dismiss, otherwise we just ignore taps inside the tip
+    if (!(this.target && this.target.contains(e.target)) && !(this.tip && this.tip.contains(e.target)) && !this.props.isOpen) {
+      this.hideTip();
+    }
   }
 
   toggleTip() {
@@ -255,7 +278,8 @@ class Tooltip extends React.Component {
     } else if (useHover && !isControlledByProps) {
       props.onMouseEnter = this.startHover;
       props.onMouseLeave = (tipContentHover || mouseOutDelay) ? this.endHover : this.hideTip;
-      props.onTouchStart = this.toggleTip;
+      props.onTouchStart = this.targetTouchStart;
+      props.onTouchEnd = this.targetTouchEnd;
 
       if (tipContentHover) {
         portalProps.onMouseEnter = this.startHover;
