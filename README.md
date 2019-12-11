@@ -174,6 +174,16 @@ You can pass in props to define tip direction, styling, etc.  Content is the onl
       <td>number</td>
       <td>The distance from the tooltip to the target, defaults to 10px with an arrow and 3px without an arrow</td>
     </tr>
+    <tr>
+      <td>zIndex</td>
+      <td>number</td>
+      <td>The zIndex of the tooltip, defaults to 1000</td>
+    </tr>
+    <tr>
+      <td>onToggle</td>
+      <td>function</td>
+      <td>if passed, this is called when the visibility of the tooltip changes.</td>
+    </tr>
   </tbody>
 </table>
 <br />

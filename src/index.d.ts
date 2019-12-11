@@ -25,6 +25,8 @@ declare module 'react-tooltip-lite' {
     tipContentClassName?: string;
     useHover?: boolean;
     useDefaultStyles?: boolean;
+    zIndex: number;
+    onToggle: (showTip: boolean) => void;
   }
 
   export default class Tooltip extends React.Component<TooltipProps> {

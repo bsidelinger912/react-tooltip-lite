@@ -68,7 +68,8 @@ class Tooltip extends React.Component {
     tipContentClassName: undefined,
     useDefaultStyles: false,
     useHover: true,
-    zIndex: 1000
+    zIndex: 1000,
+    onToggle: undefined,
   }
 
   static getDerivedStateFromProps(nextProps) {
