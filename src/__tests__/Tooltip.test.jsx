@@ -205,4 +205,7 @@ describe('Tooltip', () => {
     jest.advanceTimersByTime(mouseOutDelay);
     assertTipHidden(getByText);
   });
+
+  it('should support onToggle prop');
+  it('should support zIndex prop');
 });

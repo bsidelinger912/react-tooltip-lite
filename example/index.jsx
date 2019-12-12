@@ -58,9 +58,9 @@ class App extends React.Component {
             <Tooltip content="you can specify 'direction' (up, down, left, right) too" direction="down" className="target" tipContentClassName="">
               t
             </Tooltip>
-            
-            <Tooltip onToggle={(isOpen) => {alert(`Is tooltip open ? \n Answer : ${isOpen? 'Yes' : 'No' }`) }} content="alert shown" className="target" tipContentClassName="">
-              Hover Me 
+
+            <Tooltip onToggle={(isOpen) => { alert(`Is tooltip open ? \n Answer : ${isOpen ? 'Yes' : 'No'}`); }} content="alert shown" className="target" tipContentClassName="">
+              Hover Me
             </Tooltip>
           </div>
         </section>
@@ -348,6 +348,15 @@ class App extends React.Component {
               up-end with arrow
             </Tooltip>
           </div>
+        </section>
+        <section>
+          <Tooltip tagName="span" content="check the console log" onToggle={isVisible => console.log(`is visible: ${isVisible}`)}>
+            On toggle example
+          </Tooltip>
+          &nbsp; &nbsp;
+          <Tooltip tagName="span" content="This has a z-index of 5000" zIndex={5000} eventToggle="onClick">
+            z-index example
+          </Tooltip>
         </section>
       </div>
     );
