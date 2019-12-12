@@ -206,6 +206,40 @@ describe('Tooltip', () => {
     assertTipHidden(getByText);
   });
 
-  it('should support onToggle prop');
-  it('should support zIndex prop');
+  it('should support onToggle prop', () => {
+    const spy = jest.fn();
+    const { getByText } = render(
+      <Tooltip content={tipContent} onToggle={spy}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    jest.runAllTimers();
+    expect(spy).toHaveBeenCalledWith(true);
+
+    fireEvent.mouseOut(target);
+
+    jest.runAllTimers();
+    expect(spy).toHaveBeenCalledWith(false);
+  });
+
+  it('should support zIndex prop', () => {
+    const { getByText } = render(
+      <Tooltip content={tipContent} zIndex={5000}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    jest.runAllTimers();
+
+    const tip = getByText(tipContent);
+    const styles = window.getComputedStyle(tip);
+    expect(styles['z-index']).toEqual('5000');
+  });
 });
