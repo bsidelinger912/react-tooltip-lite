@@ -118,7 +118,7 @@ class Tooltip extends React.Component {
     window.addEventListener('touchEnd', this.bodyTouchEnd);
   }
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     // older versions of react won't leverage getDerivedStateFromProps, TODO: remove when < 16.3 support is dropped
     if (!this.state.hasBeenShown && this.props.isOpen) {
       // eslint-disable-next-line react/no-did-update-set-state
@@ -131,6 +131,10 @@ class Tooltip extends React.Component {
     // this only has to happen the first time the tip is shown, and allows us to not render every tip on the page with initial render.
     if (!prevState.hasBeenShown && this.state.hasBeenShown) {
       this.showTip();
+    }
+
+    if (this.props.isOpen === false && prevProps.isOpen !== this.props.isOpen) {
+      this.hideTip();
     }
   }
 
