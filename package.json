@@ -7,7 +7,7 @@
   "scripts": {
     "bundle": "node node_modules/webpack/bin/webpack.js -p --colors --display-error-details --config webpack.dist.config.js",
     "dev": "webpack-dev-server --progress --colors",
-    "transpile": "babel src --out-dir dist --ignore ./src/**/*.test.jsx && cp src/index.d.ts dist/index.d.ts",
+    "transpile": "tsc -d",
     "build": "rm -rf dist && mkdir dist && npm run transpile && npm run bundle",
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 6006",
@@ -46,6 +46,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.7.7",
     "@storybook/addon-actions": "^5.0.10",
     "@storybook/addon-knobs": "^5.0.10",
     "@storybook/addon-links": "^5.0.10",
@@ -54,6 +55,8 @@
     "@storybook/addon-viewport": "^5.0.11",
     "@storybook/addons": "^5.0.10",
     "@storybook/react": "^5.0.10",
+    "@types/prop-types": "^15.7.3",
+    "@types/react": "^16.9.17",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
@@ -72,6 +75,7 @@
     "react-test-renderer": "^16.8.6",
     "react-testing-library": "^7.0.0",
     "style-loader": "^0.23.1",
+    "typescript": "^3.7.4",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1",
     "webpack-dev-server": "^3.3.1"
