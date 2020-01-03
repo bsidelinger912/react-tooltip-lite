@@ -4,21 +4,7 @@
  */
 
 import getDirection from './getDirection';
-
-export const minArrowPadding = 5;
-const bodyPadding = 10;
-const noArrowDistance = 3;
-
-/**
- * cross browser scroll positions
- */
-function getScrollTop() {
-  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-}
-
-export function getScrollLeft() {
-  return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
-}
+import { minArrowPadding, bodyPadding, getArrowSpacing, getScrollTop, getScrollLeft } from './functions';
 
 /**
  * Sets tip max width safely for mobile
@@ -37,11 +23,6 @@ function parseAlignMode(direction) {
     return directionArray[1];
   }
   return 'middle';
-}
-
-export function getArrowSpacing(props) {
-  const defaultArrowSpacing = props.arrow ? props.arrowSize : noArrowDistance;
-  return typeof props.distance === 'number' ? props.distance : defaultArrowSpacing;
 }
 
 /**

@@ -1,7 +1,7 @@
 /**
  * Checks the intended tip direction and falls back if not enough space
  */
-import { getScrollLeft, getArrowSpacing, minArrowPadding } from './position';
+import { getScrollLeft, getArrowSpacing, minArrowPadding } from './functions';
 
 function checkLeftRightWidthSufficient(tip, target, distance, bodyPadding) {
   const targetRect = target.getBoundingClientRect();

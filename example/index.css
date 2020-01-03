@@ -146,3 +146,13 @@ a {
 .controlled-example_close-button:hover {
   color: grey;
 }
+
+.internal-scroll-container {
+  height: 200px;
+  overflow: auto;
+}
+
+.internal-scroll-container > div {
+  padding-top: 100px;
+  height: 400px;
+}
