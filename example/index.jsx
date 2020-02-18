@@ -47,7 +47,7 @@ class App extends React.Component {
           <h3>Basic:</h3>
 
           <div className="flex-spread">
-            <Tooltip content="By default the text is above the element" className="target" tipContentClassName="foo">
+            <Tooltip padding={20} content="By default the text is above the element" className="target" tipContentClassName="foo">
               Target
             </Tooltip>
 
@@ -59,7 +59,7 @@ class App extends React.Component {
               t
             </Tooltip>
 
-            <Tooltip onToggle={(isOpen) => { alert(`Is tooltip open ? \n Answer : ${isOpen ? 'Yes' : 'No'}`); }} content="alert shown" className="target" tipContentClassName="">
+            <Tooltip onToggle={(isOpen) => { console.log(`Is tooltip open ? \n Answer : ${isOpen ? 'Yes' : 'No'}`); }} content="alert shown" className="target" tipContentClassName="">
               Hover Me
             </Tooltip>
           </div>
@@ -357,6 +357,16 @@ class App extends React.Component {
           <Tooltip tagName="span" content="This has a z-index of 5000" zIndex={5000} eventToggle="onClick">
             z-index example
           </Tooltip>
+        </section>
+        <section>
+          <h3>Internal scrollbars</h3>
+          <div className="internal-scroll-container">
+            <div>
+              <Tooltip content="hello" tagName="span">
+                  Scroll on mobile tapping here
+              </Tooltip>
+            </div>
+          </div>
         </section>
       </div>
     );

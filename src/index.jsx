@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Portal, { isBrowser } from './Portal';
 import positions from './position';
+import { getScrollParent } from './functions';
 
 // default colors
 const defaultColor = '#fff';
@@ -35,7 +36,10 @@ class Tooltip extends React.Component {
     hoverDelay: PropTypes.number,
     isOpen: PropTypes.bool,
     mouseOutDelay: PropTypes.number,
-    padding: PropTypes.string,
+    padding: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     styles: PropTypes.object,
     tagName: PropTypes.string,
     tipContentHover: PropTypes.bool,
@@ -112,8 +116,10 @@ class Tooltip extends React.Component {
       this.setState({ isOpen: true });
     }
 
+    this.scrollParent = getScrollParent(this.target);
+
     window.addEventListener('resize', this.listenResizeScroll);
-    window.addEventListener('scroll', this.listenResizeScroll);
+    this.scrollParent.addEventListener('scroll', this.listenResizeScroll);
     window.addEventListener('touchstart', this.bodyTouchStart);
     window.addEventListener('touchEnd', this.bodyTouchEnd);
   }
@@ -140,7 +146,7 @@ class Tooltip extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.listenResizeScroll);
-    window.removeEventListener('scroll', this.listenResizeScroll);
+    this.scrollParent.removeEventListener('scroll', this.listenResizeScroll);
     window.removeEventListener('touchstart', this.bodyTouchStart);
     window.removeEventListener('touchEnd', this.bodyTouchEnd);
     clearTimeout(this.debounceTimeout);
