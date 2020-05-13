@@ -185,29 +185,6 @@ class App extends React.Component {
         </section>
 
         <section>
-          <h3>Custom Arrow content</h3>
-          <Tooltip
-            content="Event more customizations possible via the arrowContent prop"
-            className="target"
-            background="white"
-            color="black"
-            tipContentClassName="arrow-content-tooltip"
-            spacing={0}
-            tagName="span"
-            arrowContent={(
-              <svg style={{ display: 'block' }} viewBox="0 0 21 11" width="20px" height="10px">
-                <path
-                  d="M0,11 L9.43630703,1.0733987 L9.43630703,1.0733987 C10.1266203,0.3284971 11.2459708,0 11.936284,1.0733987 L20,11"
-                  style={{ stroke: 'gray', fill: 'white' }}
-                />
-              </svg>
-            )}
-          >
-            Hover
-          </Tooltip>
-        </section>
-
-        <section>
           <h3>Wrap anything as a target</h3>
           <Tooltip content="this is lorem ipsum">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt egestas sapien quis lacinia. Praesent ut sem leo.
