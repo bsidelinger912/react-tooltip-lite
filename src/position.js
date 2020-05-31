@@ -214,7 +214,7 @@ function getArrowStyles(target, tip, direction, state, props) {
       borderStyles.borderRight = `${props.arrowSize}px solid transparent`;
 
       if (props.background) {
-        borderStyles.borderBottom = `10px solid ${props.background}`;
+        borderStyles.borderBottom = `${props.arrowSize}px solid ${props.background}`;
       } else {
         borderStyles.borderBottomWidth = `${props.arrowSize}px`;
         borderStyles.borderBottomStyle = 'solid';
