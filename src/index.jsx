@@ -48,6 +48,7 @@ class Tooltip extends React.Component {
     useHover: PropTypes.bool,
     zIndex: PropTypes.number,
     onToggle: PropTypes.func,
+    arrowContent: PropTypes.node,
   }
 
   static defaultProps = {
@@ -74,6 +75,7 @@ class Tooltip extends React.Component {
     useHover: true,
     zIndex: 1000,
     onToggle: undefined,
+    arrowContent: null,
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -204,20 +206,25 @@ class Tooltip extends React.Component {
       return this.setState({ hasBeenShown: true });
     }
 
-    this.setState({ showTip: true }, () => {
-      if (typeof this.props.onToggle === 'function') {
-        this.props.onToggle(this.state.showTip);
-      }
-    });
+    if (!this.state.showTip) {
+      this.setState({ showTip: true }, () => {
+        if (typeof this.props.onToggle === 'function') {
+          this.props.onToggle(this.state.showTip);
+        }
+      });
+    }
   }
 
   hideTip() {
     this.setState({ hasHover: false });
-    this.setState({ showTip: false }, () => {
-      if (typeof this.props.onToggle === 'function') {
-        this.props.onToggle(this.state.showTip);
-      }
-    });
+
+    if (this.state.showTip) {
+      this.setState({ showTip: false }, () => {
+        if (typeof this.props.onToggle === 'function') {
+          this.props.onToggle(this.state.showTip);
+        }
+      });
+    }
   }
 
   startHover() {
@@ -264,6 +271,7 @@ class Tooltip extends React.Component {
       tipContentClassName,
       useDefaultStyles,
       useHover,
+      arrowContent,
     } = this.props;
 
     const isControlledByProps = typeof isOpen !== 'undefined' && isOpen !== null;
@@ -334,7 +342,8 @@ class Tooltip extends React.Component {
       };
 
       const arrowStyles = {
-        ...currentPositions.arrow,
+        ...currentPositions.arrow.positionStyles,
+        ...(arrowContent ? {} : currentPositions.arrow.borderStyles),
         position: 'absolute',
         width: '0px',
         height: '0px',
@@ -347,7 +356,7 @@ class Tooltip extends React.Component {
             <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
               {content}
             </span>
-            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles} />
+            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles}>{arrowContent}</span>
           </div>
         </Portal>
       );

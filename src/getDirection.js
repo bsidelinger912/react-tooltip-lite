@@ -40,8 +40,8 @@ function checkTargetSufficientlyVisible(target, tip, props) {
 
 function checkForArrowOverhang(props, arrowStyles, bodyPadding) {
   const scrollLeft = getScrollLeft();
-  const hasLeftClearance = arrowStyles.left - scrollLeft > bodyPadding;
-  const hasRightClearance = arrowStyles.left + (props.arrowSize * 2) < (scrollLeft + document.documentElement.clientWidth) - bodyPadding;
+  const hasLeftClearance = arrowStyles.positionStyles.left - scrollLeft > bodyPadding;
+  const hasRightClearance = arrowStyles.positionStyles.left + (props.arrowSize * 2) < (scrollLeft + document.documentElement.clientWidth) - bodyPadding;
 
   return (!hasLeftClearance || !hasRightClearance);
 }

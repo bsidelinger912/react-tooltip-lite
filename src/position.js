@@ -147,8 +147,10 @@ function getLeftRightPosition(tip, target, state, direction, alignMode, props) {
 function getArrowStyles(target, tip, direction, state, props) {
   if (!target || !props.arrow) {
     return {
-      top: '0',
-      left: '-10000000px',
+      positionStyles: {
+        top: '0',
+        left: '-10000000px',
+      },
     };
   }
 
@@ -159,6 +161,7 @@ function getArrowStyles(target, tip, direction, state, props) {
   const scrollLeft = getScrollLeft();
   const arrowSpacing = getArrowSpacing(props);
   const borderStyles = {};
+  const positionStyles = {};
 
   switch (direction) {
     case 'right':
@@ -172,12 +175,9 @@ function getArrowStyles(target, tip, direction, state, props) {
         borderStyles.borderRightStyle = 'solid';
       }
 
-      return {
-        ...borderStyles,
-        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px',
-        left: (targetRect.right + scrollLeft + arrowSpacing) - props.arrowSize,
-      };
-
+      positionStyles.top = (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px';
+      positionStyles.left = (targetRect.right + scrollLeft + arrowSpacing) - props.arrowSize;
+      break;
     case 'left':
       borderStyles.borderTop = `${props.arrowSize}px solid transparent`;
       borderStyles.borderBottom = `${props.arrowSize}px solid transparent`;
@@ -189,12 +189,9 @@ function getArrowStyles(target, tip, direction, state, props) {
         borderStyles.borderLeftStyle = 'solid';
       }
 
-      return {
-        ...borderStyles,
-        top: (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px',
-        left: (targetRect.left + scrollLeft) - arrowSpacing - 1,
-      };
-
+      positionStyles.top = (state.showTip && tip) ? (targetRect.top + scrollTop + halfTargetHeight) - props.arrowSize : '-10000000px';
+      positionStyles.left = (targetRect.left + scrollLeft) - arrowSpacing - 1;
+      break;
     case 'up':
       borderStyles.borderLeft = `${props.arrowSize}px solid transparent`;
       borderStyles.borderRight = `${props.arrowSize}px solid transparent`;
@@ -207,12 +204,10 @@ function getArrowStyles(target, tip, direction, state, props) {
         borderStyles.borderTopStyle = 'solid';
       }
 
-      return {
-        ...borderStyles,
-        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px',
-        top: (targetRect.top + scrollTop) - arrowSpacing,
-      };
 
+      positionStyles.left = (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px';
+      positionStyles.top = (targetRect.top + scrollTop) - arrowSpacing;
+      break;
     case 'down':
     default:
       borderStyles.borderLeft = `${props.arrowSize}px solid transparent`;
@@ -225,12 +220,14 @@ function getArrowStyles(target, tip, direction, state, props) {
         borderStyles.borderBottomStyle = 'solid';
       }
 
-      return {
-        ...borderStyles,
-        left: (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px',
-        top: (targetRect.bottom + scrollTop + arrowSpacing) - props.arrowSize,
-      };
+      positionStyles.left = (state.showTip && tip) ? (targetRect.left + scrollLeft + halfTargetWidth) - props.arrowSize : '-10000000px';
+      positionStyles.top = (targetRect.bottom + scrollTop + arrowSpacing) - props.arrowSize;
+      break;
   }
+  return {
+    borderStyles,
+    positionStyles,
+  };
 }
 
 /**

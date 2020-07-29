@@ -59,6 +59,51 @@ describe('Tooltip', () => {
     );
 
     assertTipVisible(getByText);
+
+    rerender(
+      <Tooltip content={tipContent} isOpen={false}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    jest.runAllTimers();
+
+    assertTipHidden(getByText);
+  });
+
+  it('should not open the tip when isVisible goes from false to undefined', () => {
+    const { rerender, getByText } = render(
+      <Tooltip content={tipContent}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    jest.runAllTimers();
+
+    assertTipVisible(getByText);
+
+    rerender(
+      <Tooltip content={tipContent} isOpen={false}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    jest.runAllTimers();
+
+    assertTipHidden(getByText);
+
+    rerender(
+      <Tooltip content={tipContent} isOpen={false}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    jest.runAllTimers();
+
+    assertTipHidden(getByText);
   });
 
   it('should handle null as undefined for isOpen prop', () => {
@@ -226,6 +271,19 @@ describe('Tooltip', () => {
     expect(spy).toHaveBeenCalledWith(false);
   });
 
+  it('should not call onToggle when the state is not actually changing', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <Tooltip content={tipContent} onToggle={spy}>
+        {targetContent}
+      </Tooltip>
+    );
+
+    fireEvent.touchStart(container);
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('should support zIndex prop', () => {
     const { getByText } = render(
       <Tooltip content={tipContent} zIndex={5000}>
@@ -241,5 +299,30 @@ describe('Tooltip', () => {
     const tip = getByText(tipContent);
     const styles = window.getComputedStyle(tip);
     expect(styles['z-index']).toEqual('5000');
+  });
+
+  it('should support the arrowContent prop', () => {
+    const { getByText, getByTestId } = render(
+      <Tooltip
+        content={tipContent}
+        arrowContent={(
+          <svg data-testid="my-arrow" style={{ display: 'block' }} viewBox="0 0 21 11" width="20px" height="10px">
+            <path
+              d="M0,11 L9.43630703,1.0733987 L9.43630703,1.0733987 C10.1266203,0.3284971 11.2459708,0 11.936284,1.0733987 L20,11"
+              style={{ stroke: 'gray', fill: 'white' }}
+            />
+          </svg>
+        )}
+      >
+        {targetContent}
+      </Tooltip>
+    );
+
+    const target = getByText(targetContent);
+    fireEvent.mouseOver(target);
+
+    jest.runAllTimers();
+
+    getByTestId('my-arrow');
   });
 });
