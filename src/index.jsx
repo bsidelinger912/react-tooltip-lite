@@ -349,10 +349,10 @@ class Tooltip extends React.Component {
       tipPortal = (
         <Portal>
           <div {...portalProps} className={typeof tipContentClassName !== 'undefined' ? tipContentClassName : className}>
-            <span className="react-tooltip-lite" style={tipStyles} ref={(tip) => { this.tip = tip; }}>
+            <span className={`react-tooltip-lite ${showTip ? 'show' : 'hide'}`} style={tipStyles} ref={(tip) => { this.tip = tip; }}>
               {content}
             </span>
-            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow`} style={arrowStyles}>{arrowContent}</span>
+            <span className={`react-tooltip-lite-arrow react-tooltip-lite-${currentPositions.realDirection}-arrow ${showTip ? 'show' : 'hide'}`} style={arrowStyles}>{arrowContent}</span>
           </div>
         </Portal>
       );
