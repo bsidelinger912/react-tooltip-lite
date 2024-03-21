@@ -37,8 +37,8 @@
     "prop-types": "^15.5.8"
   },
   "peerDependencies": {
-    "react": "^15.5.4 || ^16.0.0",
-    "react-dom": "^15.5.4 || ^16.0.0"
+    "react": "^15.5.4 || ^16.0.0 || ^18.0.0",
+    "react-dom": "^15.5.4 || ^16.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
